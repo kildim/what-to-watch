@@ -1,12 +1,12 @@
 import Main from '../main/main';
 
-type PropsType = {
+type AppProps = {
   title: string,
   genre: string,
   release: string
 }
 
-function App({title, genre, release}: PropsType): JSX.Element {
+function App({title, genre, release}: AppProps): JSX.Element {
   return (
     <Main
       title={title}
