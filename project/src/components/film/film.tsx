@@ -1,6 +1,6 @@
 import Footer from '../footer/footer';
 
-function Movie(): JSX.Element {
+function Film(): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -164,4 +164,4 @@ function Movie(): JSX.Element {
   );
 }
 
-export default Movie;
+export default Film;
