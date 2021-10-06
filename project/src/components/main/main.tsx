@@ -1,6 +1,5 @@
 import SmallFilmCard from '../small-film-card/small-film-card';
 import Footer from '../footer/footer';
-import {Fragment} from 'react';
 
 type MainProps = {
   title: string,
@@ -12,7 +11,7 @@ const cards: number[] = Array(20).fill(0).map((value, index) => index);
 
 function Main({title, genre, release}: MainProps): JSX.Element {
   return (
-    <Fragment>
+    <>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
@@ -125,7 +124,7 @@ function Main({title, genre, release}: MainProps): JSX.Element {
 
         <Footer />
       </div>
-    </Fragment>
+    </>
   );
 }
 

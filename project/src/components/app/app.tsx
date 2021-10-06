@@ -1,5 +1,6 @@
-import Main from '../main/main';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+
+import Main from '../main/main';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import SignIn from '../sign-in/sign-in';
 import Film from '../film/film';
