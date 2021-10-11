@@ -9,14 +9,9 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
+import {AppProps} from '../../types/appProps';
 
-type AppProps = {
-  title: string,
-  genre: string,
-  release: string
-}
-
-function App({title, genre, release}: AppProps): JSX.Element {
+function App({title, genre, release, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -25,6 +20,7 @@ function App({title, genre, release}: AppProps): JSX.Element {
             title={title}
             genre={genre}
             release={release}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SignIn}>
@@ -34,13 +30,19 @@ function App({title, genre, release}: AppProps): JSX.Element {
           <Film/>
         </Route>
         <Route exact path={AppRoute.Review}>
-          <Review/>
+          <Review
+            films={films}
+          />
         </Route>
         <Route exact path={AppRoute.MyList}>
-          <MyList/>
+          <MyList
+            films={films}
+          />
         </Route>
         <Route exact path={AppRoute.Player}>
-          <Player/>
+          <Player
+            films={films}
+          />
         </Route>
         <PrivateRoute
           exact

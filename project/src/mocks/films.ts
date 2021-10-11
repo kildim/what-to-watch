@@ -1,6 +1,6 @@
 import {Film} from '../types/film';
 
-const MOCKS_COUNT = 8;
+const MOCKS_COUNT = 30;
 
 function* idMaker(): Generator<number> {
   let index = 0;
@@ -18,8 +18,8 @@ export const films: Film[] = Array(MOCKS_COUNT).fill('').map(() =>
       id: newID,
       name: `#${newID} The Grand Budapest Hotel`,
       posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
-      previewImage: 'img/the-grand-budapest-hotel.jpg',
-      backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
+      previewImage: 'img/seven-years-in-tibet.jpg',
+      backgroundImage: 'img/bg-the-grand-budapest-hotel.jpg',
       backgroundColor: '#ffffff',
       videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
       previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',

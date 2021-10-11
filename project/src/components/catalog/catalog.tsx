@@ -1,15 +1,14 @@
-import SmallFilmCard from '../small-film-card/small-film-card';
+import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {CatalogProps} from '../../types/catalogProps';
 
-const cards: number[] = Array(9).fill(0).map((value, index) => index);
+// const cards: number[] = Array(9).fill(0).map((value, index) => index);
 
-function Catalog(): JSX.Element {
+function Catalog({films}: CatalogProps): JSX.Element {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <div className="catalog__films-list">
-        {cards.map((card) => <SmallFilmCard key={card}/>)}
-      </div>
+      <CatalogFilmsList films={films.slice(9)} />
     </section>
   );
 }

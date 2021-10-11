@@ -1,4 +1,4 @@
-import Catalog from '../catalog/catalog';
+// import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 
 function UserPage(): JSX.Element {
@@ -27,7 +27,7 @@ function UserPage(): JSX.Element {
         </ul>
       </header>
 
-      <Catalog/>
+      {/*<Catalog/>*/}
       <Footer/>
     </div>
   );

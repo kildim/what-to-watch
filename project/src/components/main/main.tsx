@@ -1,15 +1,9 @@
-import SmallFilmCard from '../small-film-card/small-film-card';
+// import SmallFilmCard from '../small-film-card/small-film-card';
 import Footer from '../footer/footer';
+import {MainProps} from '../../types/mainProps';
+import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 
-type MainProps = {
-  title: string,
-  genre: string,
-  release: string
-}
-
-const cards: number[] = Array(20).fill(0).map((value, index) => index);
-
-function Main({title, genre, release}: MainProps): JSX.Element {
+function Main({title, genre, release, films}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -113,9 +107,7 @@ function Main({title, genre, release}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {cards.map((card) => <SmallFilmCard key={card}/>)}
-          </div>
+          <CatalogFilmsList films={films.slice(0, 20)} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
