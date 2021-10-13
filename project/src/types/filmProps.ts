@@ -1,5 +1,5 @@
 import {Film} from './film';
 
-export type ReviewProps = {
+export type FilmProps = {
   film: Film
-}
+};

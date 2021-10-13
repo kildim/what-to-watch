@@ -26,24 +26,28 @@ function App({title, genre, release, films}: AppProps): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <SignIn/>
         </Route>
-        <Route exact path={AppRoute.Movie}>
-          <Film/>
-        </Route>
-        <Route exact path={AppRoute.Review}>
-          <Review
-            films={films}
-          />
-        </Route>
+        <Route exact path={AppRoute.Movie}
+          render={ (routeProps) => (
+            <Film film={films[Number(routeProps.match?.params.id)]} />
+          )}
+        />
+        <Route exact path={AppRoute.Review}
+          render={ (routeProps) => (
+            <Review
+              film={films[Number(routeProps.match?.params.id)]}
+            />
+          )}
+        />
         <Route exact path={AppRoute.MyList}>
           <MyList
             films={films}
           />
         </Route>
-        <Route exact path={AppRoute.Player}>
-          <Player
-            films={films}
-          />
-        </Route>
+        <Route exact path={AppRoute.Player}
+          render={ (routeProps) => (
+            <Player film={films[Number(routeProps.match?.params.id)]} />
+          )}
+        />
         <PrivateRoute
           exact
           path={AppRoute.Favorites}

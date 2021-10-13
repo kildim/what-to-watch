@@ -1,4 +1,5 @@
+import {Film} from './film';
+
 export type SmallFilmcardProps = {
-  image: string,
-  name: string,
+  movie: Film,
 }

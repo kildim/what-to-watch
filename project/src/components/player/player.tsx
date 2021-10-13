@@ -1,17 +1,13 @@
-import {useParams} from 'react-router-dom';
 import {PlayerProps} from '../../types/playerProps';
-import {Film} from '../../types/film';
-import {UNEXISTENT_FILM} from '../../const';
 
-function Player({films}: PlayerProps): JSX.Element {
+function Player({film}: PlayerProps): JSX.Element {
   const progressStyles = {
     left: '30%',
   };
-  const {id}: {id: string} = useParams();
-  const movie = films.find((film :Film)=> film.id === Number(id)) || UNEXISTENT_FILM;
+
   return (
     <div className="player">
-      <video src={movie.videoLink} className="player__video" poster={movie.posterImage}/>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage}/>
 
 
       <button type="button" className="player__exit">Exit</button>
@@ -32,7 +28,7 @@ function Player({films}: PlayerProps): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{movie.name}</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
