@@ -1,8 +1,6 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import {CatalogProps} from '../../types/catalogProps';
 
-// const cards: number[] = Array(9).fill(0).map((value, index) => index);
-
 function Catalog({films}: CatalogProps): JSX.Element {
   return (
     <section className="catalog">

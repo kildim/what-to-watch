@@ -1,6 +1,3 @@
-// import {useState} from 'react';
-
-
 import {ChangeEvent, useState} from 'react';
 
 function ReviewForm () {
@@ -9,6 +6,7 @@ function ReviewForm () {
   const DEFAULT_RATING = Array(MAX_RATING).fill(null).map(()=>false);
 
   const [rating, setRating] = useState(DEFAULT_RATING);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [review, setReview] = useState('');
 
   const RATING_INPUTS = Array(MAX_RATING).fill(null).map((value, index)=> {
