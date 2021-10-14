@@ -1,5 +1,9 @@
-import {MyListProps} from '../../types/myListProps';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {Film} from '../../types/film';
+
+type MyListProps = {
+  films: Film[]
+}
 
 function MyList({films}: MyListProps):JSX.Element {
   return (

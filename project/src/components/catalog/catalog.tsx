@@ -1,12 +1,16 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {CatalogProps} from '../../types/catalogProps';
+import {Film} from '../../types/film';
 
-function Catalog({films}: CatalogProps): JSX.Element {
+type CatalogProps = {
+  films: Film[]
+}
+
+function Catalog({ films }: CatalogProps): JSX.Element {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <CatalogFilmsList films={films.slice(9)} />
+      <CatalogFilmsList films={films} />
     </section>
   );
 }

@@ -1,8 +1,12 @@
 import {Link} from 'react-router-dom';
 
 import Footer from '../footer/footer';
-import {FilmProps} from '../../types/filmProps';
+import {Film} from '../../types/film';
 import {AppRoute} from '../../const';
+
+type FilmProps = {
+  film: Film
+};
 
 function Film({film}: FilmProps): JSX.Element {
   const reviewRoute = `/films/${film.id}/review`;

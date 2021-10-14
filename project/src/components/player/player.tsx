@@ -1,4 +1,8 @@
-import {PlayerProps} from '../../types/playerProps';
+import {Film} from '../../types/film';
+
+type PlayerProps = {
+  film: Film
+}
 
 function Player({film}: PlayerProps): JSX.Element {
   const progressStyles = {

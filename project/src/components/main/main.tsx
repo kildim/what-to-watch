@@ -1,7 +1,13 @@
-// import SmallFilmCard from '../small-film-card/small-film-card';
 import Footer from '../footer/footer';
-import {MainProps} from '../../types/mainProps';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {Film} from '../../types/film';
+
+type MainProps = {
+  title: string,
+  genre: string,
+  release: string,
+  films: Film[]
+}
 
 function Main({title, genre, release, films}: MainProps): JSX.Element {
   return (
@@ -107,7 +113,7 @@ function Main({title, genre, release, films}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <CatalogFilmsList films={films.slice(0, 20)} />
+          <CatalogFilmsList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

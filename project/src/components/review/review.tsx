@@ -1,5 +1,9 @@
-import {ReviewProps} from '../../types/reviewProps';
 import ReviewForm from '../reviewForm/reviewForm';
+import {Film} from '../../types/film';
+
+type ReviewProps = {
+  film: Film
+}
 
 function Review({film}: ReviewProps):JSX.Element {
 
@@ -52,7 +56,7 @@ function Review({film}: ReviewProps):JSX.Element {
       </div>
 
       <div className="add-review">
-        <ReviewForm></ReviewForm>
+        <ReviewForm/>
       </div>
 
     </section>

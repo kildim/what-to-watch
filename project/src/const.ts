@@ -5,7 +5,7 @@ export enum AppRoute {
   Review = '/films/:id/review',
   MyList = '/my-list',
   Player = '/player/:id',
-  Favorites = '/favorites'
+  Favorites = '/favorites',
 }
 
 export enum AuthorizationStatus {
@@ -21,8 +21,10 @@ export const UNEXISTENT_FILM = {
   previewImage: 'img/seven-years-in-tibet.jpg',
   backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
   backgroundColor: '#ffffff',
-  videoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  previewVideoLink: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+  videoLink:
+    'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+  previewVideoLink:
+    'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
   description: 'FILM NOT FOUND',
   rating: 8.9,
   scoresCount: 240,
