@@ -13,7 +13,7 @@ function ReviewForm() {
   const onChangeInputHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const indexOfChecked = Number(target.value) - 1;
     setRating(
-      rating.map((member, memberIndex) => memberIndex === indexOfChecked)
+      rating.map((member, memberIndex) => memberIndex === indexOfChecked),
     );
   };
 
@@ -53,7 +53,7 @@ function ReviewForm() {
           onInput={({ target }: ChangeEvent<HTMLTextAreaElement>) => {
             setReview(target.value);
           }}
-        ></textarea>
+        />
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">
             Post
