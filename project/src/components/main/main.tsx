@@ -1,18 +1,17 @@
-import SmallFilmCard from '../small-film-card/small-film-card';
 import Footer from '../footer/footer';
-import {Fragment} from 'react';
+import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {Film} from '../../types/film';
 
 type MainProps = {
   title: string,
   genre: string,
-  release: string
+  release: string,
+  films: Film[]
 }
 
-const cards: number[] = Array(20).fill(0).map((value, index) => index);
-
-function Main({title, genre, release}: MainProps): JSX.Element {
+function Main({title, genre, release, films}: MainProps): JSX.Element {
   return (
-    <Fragment>
+    <>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
@@ -114,9 +113,7 @@ function Main({title, genre, release}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {cards.map((card) => <SmallFilmCard key={card}/>)}
-          </div>
+          <CatalogFilmsList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -125,7 +122,7 @@ function Main({title, genre, release}: MainProps): JSX.Element {
 
         <Footer />
       </div>
-    </Fragment>
+    </>
   );
 }
 
