@@ -9,21 +9,39 @@ function VideoPlayer({ film }: VideoPlayerProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const handleMouseEmerging = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(isPlaying);
-    // videoRef.current?.pause();
-    isPlaying ? videoRef.current?.play() : videoRef.current?.pause();
+    let timeout: ReturnType<typeof setTimeout>;
+    if (isPlaying) {
+      timeout = setTimeout(() => videoRef.current?.play(), 1000);
+    } else {
+      videoRef.current?.load();
+    }
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
   }, [isPlaying]);
 
   return (
-    <video
-      muted
-      poster={film.posterImage}
-      src={film.previewVideoLink}
-      ref={videoRef}
-      onClick={() => setIsPlaying(!isPlaying)}
-    />
+    <div
+      className="small-film-card__image"
+      onMouseOver={handleMouseEmerging}
+      onMouseLeave={handleMouseEmerging}
+    >
+      <video
+        muted
+        poster={film.posterImage}
+        src={film.previewVideoLink}
+        ref={videoRef}
+        preload={'none'}
+        loop
+      />
+    </div>
   );
 }
 
