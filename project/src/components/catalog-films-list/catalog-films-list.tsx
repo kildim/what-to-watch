@@ -14,7 +14,7 @@ function CatalogFilmsList({ films }: CatalogFilmsListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {films.map((film: Film) => (
-        <SmallFilmCard key={film.id} movie={film} />
+        <SmallFilmCard key={film.id} film={film} />
       ))}
     </div>
   );
