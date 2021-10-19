@@ -1,9 +1,9 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {Film} from '../../types/film';
+import { Film } from '../../types/film';
 
 type CatalogProps = {
-  films: Film[]
-}
+  films: Film[];
+};
 
 function Catalog({ films }: CatalogProps): JSX.Element {
   return (

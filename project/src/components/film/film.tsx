@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 
 import Footer from '../footer/footer';
-import {Film} from '../../types/film';
+import {Film as FilmType}  from '../../types/film';
 import {AppRoute} from '../../const';
 
 type FilmProps = {
-  film: Film
+  film: FilmType
 };
 
 function Film({film}: FilmProps): JSX.Element {
