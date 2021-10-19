@@ -9,8 +9,19 @@ function VideoPlayer({ film }: VideoPlayerProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const handleMouseEmerging = () => {
-    setIsPlaying(!isPlaying);
+  const handleMouseOver = () => {
+    setIsPlaying(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPlaying(false);
+  };
+
+  const stopPlay = (video: HTMLVideoElement | null): void => {
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
   };
 
   useEffect(() => {
@@ -18,7 +29,7 @@ function VideoPlayer({ film }: VideoPlayerProps): JSX.Element {
     if (isPlaying) {
       timeout = setTimeout(() => videoRef.current?.play(), 1000);
     } else {
-      videoRef.current?.load();
+      stopPlay(videoRef.current);
     }
     return () => {
       if (timeout) {
@@ -30,16 +41,16 @@ function VideoPlayer({ film }: VideoPlayerProps): JSX.Element {
   return (
     <div
       className="small-film-card__image"
-      onMouseOver={handleMouseEmerging}
-      onMouseLeave={handleMouseEmerging}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       <video
-        muted
         poster={film.posterImage}
         src={film.previewVideoLink}
         ref={videoRef}
-        preload={'none'}
+        preload="none"
         loop
+        muted
       />
     </div>
   );
