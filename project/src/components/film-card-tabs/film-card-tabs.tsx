@@ -52,7 +52,7 @@ function Overview ({film, setActiveTab}: tabProps) {
 }
 
 function Details ({film, setActiveTab}: tabProps) {
-  const starring = film.starring.join(',');
+  const starring = film.starring.join(',\n');
 
   setActiveTab(Tabs.Details);
   return (
@@ -64,7 +64,7 @@ function Details ({film, setActiveTab}: tabProps) {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value">{starring}</span>
+          <span className="film-card__details-value" style={{whiteSpace: 'pre-line'}}>{starring}</span>
         </p>
       </div>
 
