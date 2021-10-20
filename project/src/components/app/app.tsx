@@ -29,8 +29,7 @@ function App({ title, genre, release, films }: AppProps): JSX.Element {
           <SignIn />
         </Route>
         <Route
-          exact
-          path={AppRoute.Movie}
+          path={AppRoute.Film}
           render={(routeProps) => (
             <Film film={films[Number(routeProps.match?.params.id)]} />
           )}
