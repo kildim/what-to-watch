@@ -1,6 +1,5 @@
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Film} from '../../types/film';
-// import VideoPlayer from '../videoplayer/videoplayer';
 import {useEffect, useRef, useState} from 'react';
 
 type SmallFilmcardProps = {
@@ -12,6 +11,7 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
   const filmPath = `/films/${film.id}`;
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const history = useHistory();
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleMouseEnter = () => {
@@ -20,6 +20,10 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
 
   const handleMouseLeave = () => {
     setIsPlaying(false);
+  };
+
+  const handleClick = () => {
+    history.push(filmPath);
   };
 
   const stopPlay = (video: HTMLVideoElement | null): void => {
@@ -46,6 +50,7 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     <article className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <div className="small-film-card__image">
         <video

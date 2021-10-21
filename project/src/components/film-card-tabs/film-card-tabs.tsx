@@ -14,18 +14,15 @@ type tabProps = {
 }
 
 enum Tabs {
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  Overview,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  Details,
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  Reviews
+  OverviewTab,
+  DetailsTab,
+  ReviewsTab
 }
 
 function Overview ({film, setActiveTab}: tabProps) {
   const starring = `${film.starring.join(', ')}.`;
 
-  setActiveTab(Tabs.Overview);
+  setActiveTab(Tabs.OverviewTab);
   return (
     <>
       <div className="film-rating">
@@ -54,7 +51,7 @@ function Overview ({film, setActiveTab}: tabProps) {
 function Details ({film, setActiveTab}: tabProps) {
   const starring = film.starring.join(',\n');
 
-  setActiveTab(Tabs.Details);
+  setActiveTab(Tabs.DetailsTab);
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
@@ -88,7 +85,7 @@ function Details ({film, setActiveTab}: tabProps) {
 
 function Reviews ({film, setActiveTab}: tabProps) {
 
-  setActiveTab(Tabs.Reviews);
+  setActiveTab(Tabs.ReviewsTab);
   return (
 
     <div className="film-card__reviews film-card__row">
@@ -192,20 +189,20 @@ function Reviews ({film, setActiveTab}: tabProps) {
 }
 
 function FilmCardTabs ({film}: FilmCardTabsProps): JSX.Element {
-  const [activeTab, setActiveTab] = useState(Tabs.Overview);
+  const [activeTab, setActiveTab] = useState(Tabs.OverviewTab);
   const {url} = useRouteMatch();
 
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li className={`film-nav__item ${  activeTab === Tabs.Overview ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${  activeTab === Tabs.OverviewTab ? 'film-nav__item--active' : ''}`}>
             <Link to={`${url}/overview`} className="film-nav__link" >Overview</Link>
           </li>
-          <li className={`film-nav__item ${  activeTab === Tabs.Details ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${  activeTab === Tabs.DetailsTab ? 'film-nav__item--active' : ''}`}>
             <Link to={`${url}/details`} className="film-nav__link" >Details</Link>
           </li>
-          <li className={`film-nav__item ${  activeTab === Tabs.Reviews ? 'film-nav__item--active' : ''}`}>
+          <li className={`film-nav__item ${  activeTab === Tabs.ReviewsTab ? 'film-nav__item--active' : ''}`}>
             <Link to={`${url}/reviews`} className="film-nav__link" >Reviews</Link>
           </li>
         </ul>
