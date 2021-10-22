@@ -1,8 +1,8 @@
-import ReviewForm from '../reviewForm/reviewForm';
-import {Film} from '../../types/film';
+import ReviewForm from '../review-form/review-form';
+import {FilmType} from '../../types/types';
 
 type ReviewProps = {
-  film: Film
+  film: FilmType
 }
 
 function Review({film}: ReviewProps):JSX.Element {

@@ -1,4 +1,4 @@
-import {Film} from '../types/film';
+import {FilmType} from '../types/types';
 
 const MOCKS_COUNT = 10;
 
@@ -10,7 +10,7 @@ function* idMaker(): Generator<number> {
 
 const filmId: Generator<number> = idMaker();
 
-export const films: Film[] = Array(MOCKS_COUNT).fill('').map(() =>
+export const films: FilmType[] = Array(MOCKS_COUNT).fill('').map(() =>
 {
   const newID = filmId.next().value;
   return (
