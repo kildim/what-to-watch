@@ -1,12 +1,12 @@
 import Footer from '../footer/footer';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import { Film } from '../../types/film';
+import { FilmType } from '../../types/types';
 
 type MainProps = {
   title: string;
   genre: string;
   release: string;
-  films: Film[];
+  films: FilmType[];
 };
 
 function Main({ title, genre, release, films }: MainProps): JSX.Element {

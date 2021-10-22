@@ -1,7 +1,7 @@
-import {Film} from '../../types/film';
+import {FilmType} from '../../types/types';
 
 type OverviewTabProps = {
-  film: Film
+  film: FilmType
 }
 
 function OverviewTab ({film}: OverviewTabProps) {

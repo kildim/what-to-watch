@@ -1,9 +1,9 @@
 import {Link, useHistory} from 'react-router-dom';
-import {Film} from '../../types/film';
+import {FilmType} from '../../types/types';
 import {useEffect, useRef, useState} from 'react';
 
 type SmallFilmcardProps = {
-  film: Film,
+  film: FilmType,
 }
 
 

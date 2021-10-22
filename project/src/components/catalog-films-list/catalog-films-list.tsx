@@ -1,19 +1,18 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-import { Film } from '../../types/film';
+import { FilmType } from '../../types/types';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 type CatalogFilmsListProps = {
-  films: Film[]
+  films: FilmType[]
 }
 
 function CatalogFilmsList({ films }: CatalogFilmsListProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <div className="catalog__films-list">
-      {films.map((film: Film) => (
+      {films.map((film: FilmType) => (
         <SmallFilmCard key={film.id} film={film} />
       ))}
     </div>

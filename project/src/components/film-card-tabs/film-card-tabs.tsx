@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Film } from '../../types/film';
+import { FilmType } from '../../types/types';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
@@ -7,7 +7,7 @@ import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
 
 type FilmCardTabsProps = {
-  film: Film;
+  film: FilmType;
 };
 
 function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
@@ -17,17 +17,17 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
-          <li className={'film-nav__item}'}>
+          <li className={'film-nav__item'}>
             <Link to={`${url}/overview`} className="film-nav__link">
               Overview
             </Link>
           </li>
-          <li className={'film-nav__item}'}>
+          <li className={'film-nav__item'}>
             <Link to={`${url}/details`} className="film-nav__link">
               Details
             </Link>
           </li>
-          <li className={'film-nav__item}'}>
+          <li className={'film-nav__item'}>
             <Link to={`${url}/reviews`} className="film-nav__link">
               Reviews
             </Link>

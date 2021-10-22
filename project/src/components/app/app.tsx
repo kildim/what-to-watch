@@ -9,7 +9,7 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import { Film as FilmType } from '../../types/film';
+import { FilmType as FilmType } from '../../types/types';
 
 type AppProps = {
   title: string;

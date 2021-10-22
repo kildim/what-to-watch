@@ -1,4 +1,4 @@
-export type Film = {
+export type FilmType = {
   id: number,
   name: string,
   posterImage: string,
@@ -17,3 +17,5 @@ export type Film = {
   released: number,
   isFavorite: boolean,
 }
+
+export type GenreType = string;

@@ -1,21 +1,22 @@
 import {Link} from 'react-router-dom';
 
 import Footer from '../footer/footer';
-import {Film as FilmType}  from '../../types/film';
+import {FilmType as FilmType}  from '../../types/types';
 import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {filterFilmsByGenre} from '../../utills/utils';
+import {films} from '../../mocks/films';
 
 type FilmProps = {
   film: FilmType
 };
 
 const similarNumber = 4;
-const getSimilarList = (film: FilmType) => Array(similarNumber).fill('').map(() => film);
 
 function Film({film}: FilmProps): JSX.Element {
   const reviewRoute = `/films/${film.id}/review`;
-  const similarFilms = getSimilarList(film);
+  const similarFilms = filterFilmsByGenre(films, film.genre).slice(0, similarNumber);
 
   return (
     <>

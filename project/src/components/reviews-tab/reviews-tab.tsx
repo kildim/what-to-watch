@@ -1,7 +1,7 @@
-import { Film } from '../../types/film';
+import { FilmType } from '../../types/types';
 
 type ReviewsTabProp = {
-  film: Film;
+  film: FilmType;
 };
 
 function ReviewsTab({ film }: ReviewsTabProp): JSX.Element {
