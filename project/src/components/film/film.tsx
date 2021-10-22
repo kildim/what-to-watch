@@ -1,7 +1,7 @@
-import {Link} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 import Footer from '../footer/footer';
-import {FilmType as FilmType}  from '../../types/types';
+import {FilmType}  from '../../types/types';
 import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
@@ -15,11 +15,8 @@ type FilmProps = {
 const similarNumber = 4;
 
 function Film({film}: FilmProps): JSX.Element {
-  const reviewRoute = `/films/${film.id}/review`;
+  const url = useRouteMatch();
   const similarFilms = filterFilmsByGenre(films, film.genre).slice(0, similarNumber);
-
-  window.scrollTo(0, 0);
-  // Наверное это костыль - но так я прокручиваю страничку в начало после перехода при клике на карточку фильма
 
   return (
     <>
@@ -73,7 +70,7 @@ function Film({film}: FilmProps): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={reviewRoute} className="btn film-card__button">Add review</Link>
+                <Link to={`${url}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
