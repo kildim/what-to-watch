@@ -18,6 +18,9 @@ function Film({film}: FilmProps): JSX.Element {
   const reviewRoute = `/films/${film.id}/review`;
   const similarFilms = filterFilmsByGenre(films, film.genre).slice(0, similarNumber);
 
+  window.scrollTo(0, 0);
+  // Наверное это костыль - но так я прокручиваю страничку в начало после перехода при клике на карточку фильма
+
   return (
     <>
       <section className="film-card film-card--full">
