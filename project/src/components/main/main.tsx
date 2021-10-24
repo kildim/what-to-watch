@@ -1,15 +1,27 @@
 import Footer from '../footer/footer';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import { connect, ConnectedProps } from 'react-redux';
+import { StateType } from '../../types/state';
 import { FilmType } from '../../types/types';
 
-type MainProps = {
-  title: string;
-  genre: string;
-  release: string;
-  films: FilmType[];
-};
+const mapStateToProps = ({ genre, films }: StateType) => ({
+  genre,
+  films,
+});
 
-function Main({ title, genre, release, films }: MainProps): JSX.Element {
+const connector = connect(mapStateToProps, null);
+
+type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+
+function Main(props: PropsFromRedux): JSX.Element {
+  const { genre, films } = props;
+
+  // eslint-disable-next-line no-console
+  console.log(props);
+
+  //TODO добавить получение данных для промо с сервера
+  const promo: FilmType = films[0];
+
   return (
     <>
       <section className="film-card">
@@ -60,12 +72,12 @@ function Main({ title, genre, release, films }: MainProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               {/*<h2 className="film-card__title">The Grand Budapest Hotel</h2>*/}
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
                 {/*<span className="film-card__genre">Drama</span>*/}
-                <span className="film-card__year">{release}</span>
+                <span className="film-card__year">{promo.released}</span>
                 {/*<span className="film-card__year">2014</span>*/}
               </p>
 
@@ -165,4 +177,5 @@ function Main({ title, genre, release, films }: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export  {Main};
+export default connector(Main);

@@ -1,22 +1,38 @@
-import {Link, useRouteMatch} from 'react-router-dom';
+import {Link, useParams, useRouteMatch} from 'react-router-dom';
 
 import Footer from '../footer/footer';
-import {FilmType}  from '../../types/types';
 import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import {filterFilmsByGenre} from '../../utills/utils';
-import {films} from '../../mocks/films';
-
-type FilmProps = {
-  film: FilmType
-};
+import {connect, ConnectedProps} from 'react-redux';
+import {StateType} from '../../types/state';
+import {FilmType} from '../../types/types';
 
 const similarNumber = 4;
 
-function Film({film}: FilmProps): JSX.Element {
+const mapStateToProps = ({ genre, films }: StateType) => ({
+  genre,
+  films,
+});
+
+const connector = connect(mapStateToProps, null);
+
+type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+
+function Film(props: PropsFromRedux): JSX.Element {
+
+  const { genre, films } = props;
   const url = useRouteMatch();
-  const similarFilms = filterFilmsByGenre(films, film.genre).slice(0, similarNumber);
+
+  const {id} = useParams<{id?: string}>();
+  if (id === undefined) {
+    throw new Error('Unknown film');
+  }
+
+  const film: FilmType = films[Number(id)];
+
+  const similarFilms = filterFilmsByGenre(films, genre).slice(0, similarNumber);
 
   return (
     <>
@@ -99,4 +115,5 @@ function Film({film}: FilmProps): JSX.Element {
   );
 }
 
-export default Film;
+export {Film};
+export default connector(Film);

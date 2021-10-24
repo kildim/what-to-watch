@@ -4,6 +4,7 @@ type ReviewsTabProp = {
   film: FilmType;
 };
 
+
 function ReviewsTab({ film }: ReviewsTabProp): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">

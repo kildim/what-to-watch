@@ -1,11 +1,9 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import { FilmType } from '../../types/types';
+import {films} from '../../mocks/films';
 
-type MyListProps = {
-  films: FilmType[];
-};
+function MyList(): JSX.Element {
 
-function MyList({ films }: MyListProps): JSX.Element {
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -58,4 +56,4 @@ function MyList({ films }: MyListProps): JSX.Element {
   );
 }
 
-export default MyList;
+export default MyList ;

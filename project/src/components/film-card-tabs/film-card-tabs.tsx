@@ -5,7 +5,7 @@ import {AppRoute} from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import classNames from 'classnames';
 
 type FilmCardTabsProps = {
@@ -36,13 +36,15 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
   const handleDetailsNavLinkClick = () => setActiveTab(Tab.Details);
   const handleReviewsNavLinkClick = () => setActiveTab(Tab.Reviews);
 
+  useEffect(() => setActiveTab(Tab.Overview), [film.id]);
+
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
           <li className={overviewNavLinkClass}>
             <Link
-              to={`${url}`}
+              to={url}
               className="film-nav__link"
               onClick={handleOverviewNavLinkClick}
             >

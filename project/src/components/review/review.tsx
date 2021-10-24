@@ -1,11 +1,27 @@
 import ReviewForm from '../review-form/review-form';
 import {FilmType} from '../../types/types';
+import {StateType} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
+import {useParams} from 'react-router-dom';
 
-type ReviewProps = {
-  film: FilmType
-}
+const mapStateToProps = ({ genre, films }: StateType) => ({
+  genre,
+  films,
+});
 
-function Review({film}: ReviewProps):JSX.Element {
+const connector = connect(mapStateToProps, null);
+
+type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+
+function Review(props: PropsFromRedux):JSX.Element {
+  const { films } = props;
+
+  const {id} = useParams<{id?: string}>();
+  if (id === undefined) {
+    throw new Error('Unknown film');
+  }
+
+  const film: FilmType = films[Number(id)];
 
   return (
     <section className="film-card film-card--full">

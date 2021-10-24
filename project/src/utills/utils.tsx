@@ -6,6 +6,6 @@ const joinArrayByComma = (ingoingArray: string[]): string =>
 const filterFilmsByGenre = (
   ingoingArray: FilmType[],
   genre: GenreType,
-): FilmType[] => ingoingArray.filter((film: FilmType) => film.genre === genre);
+): FilmType[] => ingoingArray.filter((film: FilmType) => genre==='all' ? true : film.genre === genre);
 
 export { joinArrayByComma, filterFilmsByGenre };
