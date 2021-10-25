@@ -18,4 +18,3 @@ export type FilmType = {
   isFavorite: boolean,
 }
 
-export type GenreType = string;

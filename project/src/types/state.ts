@@ -1,6 +1,12 @@
-import {FilmType, GenreType} from './types';
+import {FilmType} from './types';
+
+export type GenreType = {
+  dataLabel: string,
+  genre: string
+}
 
 export type StateType = {
-  genre: GenreType,
+  genre: string,
   films: FilmType [],
+  genres: GenreType[],
 }

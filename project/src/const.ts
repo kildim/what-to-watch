@@ -39,3 +39,8 @@ export const UNEXISTENT_FILM = {
   released: 0,
   isFavorite: false,
 };
+
+export enum Constant {
+  AllGenresItem = 'All genres',
+  GenresNumber = 9,
+}

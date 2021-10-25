@@ -3,6 +3,7 @@ import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import { connect, ConnectedProps } from 'react-redux';
 import { StateType } from '../../types/state';
 import { FilmType } from '../../types/types';
+import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 
 const mapStateToProps = ({ genre, films }: StateType) => ({
   genre,
@@ -15,9 +16,6 @@ type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
 
 function Main(props: PropsFromRedux): JSX.Element {
   const { genre, films } = props;
-
-  // eslint-disable-next-line no-console
-  console.log(props);
 
   //TODO добавить получение данных для промо с сервера
   const promo: FilmType = films[0];
@@ -109,59 +107,7 @@ function Main(props: PropsFromRedux): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">
-                All genres
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Comedies
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Crime
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Documentary
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Dramas
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Horror
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Kids & Family
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Romance
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Sci-Fi
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Thrillers
-              </a>
-            </li>
-          </ul>
-
+          <CatalogGenresList />
           <CatalogFilmsList films={films} />
 
           <div className="catalog__more">
@@ -177,5 +123,5 @@ function Main(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export  {Main};
+export { Main };
 export default connector(Main);

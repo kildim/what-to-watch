@@ -17,8 +17,17 @@ const getRandomInteger = (a = 0, b = 1) => {
 
 const genres = [
   'Comedy',
-  'Thriller',
+  'Thrillers',
   'Documentary',
+  'Crime',
+  'Dramas',
+  'Horror',
+  'Kids & Family',
+  'Romance',
+  'Sci-Fi',
+  'Action',
+  'Fantasy',
+  'Mystery',
 ];
 
 const genGenre = () => genres[getRandomInteger(0,2)];

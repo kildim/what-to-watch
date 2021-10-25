@@ -1,11 +1,28 @@
-import { FilmType, GenreType } from '../types/types';
+import { FilmType } from '../types/types';
+import {Constant} from '../const';
+import {GenreType} from '../types/state';
 
 const joinArrayByComma = (ingoingArray: string[]): string =>
   ingoingArray.join(',\n');
 
 const filterFilmsByGenre = (
   ingoingArray: FilmType[],
-  genre: GenreType,
-): FilmType[] => ingoingArray.filter((film: FilmType) => genre==='all' ? true : film.genre === genre);
+  genre: string,
+): FilmType[] => ingoingArray.filter((film: FilmType) => genre === 'all' ? true : film.genre === genre);
 
-export { joinArrayByComma, filterFilmsByGenre };
+const getGenres = (films: FilmType[]): GenreType [] => {
+  const genres = films.map((film) => film.genre).slice(0,Constant.GenresNumber);
+  genres.unshift(Constant.AllGenresItem);
+  // [...new Set(genres)].forEach((genre) => result.set(toKebabCase(genre), genre));
+  return [...new Set(genres)].map((genre: string) => ({dataLabel: toKebabCase(genre), genre: genre}));
+};
+
+const toKebabCase = (str: string):string  => {
+  const someVariable =  str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g);
+  if (someVariable === null) {
+    return '';
+  }
+  return someVariable.map((x) => x.toLowerCase()).join('-');
+};
+
+export { joinArrayByComma, filterFilmsByGenre, getGenres, toKebabCase };

@@ -1,18 +1,17 @@
-import {GenreType} from '../types/types';
 
 export enum Action {
   SetGenre = 'film/setGenre',
   GetGenreFilms = 'film/getGenreFilms',
 }
 
-export const setGenre = (genre: GenreType) => ({
+export const setGenre = (genre: string) => ({
   type: Action.SetGenre,
   payload: {
     genre,
   },
 } as const);
 
-export const getGenreFilms = (genre: GenreType) => ({
+export const getGenreFilms = (genre: string) => ({
   type: Action.GetGenreFilms,
   payload: {
     genre,
