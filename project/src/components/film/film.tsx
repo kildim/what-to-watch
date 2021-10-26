@@ -8,6 +8,7 @@ import {filterFilmsByGenre} from '../../utills/utils';
 import {connect, ConnectedProps} from 'react-redux';
 import {StateType} from '../../types/state';
 import {FilmType} from '../../types/types';
+import {useState} from 'react';
 
 const similarNumber = 4;
 
@@ -22,7 +23,7 @@ type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
 
 function Film(props: PropsFromRedux): JSX.Element {
 
-  const { genre, films } = props;
+  const { films } = props;
   const url = useRouteMatch();
 
   const {id} = useParams<{id?: string}>();
@@ -31,8 +32,9 @@ function Film(props: PropsFromRedux): JSX.Element {
   }
 
   const film: FilmType = films[Number(id)];
+  const [filmGenre] = useState(film.genre);
 
-  const similarFilms = filterFilmsByGenre(films, genre).slice(0, similarNumber);
+  const similarFilms = filterFilmsByGenre(films, filmGenre).slice(0, similarNumber);
 
   return (
     <>

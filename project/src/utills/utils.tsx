@@ -8,12 +8,11 @@ const joinArrayByComma = (ingoingArray: string[]): string =>
 const filterFilmsByGenre = (
   ingoingArray: FilmType[],
   genre: string,
-): FilmType[] => ingoingArray.filter((film: FilmType) => genre === 'all' ? true : film.genre === genre);
+): FilmType[] => ingoingArray.filter((film: FilmType) => genre === Constant.AllGenresItem ? true : film.genre === genre);
 
 const getGenres = (films: FilmType[]): GenreType [] => {
   const genres = films.map((film) => film.genre).slice(0,Constant.GenresNumber);
   genres.unshift(Constant.AllGenresItem);
-  // [...new Set(genres)].forEach((genre) => result.set(toKebabCase(genre), genre));
   return [...new Set(genres)].map((genre: string) => ({dataLabel: toKebabCase(genre), genre: genre}));
 };
 

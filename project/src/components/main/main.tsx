@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { StateType } from '../../types/state';
 import { FilmType } from '../../types/types';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
+import {filterFilmsByGenre} from '../../utills/utils';
 
 const mapStateToProps = ({ genre, films }: StateType) => ({
   genre,
@@ -19,6 +20,7 @@ function Main(props: PropsFromRedux): JSX.Element {
 
   //TODO добавить получение данных для промо с сервера
   const promo: FilmType = films[0];
+  const filmsByGenre = filterFilmsByGenre(films, genre);
 
   return (
     <>
@@ -108,7 +110,7 @@ function Main(props: PropsFromRedux): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <CatalogGenresList />
-          <CatalogFilmsList films={films} />
+          <CatalogFilmsList films={filmsByGenre} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">

@@ -4,8 +4,8 @@ import {StateType} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-const mapStateToProps = ({ genre, films }: StateType) => ({
-  genre,
+const mapStateToProps = ({ films }: StateType) => ({
+  // genre,
   films,
 });
 

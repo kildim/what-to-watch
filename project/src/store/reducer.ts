@@ -3,11 +3,10 @@ import {StateType} from '../types/state';
 import {ActionType} from '../types/action';
 import {Action} from './action';
 import {getGenres} from '../utills/utils';
+import {Constant} from '../const';
 
-const initialState: StateType = {
-  genre: 'all',
-
-  //TODO стэйт films грузить с сервера и генерировать genres на основе films используя getGenres()
+const initialState = {
+  genre: Constant.AllGenresItem as string,
   films: films,
   genres: getGenres(films),
 };

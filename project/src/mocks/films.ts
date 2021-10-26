@@ -1,6 +1,6 @@
 import {FilmType} from '../types/types';
 
-const MOCKS_COUNT = 20;
+const MOCKS_COUNT = 40;
 
 function* idMaker(): Generator<number> {
   let index = 0;
@@ -30,7 +30,7 @@ const genres = [
   'Mystery',
 ];
 
-const genGenre = () => genres[getRandomInteger(0,2)];
+const genGenre = () => genres[getRandomInteger(0,genres.length-1)];
 
 const filmId: Generator<number> = idMaker();
 
