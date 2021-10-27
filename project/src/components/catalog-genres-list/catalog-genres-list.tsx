@@ -30,7 +30,7 @@ function CatalogGenresList(props: PropsFromRedux): JSX.Element {
 
   const handleChangeGenre = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    const target = event.target as HTMLAnchorElement;
+    const target = event.currentTarget;
     const genreName = target.textContent;
     if (genreName) {
       onChangeGenre(genreName);
