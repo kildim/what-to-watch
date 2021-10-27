@@ -7,6 +7,7 @@ import PrivateRoute from '../private-route/private-route';
 import Film from '../film/film';
 import Review from '../review/review';
 import MyList from '../my-list/my-list';
+import Player from '../player/player';
 
 function App(): JSX.Element {
   return (
@@ -30,9 +31,9 @@ function App(): JSX.Element {
         <Route
           exact
           path={AppRoute.Player}
-          // render={(routeProps) => (
-          //   <Player film={films[Number(routeProps.match?.params.id)]} />
-          // )}
+          render={(routeProps) => (
+            <Player />
+          )}
         />
         <PrivateRoute
           exact
@@ -41,7 +42,7 @@ function App(): JSX.Element {
           authorizationStatus={AuthorizationStatus.NoAuth}
         />
         <Route>
-          <Page404 />
+          <Page404 message={()=>('HELLO!')}/>
         </Route>
       </Switch>
     </BrowserRouter>
