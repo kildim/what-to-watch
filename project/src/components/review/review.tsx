@@ -5,11 +5,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
 const mapStateToProps = ({ films }: StateType) => ({
-  // genre,
   films,
 });
 
-const connector = connect(mapStateToProps, null);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
 
@@ -17,9 +16,6 @@ function Review(props: PropsFromRedux):JSX.Element {
   const { films } = props;
 
   const {id} = useParams<{id?: string}>();
-  if (id === undefined) {
-    throw new Error('Unknown film');
-  }
 
   const film: FilmType = films[Number(id)];
 

@@ -3,10 +3,10 @@ import {StateType} from '../types/state';
 import {ActionType} from '../types/action';
 import {Action} from './action';
 import {getGenres} from '../utills/utils';
-import {Constant} from '../const';
+import {ALL_GENRES_ITEM} from '../const';
 
 const initialState = {
-  genre: Constant.AllGenresItem as string,
+  genre: ALL_GENRES_ITEM as string,
   films: films,
   genres: getGenres(films),
 };
@@ -14,7 +14,7 @@ const initialState = {
 const reducer = (state: StateType = initialState, action: ActionType): StateType => {
   switch (action.type) {
     case Action.SetGenre:
-      return {...state, genre: action.payload.genre};
+      return {...state, genre: action.payload};
     default:
       return state;
   }

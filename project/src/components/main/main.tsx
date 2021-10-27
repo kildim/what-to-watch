@@ -11,9 +11,9 @@ const mapStateToProps = ({ genre, films }: StateType) => ({
   films,
 });
 
-const connector = connect(mapStateToProps, null);
+const connector = connect(mapStateToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
   const { genre, films } = props;
@@ -73,12 +73,9 @@ function Main(props: PropsFromRedux): JSX.Element {
 
             <div className="film-card__desc">
               <h2 className="film-card__title">{promo.name}</h2>
-              {/*<h2 className="film-card__title">The Grand Budapest Hotel</h2>*/}
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                {/*<span className="film-card__genre">Drama</span>*/}
                 <span className="film-card__year">{promo.released}</span>
-                {/*<span className="film-card__year">2014</span>*/}
               </p>
 
               <div className="film-card__buttons">
