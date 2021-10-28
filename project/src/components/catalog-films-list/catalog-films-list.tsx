@@ -1,15 +1,15 @@
-import { FilmType } from '../../types/types';
+import {FilmType} from '../../types/types';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 type CatalogFilmsListProps = {
-  films: FilmType[];
-};
+  films: FilmType[]
+}
 
-function CatalogFilmsList({ films }: CatalogFilmsListProps): JSX.Element {
+function CatalogFilmsList({films}: CatalogFilmsListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {films.map((film: FilmType) => (
-        <SmallFilmCard key={film.id} film={film} />
+        <SmallFilmCard key={film.id} film={film}/>
       ))}
     </div>
   );
