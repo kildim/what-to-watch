@@ -1,29 +1,43 @@
-import {Link, useRouteMatch} from 'react-router-dom';
-
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
 import Footer from '../footer/footer';
-import {FilmType}  from '../../types/types';
-import {AppRoute} from '../../const';
+import { AppRoute } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {filterFilmsByGenre} from '../../utills/utils';
-import {films} from '../../mocks/films';
-
-type FilmProps = {
-  film: FilmType
-};
+import { filterFilmsByGenre } from '../../utills/utils';
+import { StateType } from '../../types/state';
+import { FilmType } from '../../types/types';
 
 const similarNumber = 4;
 
-function Film({film}: FilmProps): JSX.Element {
+const mapStateToProps = ({ genre, films }: StateType) => ({
+  genre,
+  films,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Film(props: PropsFromRedux): JSX.Element {
+  const { films } = props;
   const url = useRouteMatch();
-  const similarFilms = filterFilmsByGenre(films, film.genre).slice(0, similarNumber);
+
+  const { id } = useParams<{ id?: string }>();
+
+  const film: FilmType = films[Number(id)];
+
+  const similarFilms = filterFilmsByGenre(films, film.genre).slice(
+    0,
+    similarNumber,
+  );
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name}/>
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -40,7 +54,12 @@ function Film({film}: FilmProps): JSX.Element {
             <ul className="user-block">
               <li className="user-block__item">
                 <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
+                  <img
+                    src="img/avatar.jpg"
+                    alt="User avatar"
+                    width="63"
+                    height="63"
+                  />
                 </div>
               </li>
               <li className="user-block__item">
@@ -58,19 +77,27 @@ function Film({film}: FilmProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button
+                  className="btn btn--play film-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button
+                  className="btn btn--list film-card__button"
+                  type="button"
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${url}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={`${url}/review`} className="btn film-card__button">
+                  Add review
+                </Link>
               </div>
             </div>
           </div>
@@ -79,11 +106,14 @@ function Film({film}: FilmProps): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={film.name} width="218"
+              <img
+                src={film.posterImage}
+                alt={film.name}
+                width="218"
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film}/>
+            <FilmCardTabs film={film} />
           </div>
         </div>
       </section>
@@ -99,4 +129,5 @@ function Film({film}: FilmProps): JSX.Element {
   );
 }
 
-export default Film;
+export { Film };
+export default connector(Film);

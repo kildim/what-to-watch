@@ -1,15 +1,27 @@
 import Footer from '../footer/footer';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import { connect, ConnectedProps } from 'react-redux';
+import { StateType } from '../../types/state';
 import { FilmType } from '../../types/types';
+import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
+import {filterFilmsByGenre} from '../../utills/utils';
 
-type MainProps = {
-  title: string;
-  genre: string;
-  release: string;
-  films: FilmType[];
-};
+const mapStateToProps = ({ genre, films }: StateType) => ({
+  genre,
+  films,
+});
 
-function Main({ title, genre, release, films }: MainProps): JSX.Element {
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Main(props: PropsFromRedux): JSX.Element {
+  const { genre, films } = props;
+
+  //TODO добавить получение данных для промо с сервера
+  const promo: FilmType = films[0];
+  const filmsByGenre = filterFilmsByGenre(films, genre);
+
   return (
     <>
       <section className="film-card">
@@ -60,13 +72,10 @@ function Main({ title, genre, release, films }: MainProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
-              {/*<h2 className="film-card__title">The Grand Budapest Hotel</h2>*/}
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                {/*<span className="film-card__genre">Drama</span>*/}
-                <span className="film-card__year">{release}</span>
-                {/*<span className="film-card__year">2014</span>*/}
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -97,60 +106,8 @@ function Main({ title, genre, release, films }: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">
-                All genres
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Comedies
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Crime
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Documentary
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Dramas
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Horror
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Kids & Family
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Romance
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Sci-Fi
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Thrillers
-              </a>
-            </li>
-          </ul>
-
-          <CatalogFilmsList films={films} />
+          <CatalogGenresList />
+          <CatalogFilmsList films={filmsByGenre} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
@@ -165,4 +122,5 @@ function Main({ title, genre, release, films }: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export { Main };
+export default connector(Main);

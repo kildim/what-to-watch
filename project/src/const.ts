@@ -39,3 +39,7 @@ export const UNEXISTENT_FILM = {
   released: 0,
   isFavorite: false,
 };
+
+export const ALL_GENRES_ITEM = 'All genres';
+export const GENRES_NUMBER = 9;
+
