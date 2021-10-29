@@ -1,6 +1,6 @@
 import { FilmType } from '../types/types';
 
-const MOCKS_COUNT = 40;
+const MOCKS_COUNT = 100;
 
 function* idMaker(): Generator<number> {
   let index = 0;

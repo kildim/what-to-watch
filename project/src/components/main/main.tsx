@@ -1,12 +1,16 @@
 import Footer from '../footer/footer';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import { connect, ConnectedProps } from 'react-redux';
-import { StateType } from '../../types/state';
-import { FilmType } from '../../types/types';
+import {connect, ConnectedProps} from 'react-redux';
+import {StateType} from '../../types/state';
+import {FilmType} from '../../types/types';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import {filterFilmsByGenre} from '../../utills/utils';
+import ShowButton from '../show-button/show-button';
+import {useState, MouseEvent} from 'react';
 
-const mapStateToProps = ({ genre, films }: StateType) => ({
+const CHUNK_LENGTH = 8;
+
+const mapStateToProps = ({genre, films}: StateType) => ({
   genre,
   films,
 });
@@ -16,11 +20,21 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const { genre, films } = props;
+  const {genre, films} = props;
+
+  const filmsByGenre = filterFilmsByGenre(films, genre);
+
+  const sliceFilmList = (list: FilmType[]): FilmType[] => [...filmsByGenre.slice(0, list.length + CHUNK_LENGTH)];
+
+  const [filmsList, setFilmsList] = useState(filmsByGenre.slice(0, CHUNK_LENGTH));
+
+
+  const handleShowButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setFilmsList(sliceFilmList);
+  };
 
   //TODO добавить получение данных для промо с сервера
   const promo: FilmType = films[0];
-  const filmsByGenre = filterFilmsByGenre(films, genre);
 
   return (
     <>
@@ -105,22 +119,16 @@ function Main(props: PropsFromRedux): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <CatalogGenresList />
-          <CatalogFilmsList films={filmsByGenre} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          <CatalogGenresList/>
+          <CatalogFilmsList films={filmsList}/>
+          <ShowButton onClickHandler={handleShowButtonClick}/>
         </section>
 
-        <Footer />
+        <Footer/>
       </div>
     </>
   );
 }
 
-export { Main };
+export {Main};
 export default connector(Main);

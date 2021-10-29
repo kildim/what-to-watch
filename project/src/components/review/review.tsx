@@ -75,4 +75,6 @@ function Review(props: PropsFromRedux):JSX.Element {
   );
 }
 
-export default Review;
+export {Review};
+export default connector(Review);
+

@@ -120,7 +120,7 @@ function Film(props: PropsFromRedux): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CatalogFilmsList films={similarFilms} />
+          <CatalogFilmsList  films={similarFilms}/>
         </section>
 
         <Footer />
