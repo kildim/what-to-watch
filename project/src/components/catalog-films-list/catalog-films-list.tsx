@@ -2,13 +2,11 @@ import {FilmType} from '../../types/types';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 type CatalogFilmsListProps = {
-  films: FilmType[]
-};
+  films: FilmType[];
+}
 
-function CatalogFilmsList({films}: CatalogFilmsListProps): JSX.Element {
-
-  // eslint-disable-next-line no-console
-  console.log(films);
+function CatalogFilmsList(props: CatalogFilmsListProps): JSX.Element {
+  const {films} = props;
 
   return (
     <div className="catalog__films-list">

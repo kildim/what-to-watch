@@ -1,12 +1,15 @@
-import Footer from '../footer/footer';
-import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import {useEffect, useState} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
+
+import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
+import Footer from '../footer/footer';
+import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
+import ShowButton from '../show-button/show-button';
+
 import {StateType} from '../../types/state';
 import {FilmType} from '../../types/types';
-import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import {filterFilmsByGenre} from '../../utills/utils';
-import ShowButton from '../show-button/show-button';
-import {useState, MouseEvent} from 'react';
+
 
 const CHUNK_LENGTH = 8;
 
@@ -22,19 +25,25 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function Main(props: PropsFromRedux): JSX.Element {
   const {genre, films} = props;
 
-  const filmsByGenre = filterFilmsByGenre(films, genre);
+  const [listCount, setListCount] = useState(CHUNK_LENGTH);
 
-  const sliceFilmList = (list: FilmType[]): FilmType[] => [...filmsByGenre.slice(0, list.length + CHUNK_LENGTH)];
-
-  const [filmsList, setFilmsList] = useState(filmsByGenre.slice(0, CHUNK_LENGTH));
-
-
-  const handleShowButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setFilmsList(sliceFilmList);
-  };
+  useEffect(() => {
+    setListCount(CHUNK_LENGTH);
+  }, [genre]);
 
   //TODO добавить получение данных для промо с сервера
   const promo: FilmType = films[0];
+
+
+  const handleShowButtonClick = () => {
+    setListCount((count) => {
+      count += CHUNK_LENGTH;
+      return count;
+    });
+  };
+
+  const filmsList = filterFilmsByGenre(films, genre);
+  const isShowButtonVisible = () => filmsList.length > listCount;
 
   return (
     <>
@@ -120,10 +129,9 @@ function Main(props: PropsFromRedux): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <CatalogGenresList/>
-          <CatalogFilmsList films={filmsList}/>
-          <ShowButton onClickHandler={handleShowButtonClick}/>
+          <CatalogFilmsList films={filmsList.slice(0, listCount)}/>
+          <ShowButton onClickHandler={handleShowButtonClick} visibility={isShowButtonVisible()}/>
         </section>
-
         <Footer/>
       </div>
     </>

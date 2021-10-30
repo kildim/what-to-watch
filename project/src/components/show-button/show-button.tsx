@@ -1,13 +1,16 @@
 import {MouseEventHandler} from 'react';
+import classNames from 'classnames';
 
 type ShowButtonPropsType = {
-  onClickHandler: MouseEventHandler<HTMLButtonElement>
+  onClickHandler: MouseEventHandler<HTMLButtonElement>,
+  visibility: boolean
 }
 
-function ShowButton ({onClickHandler}: ShowButtonPropsType):JSX.Element {
+function ShowButton ({onClickHandler, visibility}: ShowButtonPropsType):JSX.Element {
+  const constructButtonClassName = (visible: boolean) => classNames('catalog__button', {'visually-hidden': !visible});
   return (
     <div className="catalog__more">
-      <button className="catalog__button" type="button" onClick={onClickHandler}>
+      <button className={constructButtonClassName(visibility)} type="button" onClick={onClickHandler}>
         Show more
       </button>
     </div>
