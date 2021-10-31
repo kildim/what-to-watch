@@ -1,8 +1,16 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {films} from '../../mocks/films';
+import {StateType} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
 
-function MyList(): JSX.Element {
+const mapStateToProps = ({films}: StateType) => ({
+  films,
+});
+const connector = connect(mapStateToProps);
 
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function MyList(props: PropsFromRedux): JSX.Element {
+  const {films} = props;
 
   return (
     <div className="user-page">
@@ -36,7 +44,7 @@ function MyList(): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <CatalogFilmsList films={films} />
+        <CatalogFilmsList films={films}/>
       </section>
 
       <footer className="page-footer">
@@ -56,4 +64,6 @@ function MyList(): JSX.Element {
   );
 }
 
-export default MyList ;
+export  {MyList};
+export default connector(MyList);
+

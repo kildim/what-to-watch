@@ -1,12 +1,19 @@
-import Footer from '../footer/footer';
+import {useEffect, useState, useMemo} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import { connect, ConnectedProps } from 'react-redux';
-import { StateType } from '../../types/state';
-import { FilmType } from '../../types/types';
+import Footer from '../footer/footer';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
+import ShowButton from '../show-button/show-button';
+
+import {StateType} from '../../types/state';
+import {FilmType} from '../../types/types';
 import {filterFilmsByGenre} from '../../utills/utils';
 
-const mapStateToProps = ({ genre, films }: StateType) => ({
+
+const CHUNK_LENGTH = 8;
+
+const mapStateToProps = ({genre, films}: StateType) => ({
   genre,
   films,
 });
@@ -16,11 +23,27 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const { genre, films } = props;
+  const {genre, films} = props;
+
+  const [listCount, setListCount] = useState(CHUNK_LENGTH);
+
+  useEffect(() => {
+    setListCount(CHUNK_LENGTH);
+  }, [genre]);
 
   //TODO добавить получение данных для промо с сервера
   const promo: FilmType = films[0];
-  const filmsByGenre = filterFilmsByGenre(films, genre);
+
+
+  const handleShowButtonClick = () => {
+    setListCount((count) => {
+      count += CHUNK_LENGTH;
+      return count;
+    });
+  };
+
+  const filmsList = filterFilmsByGenre(films, genre);
+  const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length]);
 
   return (
     <>
@@ -105,22 +128,15 @@ function Main(props: PropsFromRedux): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <CatalogGenresList />
-          <CatalogFilmsList films={filmsByGenre} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          <CatalogGenresList/>
+          <CatalogFilmsList films={filmsList.slice(0, listCount)}/>
+          <ShowButton onClickHandler={handleShowButtonClick} visibility={isShowButtonVisible}/>
         </section>
-
-        <Footer />
+        <Footer/>
       </div>
     </>
   );
 }
 
-export { Main };
+export {Main};
 export default connector(Main);

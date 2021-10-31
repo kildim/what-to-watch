@@ -10,7 +10,7 @@ const mapStateToProps = ({ films }: StateType) => ({
 
 const connector = connect(mapStateToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Review(props: PropsFromRedux):JSX.Element {
   const { films } = props;
@@ -75,4 +75,6 @@ function Review(props: PropsFromRedux):JSX.Element {
   );
 }
 
-export default Review;
+export {Review};
+export default connector(Review);
+

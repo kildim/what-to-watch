@@ -8,9 +8,9 @@ const mapStateToProps = ({ genre, films }: StateType) => ({
   films,
 });
 
-const connector = connect(mapStateToProps, null);
+const connector = connect(mapStateToProps);
 
-type PropsFromRedux = ConnectedProps<typeof connector> | Record<string, never>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Player(props: PropsFromRedux): JSX.Element {
   const { films } = props;
