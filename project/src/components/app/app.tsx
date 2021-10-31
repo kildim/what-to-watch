@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Main from '../main/main';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import SignIn from '../sign-in/sign-in';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
@@ -14,35 +14,35 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main />
+          <Main/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
-          <SignIn />
+          <SignIn/>
         </Route>
         <Route path={AppRoute.Film}>
-          <Film />
+          <Film/>
         </Route>
         <Route exact path={AppRoute.Review}>
-          <Review />
+          <Review/>
         </Route>
         <Route exact path={AppRoute.MyList}>
-          <MyList />
+          <MyList/>
         </Route>
         <Route
           exact
           path={AppRoute.Player}
           render={(routeProps) => (
-            <Player />
+            <Player/>
           )}
         />
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <SignIn />}
+          render={() => <SignIn/>}
           authorizationStatus={AuthorizationStatus.NoAuth}
         />
         <Route>
-          <Page404 message={()=>('HELLO!')}/>
+          <Page404 message={() => ('HELLO!')}/>
         </Route>
       </Switch>
     </BrowserRouter>

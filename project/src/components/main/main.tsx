@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
@@ -43,7 +43,7 @@ function Main(props: PropsFromRedux): JSX.Element {
   };
 
   const filmsList = filterFilmsByGenre(films, genre);
-  const isShowButtonVisible = () => filmsList.length > listCount;
+  const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length]);
 
   return (
     <>
@@ -130,7 +130,7 @@ function Main(props: PropsFromRedux): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <CatalogGenresList/>
           <CatalogFilmsList films={filmsList.slice(0, listCount)}/>
-          <ShowButton onClickHandler={handleShowButtonClick} visibility={isShowButtonVisible()}/>
+          <ShowButton onClickHandler={handleShowButtonClick} visibility={isShowButtonVisible}/>
         </section>
         <Footer/>
       </div>

@@ -7,10 +7,9 @@ type ShowButtonPropsType = {
 }
 
 function ShowButton ({onClickHandler, visibility}: ShowButtonPropsType):JSX.Element {
-  const constructButtonClassName = (visible: boolean) => classNames('catalog__button', {'visually-hidden': !visible});
   return (
     <div className="catalog__more">
-      <button className={constructButtonClassName(visibility)} type="button" onClick={onClickHandler}>
+      <button className={classNames('catalog__button', {'visually-hidden': !visibility})} type="button" onClick={onClickHandler}>
         Show more
       </button>
     </div>
