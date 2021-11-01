@@ -65,7 +65,7 @@ function App(props: PropsFromRedux): JSX.Element {
           authorizationStatus={AuthorizationStatus.NoAuth}
         />
         <Route>
-          <Page404 message={() => ('HELLO!')}/>
+          <Page404 />
         </Route>
       </Switch>
     </BrowserRouter>

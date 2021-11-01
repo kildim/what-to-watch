@@ -5,7 +5,7 @@ type DetailsTabProps = {
   film: FilmType,
 }
 
-function DetailsTab ({film}: DetailsTabProps) {
+function DetailsTab ({film}: DetailsTabProps): JSX.Element {
   const starring = joinArrayByComma(film.starring);
 
   return (
