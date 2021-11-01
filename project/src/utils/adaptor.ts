@@ -48,8 +48,11 @@ const parseFilms = (store: any) => (nextDispatch: Dispatch) => (action: ActionTy
 //Не понимаю какой тайпинг указать для `store`, any?
 
   if (action.type === Action.LoadFilms) {
-    action = {...action, payload: parseFilmsFromServer(action.payload as unknown as ServerFilmType[])};
+    const films = parseFilmsFromServer(action.payload.films as unknown as ServerFilmType[]);
     //Указать тайпинг `as unknown` это норм?
+
+    const payload = { ...action.payload, films: films};
+    action = {...action, payload: payload};
   }
 
   return nextDispatch(action);

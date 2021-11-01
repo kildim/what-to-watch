@@ -1,7 +1,6 @@
 import {StateType} from '../types/state';
 import {ActionType} from '../types/action';
 import {Action} from './action';
-// import {getGenres} from '../utils/utils';
 import {ALL_GENRES_ITEM, AuthorizationStatus} from '../const';
 
 const initialState = {
@@ -17,7 +16,7 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
     case Action.SetGenre:
       return {...state, genre: action.payload};
     case Action.LoadFilms:
-      return {...state, films: action.payload};
+      return {...state, films: action.payload.films, genres: action.payload.genres};
     case Action.RequireAuthorization:
       return {...state, authorizationStatus: action.payload, isDataLoaded: true};
     case Action.RequireLogout:

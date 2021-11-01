@@ -1,5 +1,6 @@
 import {FilmType} from '../types/types';
 import {AuthorizationStatus} from '../const';
+import {getGenres} from '../utils/utils';
 
 export enum Action {
   SetGenre = 'film/setGenre',
@@ -23,7 +24,10 @@ export const getGenreFilms = (genre: string) => ({
 
 export const loadFilms = (films: FilmType[]) => ({
   type: Action.LoadFilms,
-  payload: films,
+  payload: {
+    films: films,
+    genres: getGenres(films),
+  },
 } as const);
 
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
