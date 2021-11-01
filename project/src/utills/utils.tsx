@@ -1,6 +1,6 @@
 import { FilmType } from '../types/types';
 import { GenreType } from '../types/state';
-import { ALL_GENRES_ITEM, GENRES_NUMBER } from '../const';
+import {ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER} from '../const';
 
 const joinArrayByComma = (ingoingArray: string[]): string =>
   ingoingArray.join(',\n');
@@ -18,4 +18,9 @@ const getGenres = (films: FilmType[]): GenreType[] => {
   return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(0, GENRES_NUMBER+1);
 };
 
-export { joinArrayByComma, filterFilmsByGenre, getGenres };
+const stringToBoolean = (source: string) => (source === 'true');
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
+
+export { joinArrayByComma, filterFilmsByGenre, getGenres, stringToBoolean };

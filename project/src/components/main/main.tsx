@@ -7,7 +7,7 @@ import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import ShowButton from '../show-button/show-button';
 
 import {StateType} from '../../types/state';
-import {FilmType} from '../../types/types';
+// import {FilmType} from '../../types/types';
 import {filterFilmsByGenre} from '../../utills/utils';
 
 
@@ -32,7 +32,7 @@ function Main(props: PropsFromRedux): JSX.Element {
   }, [genre]);
 
   //TODO добавить получение данных для промо с сервера
-  const promo: FilmType = films[0];
+  // const promo: FilmType = films[0];
 
 
   const handleShowButtonClick = () => {
@@ -95,10 +95,10 @@ function Main(props: PropsFromRedux): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
+              {/*<h2 className="film-card__title">{promo.name}</h2>*/}
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{promo.released}</span>
+                {/*<span className="film-card__year">{promo.released}</span>*/}
               </p>
 
               <div className="film-card__buttons">
