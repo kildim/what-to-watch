@@ -1,6 +1,6 @@
 import {stringToBoolean} from './utils';
 import {Action} from '../store/action';
-// import {Dispatch, Store} from '@reduxjs/toolkit';
+import {Dispatch} from '@reduxjs/toolkit';
 import {ActionType} from '../types/action';
 import {FilmType} from '../types/types';
 
@@ -44,10 +44,12 @@ const parseFilmsFromServer = (films: ServerFilmType[]): FilmType[] => films.map(
   isFavorite: stringToBoolean(film['is_favorite']),
 }));
 
-const parseFilms = (store: any) => (nextDispatch: any) => (action: ActionType) => {
+const parseFilms = (store: any) => (nextDispatch: Dispatch) => (action: ActionType) => {
+//Не понимаю какой тайпинг указать для `store`, any?
 
   if (action.type === Action.LoadFilms) {
     action = {...action, payload: parseFilmsFromServer(action.payload as unknown as ServerFilmType[])};
+    //Указать тайпинг `as unknown` это норм?
   }
 
   return nextDispatch(action);
