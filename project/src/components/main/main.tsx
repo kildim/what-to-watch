@@ -7,7 +7,6 @@ import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import ShowButton from '../show-button/show-button';
 
 import {StateType} from '../../types/state';
-// import {FilmType} from '../../types/types';
 import {filterFilmsByGenre} from '../../utils/utils';
 
 
@@ -43,7 +42,7 @@ function Main(props: PropsFromRedux): JSX.Element {
   };
 
   const filmsList = filterFilmsByGenre(films, genre);
-  const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length]);
+  const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length, listCount]);
 
   return (
     <>
