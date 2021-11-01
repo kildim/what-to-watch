@@ -12,7 +12,7 @@ import Review from '../review/review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import {StateType} from '../../types/state';
-import {isCheckedAuth} from '../../utills/utils';
+import {isCheckedAuth} from '../../utils/utils';
 
 
 const mapStateToProps = ({authorizationStatus, isDataLoaded}: StateType) => ({

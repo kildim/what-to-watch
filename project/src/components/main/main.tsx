@@ -8,7 +8,7 @@ import ShowButton from '../show-button/show-button';
 
 import {StateType} from '../../types/state';
 // import {FilmType} from '../../types/types';
-import {filterFilmsByGenre} from '../../utills/utils';
+import {filterFilmsByGenre} from '../../utils/utils';
 
 
 const CHUNK_LENGTH = 8;

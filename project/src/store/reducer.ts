@@ -1,7 +1,7 @@
 import {StateType} from '../types/state';
 import {ActionType} from '../types/action';
 import {Action} from './action';
-// import {getGenres} from '../utills/utils';
+// import {getGenres} from '../utils/utils';
 import {ALL_GENRES_ITEM, AuthorizationStatus} from '../const';
 
 const initialState = {

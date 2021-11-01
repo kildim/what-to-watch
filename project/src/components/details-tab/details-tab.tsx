@@ -1,5 +1,5 @@
 import {FilmType} from '../../types/types';
-import {joinArrayByComma} from '../../utills/utils';
+import {joinArrayByComma} from '../../utils/utils';
 
 type DetailsTabProps = {
   film: FilmType,

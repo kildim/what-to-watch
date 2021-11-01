@@ -4,7 +4,7 @@ import Footer from '../footer/footer';
 import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {filterFilmsByGenre} from '../../utills/utils';
+import {filterFilmsByGenre} from '../../utils/utils';
 import {StateType} from '../../types/state';
 import {FilmType} from '../../types/types';
 

@@ -1,4 +1,8 @@
 import {stringToBoolean} from './utils';
+import {Action} from '../store/action';
+// import {Dispatch, Store} from '@reduxjs/toolkit';
+import {ActionType} from '../types/action';
+import {FilmType} from '../types/types';
 
 export type ServerFilmType = {
   id: string,
@@ -20,7 +24,7 @@ export type ServerFilmType = {
   'is_favorite': string,
 }
 
-export const parseFilmsFromServer = (films: ServerFilmType[]) => films.map((film: ServerFilmType) => ({
+const parseFilmsFromServer = (films: ServerFilmType[]): FilmType[] => films.map((film: ServerFilmType) => ({
   id: Number(film['id']),
   name: film['name'],
   posterImage: film['poster_image'],
@@ -39,3 +43,14 @@ export const parseFilmsFromServer = (films: ServerFilmType[]) => films.map((film
   released: film['released'],
   isFavorite: stringToBoolean(film['is_favorite']),
 }));
+
+const parseFilms = (store: any) => (nextDispatch: any) => (action: ActionType) => {
+
+  if (action.type === Action.LoadFilms) {
+    action = {...action, payload: parseFilmsFromServer(action.payload as unknown as ServerFilmType[])};
+  }
+
+  return nextDispatch(action);
+};
+
+export {parseFilms, parseFilmsFromServer};
