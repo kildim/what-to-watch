@@ -48,9 +48,9 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}
+             onClick={handleClick}
     >
       <div className="small-film-card__image">
         <video

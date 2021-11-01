@@ -21,7 +21,7 @@ export const checkAuthAction = (): ThunkActionResult =>
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+    const {data: {token}} = await api.post<{ token: Token }>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };

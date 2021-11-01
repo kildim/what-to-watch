@@ -1,7 +1,7 @@
 import {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 
-function Page404(props: any):JSX.Element {
+function Page404(props: any): JSX.Element {
   const {message} = props;
   return (
     <Fragment>

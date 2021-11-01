@@ -1,16 +1,16 @@
-import { Link, useParams, useRouteMatch } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import {Link, useParams, useRouteMatch} from 'react-router-dom';
+import {connect, ConnectedProps} from 'react-redux';
 import Footer from '../footer/footer';
-import { AppRoute } from '../../const';
+import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import { filterFilmsByGenre } from '../../utills/utils';
-import { StateType } from '../../types/state';
-import { FilmType } from '../../types/types';
+import {filterFilmsByGenre} from '../../utills/utils';
+import {StateType} from '../../types/state';
+import {FilmType} from '../../types/types';
 
 const similarNumber = 4;
 
-const mapStateToProps = ({ genre, films }: StateType) => ({
+const mapStateToProps = ({genre, films}: StateType) => ({
   genre,
   films,
 });
@@ -20,10 +20,10 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Film(props: PropsFromRedux): JSX.Element {
-  const { films } = props;
+  const {films} = props;
   const url = useRouteMatch();
 
-  const { id } = useParams<{ id?: string }>();
+  const {id} = useParams<{ id?: string }>();
 
   const film: FilmType = films[Number(id)];
 
@@ -37,7 +37,7 @@ function Film(props: PropsFromRedux): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name} />
+            <img src={film.backgroundImage} alt={film.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -113,20 +113,20 @@ function Film(props: PropsFromRedux): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film} />
+            <FilmCardTabs film={film}/>
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CatalogFilmsList films={similarFilms} />
+          <CatalogFilmsList films={similarFilms}/>
         </section>
-        <Footer />
+        <Footer/>
       </div>
     </>
   );
 }
 
-export { Film };
+export {Film};
 export default connector(Film);

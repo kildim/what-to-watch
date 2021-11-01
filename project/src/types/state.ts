@@ -1,4 +1,4 @@
-import { FilmType } from './types';
+import {FilmType} from './types';
 import {AuthorizationStatus} from '../const';
 
 export type GenreType = string;
