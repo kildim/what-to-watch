@@ -6,6 +6,7 @@ export enum Action {
   SetGenre = 'film/setGenre',
   GetGenre = 'film/getGenreFilms',
   LoadFilms = 'data/loadFilms',
+  LoadPromo = 'data/loadPromo',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
 }
@@ -27,6 +28,13 @@ export const loadFilms = (films: FilmType[]) => ({
   payload: {
     films: films,
     genres: getGenres(films),
+  },
+} as const);
+
+export const loadPromo = (promo: FilmType) => ({
+  type: Action.LoadPromo,
+  payload: {
+    promo: promo,
   },
 } as const);
 

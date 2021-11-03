@@ -16,6 +16,7 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
+  Promo = '/promo'
 }
 
 export enum AuthorizationStatus {
@@ -23,6 +24,26 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const EMPTY_FILM = {
+  id: -1,
+  name: 'UNKNOWN',
+  posterImage: 'UNKNOWN',
+  previewImage: 'UNKNOWN',
+  backgroundImage: 'UNKNOWN',
+  backgroundColor: 'UNKNOWN',
+  videoLink: 'UNKNOWN',
+  previewVideoLink: 'UNKNOWN',
+  description: 'UNKNOWN',
+  rating: -1,
+  scoresCount: 0,
+  director: 'UNKNOWN',
+  starring: ['UNKNOWN'],
+  runTime: 0,
+  genre: 'UNKNOWN',
+  released: 0,
+  isFavorite: false,
+};
 
 export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;

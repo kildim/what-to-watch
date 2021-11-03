@@ -24,7 +24,7 @@ export type ServerFilmType = {
   'is_favorite': string,
 }
 
-const parseFilmsFromServer = (films: ServerFilmType[]): FilmType[] => films.map((film: ServerFilmType) => ({
+const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   id: Number(film['id']),
   name: film['name'],
   posterImage: film['poster_image'],
@@ -42,15 +42,11 @@ const parseFilmsFromServer = (films: ServerFilmType[]): FilmType[] => films.map(
   genre: film['genre'],
   released: film['released'],
   isFavorite: stringToBoolean(film['is_favorite']),
-}));
+});
 
 const parseFilms = (store: any) => (nextDispatch: Dispatch) => (action: ActionType) => {
-//Не понимаю какой тайпинг указать для `store`, any?
-
   if (action.type === Action.LoadFilms) {
-    const films = parseFilmsFromServer(action.payload.films as unknown as ServerFilmType[]);
-    //Указать тайпинг `as unknown` это норм?
-
+    const films = action.payload.films.map((film) => parseFilmFromServerFormat(film as unknown as ServerFilmType));
     const payload = { ...action.payload, films: films};
     action = {...action, payload: payload};
   }
@@ -58,4 +54,14 @@ const parseFilms = (store: any) => (nextDispatch: Dispatch) => (action: ActionTy
   return nextDispatch(action);
 };
 
-export {parseFilms, parseFilmsFromServer};
+const parsePromo = (store: any) => (nextDispatch: Dispatch) => (action: ActionType) => {
+  if (action.type === Action.LoadPromo) {
+    const promo = parseFilmFromServerFormat(action.payload.promo  as unknown as ServerFilmType);
+    const payload = { ...action.payload, promo: promo};
+    action = {...action, payload: payload};
+  }
+
+  return nextDispatch(action);
+};
+
+export {parseFilms, parsePromo};

@@ -9,4 +9,5 @@ export type StateType = {
   genres: GenreType[];
   authorizationStatus: AuthorizationStatus,
   isDataLoaded: boolean,
+  promo: FilmType,
 };

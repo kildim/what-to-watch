@@ -12,9 +12,10 @@ import {filterFilmsByGenre} from '../../utils/utils';
 
 const CHUNK_LENGTH = 8;
 
-const mapStateToProps = ({genre, films}: StateType) => ({
+const mapStateToProps = ({genre, films, promo}: StateType) => ({
   genre,
   films,
+  promo,
 });
 
 const connector = connect(mapStateToProps);
@@ -22,17 +23,13 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const {genre, films} = props;
+  const {genre, films, promo} = props;
 
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);
   }, [genre]);
-
-  //TODO добавить получение данных для промо с сервера
-  // const promo: FilmType = films[0];
-
 
   const handleShowButtonClick = () => {
     setListCount((count) => {
@@ -49,7 +46,7 @@ function Main(props: PropsFromRedux): JSX.Element {
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
+            src={promo.backgroundImage}
             alt="The Grand Budapest Hotel"
           />
         </div>
@@ -86,18 +83,18 @@ function Main(props: PropsFromRedux): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={promo.posterImage}
+                alt="Film poster"
                 width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              {/*<h2 className="film-card__title">{promo.name}</h2>*/}
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                {/*<span className="film-card__year">{promo.released}</span>*/}
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">

@@ -8,7 +8,7 @@ import {filterFilmsByGenre} from '../../utils/utils';
 import {StateType} from '../../types/state';
 import {FilmType} from '../../types/types';
 
-const similarNumber = 4;
+const SIMILAR_NUMBER = 4;
 
 const mapStateToProps = ({genre, films}: StateType) => ({
   genre,
@@ -29,12 +29,16 @@ function Film(props: PropsFromRedux): JSX.Element {
 
   const similarFilms = filterFilmsByGenre(films, film.genre).slice(
     0,
-    similarNumber,
+    SIMILAR_NUMBER,
   );
+
+  const FILM_CARD_INLINE_STYLE = {
+    backgroundColor: film.backgroundColor,
+  };
 
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={FILM_CARD_INLINE_STYLE}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name}/>

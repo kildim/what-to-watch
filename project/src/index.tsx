@@ -11,21 +11,23 @@ import {createAPI} from './services/api';
 import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './const';
 import {ThunkAppDispatch} from './types/action';
-import {checkAuthAction, fetchFilmsAction} from './store/api-actions';
-import {parseFilms} from './utils/adaptor';
+import {checkAuthAction, fetchFilmsAction, fetchPromoAction} from './store/api-actions';
+import {parseFilms, parsePromo} from './utils/adaptor';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(parseFilms)));
+
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(parseFilms), applyMiddleware(parsePromo)));
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
+(store.dispatch as ThunkAppDispatch)(fetchPromoAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
