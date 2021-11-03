@@ -12,13 +12,12 @@ import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './const';
 import {ThunkAppDispatch} from './types/action';
 import {checkAuthAction, fetchFilmsAction, fetchPromoAction} from './store/api-actions';
-import {parseFilms, parsePromo} from './utils/adaptor';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)), applyMiddleware(parseFilms), applyMiddleware(parsePromo)));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());

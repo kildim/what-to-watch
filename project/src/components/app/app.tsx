@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
 import Main from '../main/main';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import SignIn from '../sign-in/sign-in';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
@@ -62,7 +62,6 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.Favorites}
           render={() => <SignIn/>}
-          authorizationStatus={AuthorizationStatus.NoAuth}
         />
         <Route>
           <Page404 />

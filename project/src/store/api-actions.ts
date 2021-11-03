@@ -3,17 +3,21 @@ import {APIRoute, AuthorizationStatus} from '../const';
 import {loadFilms, loadPromo, requireAuthorization, requireLogout} from './action';
 import {dropToken, saveToken, Token} from '../services/token';
 import {AuthData} from '../types/auth-data';
+import {parseFilmFromServerFormat} from '../utils/utils';
+import {ServerFilmType} from '../types/types';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get(APIRoute.Films);
-    dispatch(loadFilms(data));
+    const {data: serverFilmsData} = await api.get(APIRoute.Films);
+    const filmsData = serverFilmsData.map((film: ServerFilmType) => parseFilmFromServerFormat(film));
+    dispatch(loadFilms(filmsData));
   };
 
 export const fetchPromoAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void > => {
-    const {data} = await  api.get(APIRoute.Promo);
-    dispatch(loadPromo(data));
+    const {data: serverPromoData} = await  api.get(APIRoute.Promo);
+    const promoData = parseFilmFromServerFormat(serverPromoData);
+    dispatch(loadPromo(promoData));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

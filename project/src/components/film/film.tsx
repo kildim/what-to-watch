@@ -1,7 +1,7 @@
 import {Link, useParams, useRouteMatch} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import Footer from '../footer/footer';
-import {AppRoute} from '../../const';
+import {AppRoute, EMPTY_FILM} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import {filterFilmsByGenre} from '../../utils/utils';
@@ -25,7 +25,7 @@ function Film(props: PropsFromRedux): JSX.Element {
 
   const {id} = useParams<{ id?: string }>();
 
-  const film: FilmType = films[Number(id)];
+  const film: FilmType = films.find((movie) => movie.id === Number(id)) || EMPTY_FILM;
 
   const similarFilms = filterFilmsByGenre(films, film.genre).slice(
     0,
