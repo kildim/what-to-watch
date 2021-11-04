@@ -20,10 +20,14 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, films: action.payload.films, genres: action.payload.genres};
     case Action.LoadPromo:
       return {...state, promo: action.payload.promo};
-    case Action.RequireAuthorization:
-      return <StateType>{...state, authorizationStatus: action.payload, isDataLoaded: true};
-    case Action.RequireLogout:
-      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+    case Action.SetAuthorizationStatus:
+      return {...state, authorizationStatus: action.payload};
+    case Action.SetIsDataLoaded:
+      return {...state, isDataLoaded: action.payload};
+    // case Action.RequireAuthorization:
+    //   return <StateType>{...state, authorizationStatus: action.payload, isDataLoaded: true};
+    // case Action.RequireLogout:
+    //   return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
     default:
       return state;
   }

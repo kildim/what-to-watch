@@ -23,9 +23,6 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
       const {response} = error;
 
       if (response?.status === HttpCode.Unauthorized) {
-        // eslint-disable-next-line no-console
-        console.log('Unauthorized');
-
         return onUnauthorized();
       }
 

@@ -2,10 +2,8 @@ import {
   setGenre,
   getGenreFilms,
   loadFilms,
-  requireAuthorization,
-  requireLogout,
   loadPromo,
-  redirectToRoute
+  redirectToRoute, setAuthorizationStatus, setIsDataLoaded
 } from '../store/action';
 import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
@@ -15,10 +13,10 @@ export type ActionType =
   | ReturnType<typeof setGenre>
   | ReturnType<typeof getGenreFilms>
   | ReturnType<typeof loadFilms>
-  | ReturnType<typeof requireAuthorization>
-  | ReturnType<typeof requireLogout>
   | ReturnType<typeof loadPromo>
-  | ReturnType<typeof redirectToRoute>;;
+  | ReturnType<typeof redirectToRoute>
+  | ReturnType<typeof setAuthorizationStatus>
+  | ReturnType<typeof setIsDataLoaded>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, StateType, AxiosInstance, ActionType>;
 

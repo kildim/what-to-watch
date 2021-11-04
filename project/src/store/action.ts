@@ -7,8 +7,8 @@ export enum Action {
   GetGenre = 'film/getGenreFilms',
   LoadFilms = 'data/loadFilms',
   LoadPromo = 'data/loadPromo',
-  RequireAuthorization = 'user/requireAuthorization',
-  RequireLogout = 'user/requireLogout',
+  SetIsDataLoaded = 'user/setIsDataLoaded',
+  SetAuthorizationStatus = 'user/setAuthorizationStatus',
   RedirectToRoute = 'game/redirectToRoute'
 }
 
@@ -39,13 +39,14 @@ export const loadPromo = (promo: FilmType) => ({
   },
 } as const);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
-  type: Action.RequireAuthorization,
-  payload: authStatus,
+export const setIsDataLoaded = (isDataLoaded: boolean) => ({
+  type: Action.SetIsDataLoaded,
+  payload: isDataLoaded,
 } as const);
 
-export const requireLogout = () => ({
-  type: Action.RequireLogout,
+export const setAuthorizationStatus = (authStatus: AuthorizationStatus) => ({
+  type: Action.SetAuthorizationStatus,
+  payload: authStatus,
 } as const);
 
 export const redirectToRoute = (url: AppRoute) => ({
