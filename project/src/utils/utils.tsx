@@ -18,7 +18,7 @@ const getGenres = (films: FilmType[]): GenreType[] => {
   return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(0, GENRES_NUMBER + 1);
 };
 
-const stringToBoolean = (source: string) => (source === 'true');
+const stringToBoolean = (source: string): boolean => (source === 'true');
 
 export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;

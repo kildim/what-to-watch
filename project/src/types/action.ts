@@ -21,6 +21,3 @@ export type ActionType =
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, StateType, AxiosInstance, ActionType>;
 
 export type ThunkAppDispatch = ThunkDispatch<StateType, AxiosInstance, ActionType>;
-
-
-
