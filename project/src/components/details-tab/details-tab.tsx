@@ -1,11 +1,11 @@
 import {FilmType} from '../../types/types';
-import {joinArrayByComma} from '../../utills/utils';
+import {joinArrayByComma} from '../../utils/utils';
 
 type DetailsTabProps = {
   film: FilmType,
 }
 
-function DetailsTab ({film}: DetailsTabProps) {
+function DetailsTab ({film}: DetailsTabProps): JSX.Element {
   const starring = joinArrayByComma(film.starring);
 
   return (

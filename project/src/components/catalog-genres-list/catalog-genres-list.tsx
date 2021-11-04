@@ -46,7 +46,7 @@ function CatalogGenresList(props: PropsFromRedux): JSX.Element {
       key={currentGenre}
       className={constructLiClassName(genre, currentGenre)}
     >
-      <a className="catalog__genres-link" onClick={handleChangeGenre}>
+      <a className="catalog__genres-link" onClick={handleChangeGenre} href='/'>
         {currentGenre}
       </a>
     </li>

@@ -12,30 +12,35 @@ export enum AppRoute {
   Similar = '/films/:id/similar',
 }
 
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
+  Promo = '/promo'
+}
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-export const UNEXISTENT_FILM = {
-  id: null,
-  name: 'FILM NOT FOUND',
-  posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
-  previewImage: 'img/seven-years-in-tibet.jpg',
-  backgroundImage: 'img/the-grand-budapest-hotel-bg.jpg',
-  backgroundColor: '#ffffff',
-  videoLink:
-    'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  previewVideoLink:
-    'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  description: 'FILM NOT FOUND',
-  rating: 8.9,
-  scoresCount: 240,
-  director: 'FILM NOT FOUND',
-  starring: ['FILM NOT FOUND'],
+export const EMPTY_FILM = {
+  id: -1,
+  name: 'UNKNOWN',
+  posterImage: 'UNKNOWN',
+  previewImage: 'UNKNOWN',
+  backgroundImage: 'UNKNOWN',
+  backgroundColor: 'UNKNOWN',
+  videoLink: 'UNKNOWN',
+  previewVideoLink: 'UNKNOWN',
+  description: 'UNKNOWN',
+  rating: -1,
+  scoresCount: 0,
+  director: 'UNKNOWN',
+  starring: ['UNKNOWN'],
   runTime: 0,
-  genre: 'FILM NOT FOUND',
+  genre: 'UNKNOWN',
   released: 0,
   isFavorite: false,
 };
