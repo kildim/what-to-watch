@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router as BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 
 import Main from '../main/main';
@@ -13,7 +13,7 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import {StateType} from '../../types/state';
 import {isCheckedAuth} from '../../utils/utils';
-
+import browserHistory from '../../browser-history';
 
 const mapStateToProps = ({authorizationStatus, isDataLoaded}: StateType) => ({
   authorizationStatus,
@@ -34,7 +34,7 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <Main/>
@@ -44,9 +44,6 @@ function App(props: PropsFromRedux): JSX.Element {
         </Route>
         <Route path={AppRoute.Film}>
           <Film/>
-        </Route>
-        <Route exact path={AppRoute.Review}>
-          <Review/>
         </Route>
         <Route exact path={AppRoute.MyList}>
           <MyList/>
@@ -61,10 +58,17 @@ function App(props: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <SignIn/>}
+          render={() => <MyList/>}
         />
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          render={() => <SignIn/>}
+        >
+          <Review/>
+        </PrivateRoute>
         <Route>
-          <Page404 />
+          <Page404/>
         </Route>
       </Switch>
     </BrowserRouter>

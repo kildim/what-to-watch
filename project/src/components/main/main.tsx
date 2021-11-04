@@ -84,7 +84,7 @@ function Main(props: PropsFromRedux): JSX.Element {
             <div className="film-card__poster">
               <img
                 src={promo.posterImage}
-                alt="Film poster"
+                alt={`${promo.name} poster`}
                 width="218"
                 height="327"
               />

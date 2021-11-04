@@ -1,5 +1,5 @@
 import {FilmType} from '../types/types';
-import {AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus} from '../const';
 import {getGenres} from '../utils/utils';
 
 export enum Action {
@@ -9,6 +9,7 @@ export enum Action {
   LoadPromo = 'data/loadPromo',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'game/redirectToRoute'
 }
 
 export const setGenre = (genre: string) => ({
@@ -45,4 +46,9 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 export const requireLogout = () => ({
   type: Action.RequireLogout,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: Action.RedirectToRoute,
+  payload: url,
 } as const);

@@ -1,7 +1,6 @@
 import axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios';
 import {getToken} from './token';
 
-
 const BACKEND_URL = 'https://8.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
 
@@ -24,6 +23,9 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
       const {response} = error;
 
       if (response?.status === HttpCode.Unauthorized) {
+        // eslint-disable-next-line no-console
+        console.log('Unauthorized');
+
         return onUnauthorized();
       }
 
