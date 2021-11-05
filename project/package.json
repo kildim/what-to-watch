@@ -28,6 +28,10 @@
       "htmlacademy/react-typescript"
     ]
   },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
