@@ -1,6 +1,6 @@
 import {ThunkActionResult} from '../types/action';
-import {APIRoute, AuthorizationStatus} from '../const';
-import {loadFilms, loadPromo, requireAuthorization, requireLogout} from './action';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {loadFilms, loadPromo, redirectToRoute, setAuthorizationStatus, setIsDataLoaded} from './action';
 import {dropToken, saveToken, Token} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {parseFilmFromServerFormat} from '../utils/utils';
@@ -24,7 +24,8 @@ export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
       .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setIsDataLoaded(true));
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       });
   };
 
@@ -32,7 +33,9 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
   async (dispatch, _getState, api) => {
     const {data: {token}} = await api.post<{ token: Token }>(APIRoute.Login, {email, password});
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setIsDataLoaded(true));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
 
@@ -40,5 +43,5 @@ export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireLogout());
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   };

@@ -19,7 +19,6 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux & PrivateRouteProps;
 
-
 function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
   const {exact, path, render, authorizationStatus} = props;
 

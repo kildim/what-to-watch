@@ -1,6 +1,6 @@
-import {FilmType, ServerFilmType} from '../types/types';
-import {GenreType} from '../types/state';
-import {ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER} from '../const';
+import { FilmType, ServerFilmType } from '../types/types';
+import { GenreType } from '../types/state';
+import { ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER } from '../const';
 
 const joinArrayByComma = (ingoingArray: string[]): string =>
   ingoingArray.join(',\n');
@@ -15,13 +15,17 @@ const filterFilmsByGenre = (
 
 const getGenres = (films: FilmType[]): GenreType[] => {
   const genres = films.map((film) => film.genre);
-  return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(0, GENRES_NUMBER + 1);
+  return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(
+    0,
+    GENRES_NUMBER + 1,
+  );
 };
 
-const stringToBoolean = (source: string) => (source === 'true');
+const isTrueString = (source: string): boolean => source === 'true';
 
-export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
+export const isCheckedAuth = (
+  authorizationStatus: AuthorizationStatus,
+): boolean => authorizationStatus === AuthorizationStatus.Unknown;
 
 const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   id: Number(film['id']),
@@ -40,7 +44,13 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   runTime: Number(film['run_time']),
   genre: film['genre'],
   released: film['released'],
-  isFavorite: stringToBoolean(film['is_favorite']),
+  isFavorite: isTrueString(film['is_favorite']),
 });
 
-export {joinArrayByComma, filterFilmsByGenre, getGenres, stringToBoolean, parseFilmFromServerFormat};
+export {
+  joinArrayByComma,
+  filterFilmsByGenre,
+  getGenres,
+  isTrueString,
+  parseFilmFromServerFormat
+};
