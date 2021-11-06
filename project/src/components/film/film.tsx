@@ -4,11 +4,13 @@ import Footer from '../footer/footer';
 import { AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {buildFilmCommentsPath, buildSimilarFilmsPath} from '../../utils/utils';
+import {buildSimilarFilmsPath} from '../../utils/utils';
 import { StateType } from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
-import {fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
-import {useEffect} from 'react';
+
+// import {fetchFilmAction} from '../../store/api-actions';
+import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+// import {useEffect} from 'react';
 
 const SIMILAR_NUMBER = 4;
 
@@ -26,14 +28,14 @@ function Film(props: PropsFromRedux): JSX.Element {
   const {film, similarFilms } = props;
   const {url} = useRouteMatch();
   const similarFilmsPath =  buildSimilarFilmsPath(String(film.id));
-  const commentsPath = buildFilmCommentsPath(String(film.id));
+  // const commentsPath = buildFilmCommentsPath(String(film.id));
   const dispatcher = useDispatch();
 
-  useEffect(() => {
-    (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
-    (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
-    (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  },[film]);
+  // useEffect(() => {
+  (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
+  (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
+  // (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
+  // },[film]);
 
 
   const similarFilmsList = similarFilms.slice(0, SIMILAR_NUMBER);
