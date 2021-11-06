@@ -1,18 +1,21 @@
-import {Link, useParams, useRouteMatch} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import {Link, useRouteMatch} from 'react-router-dom';
+import {connect, ConnectedProps, useDispatch} from 'react-redux';
 import Footer from '../footer/footer';
-import {AppRoute, EMPTY_FILM} from '../../const';
+import { AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {filterFilmsByGenre} from '../../utils/utils';
-import {StateType} from '../../types/state';
-import {FilmType} from '../../types/types';
+import {buildFilmCommentsPath, buildSimilarFilmsPath} from '../../utils/utils';
+import { StateType } from '../../types/state';
+import {ThunkAppDispatch} from '../../types/action';
+import {fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+import {useEffect} from 'react';
 
 const SIMILAR_NUMBER = 4;
 
-const mapStateToProps = ({genre, films}: StateType) => ({
-  genre,
-  films,
+const mapStateToProps = ({film, similarFilms, comments}: StateType) => ({
+  film,
+  similarFilms,
+  comments,
 });
 
 const connector = connect(mapStateToProps);
@@ -20,17 +23,20 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Film(props: PropsFromRedux): JSX.Element {
-  const {films} = props;
-  const url = useRouteMatch();
+  const {film, similarFilms } = props;
+  const {url} = useRouteMatch();
+  const similarFilmsPath =  buildSimilarFilmsPath(String(film.id));
+  const commentsPath = buildFilmCommentsPath(String(film.id));
+  const dispatcher = useDispatch();
 
-  const {id} = useParams<{ id?: string }>();
+  useEffect(() => {
+    (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
+    (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
+    (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
+  },[film]);
 
-  const film: FilmType = films.find((movie) => movie.id === Number(id)) || EMPTY_FILM;
 
-  const similarFilms = filterFilmsByGenre(films, film.genre).slice(
-    0,
-    SIMILAR_NUMBER,
-  );
+  const similarFilmsList = similarFilms.slice(0, SIMILAR_NUMBER);
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -38,10 +44,13 @@ function Film(props: PropsFromRedux): JSX.Element {
 
   return (
     <>
-      <section className="film-card film-card--full" style={FILM_CARD_INLINE_STYLE}>
+      <section
+        className="film-card film-card--full"
+        style={FILM_CARD_INLINE_STYLE}
+      >
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name}/>
+            <img src={film.backgroundImage} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -117,20 +126,20 @@ function Film(props: PropsFromRedux): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film}/>
+            <FilmCardTabs film={film} />
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CatalogFilmsList films={similarFilms}/>
+          <CatalogFilmsList films={similarFilmsList} />
         </section>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
 }
 
-export {Film};
+export { Film };
 export default connector(Film);

@@ -1,12 +1,16 @@
-import {FilmType} from '../types/types';
+import {CommentType, FilmType} from '../types/types';
 import {AppRoute, AuthorizationStatus} from '../const';
 import {getGenres} from '../utils/utils';
 
 export enum Action {
   SetGenre = 'film/setGenre',
   GetGenre = 'film/getGenreFilms',
+  SetApi = 'data/setApi',
   LoadFilms = 'data/loadFilms',
   LoadPromo = 'data/loadPromo',
+  LoadFilm = 'data/loadFilm',
+  LoadFilmComments = 'data/loadFilmComments',
+  LoadSimilarFilms = 'data/loadSimilarFilms',
   SetIsDataLoaded = 'user/setIsDataLoaded',
   SetAuthorizationStatus = 'user/setAuthorizationStatus',
   RedirectToRoute = 'game/redirectToRoute'
@@ -36,6 +40,25 @@ export const loadPromo = (promo: FilmType) => ({
   type: Action.LoadPromo,
   payload: {
     promo: promo,
+  },
+} as const);
+
+export const loadFilm = (film: FilmType) => ({
+  type: Action.LoadFilm,
+  payload: {
+    film: film,
+  },
+} as const);
+
+export const loadFilmComments = (comments: CommentType[]) => ({
+  type: Action.LoadFilmComments,
+  payload: comments,
+} as const);
+
+export const loadSimilarFilms = (films: FilmType[]) => ({
+  type: Action.LoadSimilarFilms,
+  payload: {
+    similarFilms: films,
   },
 } as const);
 

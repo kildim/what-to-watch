@@ -1,6 +1,14 @@
 import {ThunkActionResult} from '../types/action';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
-import {loadFilms, loadPromo, redirectToRoute, setAuthorizationStatus, setIsDataLoaded} from './action';
+import {
+  loadFilm,
+  loadFilms,
+  loadPromo,
+  loadSimilarFilms,
+  redirectToRoute,
+  setAuthorizationStatus,
+  setIsDataLoaded
+} from './action';
 import {dropToken, saveToken, Token} from '../services/token';
 import {AuthData} from '../types/auth-data';
 import {parseFilmFromServerFormat} from '../utils/utils';
@@ -11,6 +19,26 @@ export const fetchFilmsAction = (): ThunkActionResult =>
     const {data: serverFilmsData} = await api.get(APIRoute.Films);
     const filmsData = serverFilmsData.map((film: ServerFilmType) => parseFilmFromServerFormat(film));
     dispatch(loadFilms(filmsData));
+  };
+
+export const fetchSimilarFilmsAction = (similarFilmsPath: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data: serverFilmsData} = await api.get(similarFilmsPath);
+    const filmsData = serverFilmsData.map((film: ServerFilmType) => parseFilmFromServerFormat(film));
+    dispatch(loadSimilarFilms(filmsData));
+  };
+
+export const fetchFilmCommentsAction = (commentsPath: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data: comments} = await api.get(commentsPath);
+    dispatch(loadSimilarFilms(comments));
+  };
+
+export const fetchFilmAction = (filmPath: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data: serverFilmData} = await api.get(filmPath);
+    const filmData = parseFilmFromServerFormat(serverFilmData);
+    dispatch(loadFilm(filmData));
   };
 
 export const fetchPromoAction = (): ThunkActionResult =>

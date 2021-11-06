@@ -37,3 +37,8 @@ export type ServerFilmType = {
   released: number,
   'is_favorite': string,
 }
+
+export type CommentType = {
+  rating: string,
+  comment: string,
+}
