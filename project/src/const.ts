@@ -11,6 +11,7 @@ export enum AppRoute {
   Details = '/films/:id/details',
   Similar = '/films/:id/similar',
   AddReview = '/films/:id/review',
+  Comments = '/comments/:id',
 }
 
 export enum APIRoute {

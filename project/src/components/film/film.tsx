@@ -1,16 +1,17 @@
-import {Link, useRouteMatch} from 'react-router-dom';
+import {generatePath, Link, useRouteMatch} from 'react-router-dom';
 import {connect, ConnectedProps, useDispatch} from 'react-redux';
 import Footer from '../footer/footer';
-import { AppRoute} from '../../const';
+import {AppRoute} from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {buildSimilarFilmsPath} from '../../utils/utils';
+
 import { StateType } from '../../types/state';
 import {ThunkAppDispatch} from '../../types/action';
 
-// import {fetchFilmAction} from '../../store/api-actions';
-import {fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';
-// import {useEffect} from 'react';
+import {fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+
+import {useEffect} from 'react';
+
 
 const SIMILAR_NUMBER = 4;
 
@@ -25,20 +26,24 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Film(props: PropsFromRedux): JSX.Element {
-  const {film, similarFilms } = props;
+  const {film, similarFilms, comments} = props;
   const {url} = useRouteMatch();
-  const similarFilmsPath =  buildSimilarFilmsPath(String(film.id));
-  // const commentsPath = buildFilmCommentsPath(String(film.id));
+
+  const similarFilmsPath =  generatePath(AppRoute.Similar, {id: film.id});
+  const commentsPath = generatePath(AppRoute.Comments, {id: film.id});
   const dispatcher = useDispatch();
 
-  // useEffect(() => {
-  (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
-  (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
-  // (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  // },[film]);
+  useEffect(() => {
+    (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
+    (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
 
+    (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
+  },[dispatcher, similarFilmsPath, url, commentsPath]);
 
-  const similarFilmsList = similarFilms.slice(0, SIMILAR_NUMBER);
+  // eslint-disable-next-line no-console
+  console.log(film);
+  // eslint-disable-next-line no-console
+  console.log(comments);
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -135,7 +140,7 @@ function Film(props: PropsFromRedux): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <CatalogFilmsList films={similarFilmsList} />
+          <CatalogFilmsList films={similarFilms.slice(0, SIMILAR_NUMBER)} />
         </section>
         <Footer />
       </div>

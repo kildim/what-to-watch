@@ -1,6 +1,7 @@
-import {Link, useHistory} from 'react-router-dom';
+import {generatePath, Link, useHistory} from 'react-router-dom';
 import {FilmType} from '../../types/types';
 import {useEffect, useRef, useState} from 'react';
+import {AppRoute} from '../../const';
 
 type SmallFilmcardProps = {
   film: FilmType,
@@ -8,7 +9,7 @@ type SmallFilmcardProps = {
 
 
 function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
-  const filmPath = `/films/${film.id}`;
+  const filmPath = generatePath(AppRoute.Film, {id: film.id});
 
   const [isPlaying, setIsPlaying] = useState(false);
   const history = useHistory();

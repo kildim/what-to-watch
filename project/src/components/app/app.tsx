@@ -37,38 +37,33 @@ function App(props: PropsFromRedux): JSX.Element {
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <Main/>
+          <Main />
         </Route>
         <Route exact path={AppRoute.SignIn}>
-          <SignIn/>
+          <SignIn />
         </Route>
-        <Route path={AppRoute.Film}>
-          <Film/>
+        <Route path={AppRoute.Film}
+          render={() => <Film />}
+        >
         </Route>
         <Route exact path={AppRoute.MyList}>
-          <MyList/>
+          <MyList />
         </Route>
         <Route
           exact
           path={AppRoute.Player}
-          render={(routeProps) => (
-            <Player/>
-          )}
+          render={(routeProps) => <Player />}
         />
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <MyList/>}
+          render={() => <MyList />}
         />
-        <PrivateRoute
-          exact
-          path={AppRoute.AddReview}
-          render={() => <SignIn/>}
-        >
-          <Review/>
+        <PrivateRoute exact path={AppRoute.AddReview} render={() => <SignIn />}>
+          <Review />
         </PrivateRoute>
         <Route>
-          <Page404/>
+          <Page404 />
         </Route>
       </Switch>
     </BrowserRouter>

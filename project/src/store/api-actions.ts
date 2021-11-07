@@ -1,7 +1,7 @@
 import { ThunkActionResult } from '../types/action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import {
-  loadFilm,
+  loadFilm, loadFilmComments,
   loadFilms,
   loadPromo,
   loadSimilarFilms,
@@ -38,8 +38,6 @@ export const fetchSimilarFilmsAction =
         const filmsData = serverFilmsData.map((film: ServerFilmType) =>
           parseFilmFromServerFormat(film),
         );
-        // eslint-disable-next-line no-console
-        console.log(filmsData);
         dispatch(loadSimilarFilms(filmsData));
       } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -56,7 +54,7 @@ export const fetchFilmCommentsAction =
   (commentsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
       const { data: comments } = await api.get(commentsPath);
-      dispatch(loadSimilarFilms(comments));
+      dispatch(loadFilmComments(comments));
     };
 
 export const fetchFilmAction =

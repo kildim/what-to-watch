@@ -27,8 +27,8 @@ export const isCheckedAuth = (
   authorizationStatus: AuthorizationStatus,
 ): boolean => authorizationStatus === AuthorizationStatus.Unknown;
 
-export const buildSimilarFilmsPath = (id: string) => `/films/${id}/similar`;
-export const buildFilmCommentsPath = (id: string) => `/comments/${id}`;
+// export const buildSimilarFilmsPath = (id: string) => `/films/${id}/similar`;
+// export const buildFilmCommentsPath = (id: string) => `/comments/${id}`;
 
 
 const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({

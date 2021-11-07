@@ -39,6 +39,7 @@ export type ServerFilmType = {
 }
 
 export type CommentType = {
+  id: string,
   rating: string,
   comment: string,
 }

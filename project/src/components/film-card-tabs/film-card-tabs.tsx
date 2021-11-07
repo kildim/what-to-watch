@@ -77,7 +77,7 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
           <DetailsTab film={film} />
         </Route>
         <Route exact path={AppRoute.Reviews}>
-          <ReviewsTab film={film} />
+          <ReviewsTab />
         </Route>
         <Route exact path={AppRoute.Film}>
           <OverviewTab film={film} />
