@@ -12,6 +12,7 @@ export enum AppRoute {
   Similar = '/films/:id/similar',
   AddReview = '/films/:id/review',
   Comments = '/comments/:id',
+  Page404 = '/404'
 }
 
 export enum APIRoute {

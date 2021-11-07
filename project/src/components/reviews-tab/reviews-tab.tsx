@@ -1,6 +1,9 @@
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
 import Comment from '../comment/comment';
+import {CommentType} from '../../types/types';
+
+type ReviewsTabProps = {
+  comments: CommentType[]
+}
 
 const FILM_CARD_REVIEWS_STYLE = {
   paddingTop: '20px',
@@ -10,16 +13,7 @@ const FILM_CARD_REVIEWS_STYLE = {
 
 };
 
-const mapStateToProps = ({comments}: StateType) => ({
-  comments,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function ReviewsTab(props: PropsFromRedux): JSX.Element {
+function ReviewsTab(props: ReviewsTabProps): JSX.Element {
   const {comments} = props;
 
   return (
@@ -29,5 +23,4 @@ function ReviewsTab(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export  {ReviewsTab};
-export default connector(ReviewsTab);
+export default ReviewsTab;

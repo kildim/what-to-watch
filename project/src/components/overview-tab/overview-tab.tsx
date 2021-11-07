@@ -1,15 +1,10 @@
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
+import {FilmType} from '../../types/types';
 
-const mapStateToProps = ({film}: StateType) => ({
-  film,
-});
+type OverviewTabProps = {
+  film: FilmType
+}
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function OverviewTab (props: PropsFromRedux) {
+function OverviewTab (props: OverviewTabProps) {
   const {film} = props;
 
   const starring = `${film.starring.join(', ')}.`;
@@ -39,5 +34,4 @@ function OverviewTab (props: PropsFromRedux) {
   );
 }
 
-export {OverviewTab};
-export default connector(OverviewTab);
+export default OverviewTab;

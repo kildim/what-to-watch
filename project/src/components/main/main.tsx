@@ -9,7 +9,6 @@ import ShowButton from '../show-button/show-button';
 import {StateType} from '../../types/state';
 import {filterFilmsByGenre} from '../../utils/utils';
 
-
 const CHUNK_LENGTH = 8;
 
 const mapStateToProps = ({genre, films, promo}: StateType) => ({

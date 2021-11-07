@@ -1,17 +1,11 @@
 import {joinArrayByComma} from '../../utils/utils';
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
+import {FilmType} from '../../types/types';
 
-const mapStateToProps = ({film}: StateType) => ({
-  film,
-});
+type DetailsTabProps = {
+  film: FilmType
+}
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function DetailsTab (prop: PropsFromRedux): JSX.Element {
+function DetailsTab (prop: DetailsTabProps): JSX.Element {
   const {film} = prop;
 
   const starring = joinArrayByComma(film.starring);
@@ -47,5 +41,4 @@ function DetailsTab (prop: PropsFromRedux): JSX.Element {
   );
 }
 
-export {DetailsTab};
-export default connector(DetailsTab);
+export default DetailsTab;

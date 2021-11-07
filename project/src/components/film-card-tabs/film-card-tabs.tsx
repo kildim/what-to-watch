@@ -1,12 +1,17 @@
-import { generatePath, Link, Route, Switch } from 'react-router-dom';
+import {
+  generatePath,
+  Link,
+  Route,
+  Switch,
+  useRouteMatch
+} from 'react-router-dom';
 import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames';
-import { StateType } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { FilmType } from '../../types/types';
 
 enum Tab {
   Overview,
@@ -14,16 +19,26 @@ enum Tab {
   Reviews,
 }
 
-const mapStateToProps = ({ film }: StateType) => ({
-  film,
-});
+type FilmCardProps = {
+  film: FilmType;
+};
 
-const connector = connect(mapStateToProps);
+const useCatchActiveTab = () => {
+  let result;
+  if (useRouteMatch(AppRoute.Overview)?.isExact) {
+    result = Tab.Overview;
+  }
+  if (useRouteMatch(AppRoute.Details)?.isExact) {
+    result = Tab.Details;
+  }
+  if (useRouteMatch(AppRoute.Reviews)?.isExact) {
+    result = Tab.Reviews;
+  }
+  return result;
+};
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function FilmCardTabs({ film }: PropsFromRedux): JSX.Element {
-  const [activeTab, setActiveTab] = useState(Tab.Overview);
+function FilmCardTabs({ film }: FilmCardProps): JSX.Element {
+  const [activeTab, setActiveTab] = useState(useCatchActiveTab);
 
   const overviewNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Overview,
@@ -38,8 +53,6 @@ function FilmCardTabs({ film }: PropsFromRedux): JSX.Element {
   const handleOverviewNavLinkClick = () => setActiveTab(Tab.Overview);
   const handleDetailsNavLinkClick = () => setActiveTab(Tab.Details);
   const handleReviewsNavLinkClick = () => setActiveTab(Tab.Reviews);
-
-  useEffect(() => setActiveTab(Tab.Overview), [film.id]);
 
   return (
     <div className="film-card__desc">
@@ -76,13 +89,24 @@ function FilmCardTabs({ film }: PropsFromRedux): JSX.Element {
       </nav>
 
       <Switch>
-        <Route exact path={[AppRoute.Overview, AppRoute.Film]} render={() => <OverviewTab />} />
-        <Route exact path={AppRoute.Details} render={() => <DetailsTab />} />
-        <Route exact path={AppRoute.Reviews} render={() => <ReviewsTab />} />
+        <Route
+          exact
+          path={[AppRoute.Overview, AppRoute.Film]}
+          render={() => <OverviewTab film={film} />}
+        />
+        <Route
+          exact
+          path={AppRoute.Details}
+          render={() => <DetailsTab film={film} />}
+        />
+        <Route
+          exact
+          path={AppRoute.Reviews}
+          render={() => <ReviewsTab comments={[]} />}
+        />
       </Switch>
     </div>
   );
 }
 
-export { FilmCardTabs };
-export default connector(FilmCardTabs);
+export default FilmCardTabs;

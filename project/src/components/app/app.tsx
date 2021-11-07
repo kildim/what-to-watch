@@ -41,7 +41,7 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route
           exact
           path={AppRoute.Player}
-          render={(routeProps) => <Player />}
+          render={() => <Player />}
         />
         <PrivateRoute
           exact
