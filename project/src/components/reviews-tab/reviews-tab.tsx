@@ -2,7 +2,7 @@ import {StateType} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import Comment from '../comment/comment';
 
-const filmCardReviewsStyle = {
+const FILM_CARD_REVIEWS_STYLE = {
   paddingTop: '20px',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
@@ -23,7 +23,7 @@ function ReviewsTab(props: PropsFromRedux): JSX.Element {
   const {comments} = props;
 
   return (
-    <div className="film-card__reviews film-card__row" style={filmCardReviewsStyle}>
+    <div className="film-card__reviews film-card__row" style={FILM_CARD_REVIEWS_STYLE}>
       {comments.map((comment) => (<Comment key={comment.id}/>))}
     </div>
   );

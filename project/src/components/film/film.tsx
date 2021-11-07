@@ -1,24 +1,36 @@
-import {generatePath, Link, useRouteMatch} from 'react-router-dom';
-import {connect, ConnectedProps, useDispatch} from 'react-redux';
+import { generatePath, Link, useRouteMatch } from 'react-router-dom';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import Footer from '../footer/footer';
-import {AppRoute} from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 
 import { StateType } from '../../types/state';
-import {ThunkAppDispatch} from '../../types/action';
+import { ThunkAppDispatch } from '../../types/action';
 
-import {fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
+import {
+  fetchFilmAction,
+  fetchFilmCommentsAction,
+  fetchSimilarFilmsAction
+} from '../../store/api-actions';
 
-import {useEffect} from 'react';
-
+import { useEffect } from 'react';
+import classNames from 'classnames';
 
 const SIMILAR_NUMBER = 4;
 
-const mapStateToProps = ({film, similarFilms, comments}: StateType) => ({
+const mapStateToProps = ({
   film,
   similarFilms,
   comments,
+  authorizationStatus,
+  isDataLoaded,
+}: StateType) => ({
+  film,
+  similarFilms,
+  comments,
+  authorizationStatus,
+  isDataLoaded,
 });
 
 const connector = connect(mapStateToProps);
@@ -26,11 +38,11 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Film(props: PropsFromRedux): JSX.Element {
-  const {film, similarFilms, comments} = props;
-  const {url} = useRouteMatch();
+  const { film, similarFilms, comments, authorizationStatus} = props;
+  const { url } = useRouteMatch();
 
-  const similarFilmsPath =  generatePath(AppRoute.Similar, {id: film.id});
-  const commentsPath = generatePath(AppRoute.Comments, {id: film.id});
+  const similarFilmsPath = generatePath(AppRoute.Similar, { id: film.id });
+  const commentsPath = generatePath(AppRoute.Comments, { id: film.id });
   const dispatcher = useDispatch();
 
   useEffect(() => {
@@ -38,10 +50,10 @@ function Film(props: PropsFromRedux): JSX.Element {
     (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
 
     (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  },[dispatcher, similarFilmsPath, url, commentsPath]);
+  }, [dispatcher, similarFilmsPath, url, commentsPath]);
 
   // eslint-disable-next-line no-console
-  console.log(film);
+  console.log(authorizationStatus);
   // eslint-disable-next-line no-console
   console.log(comments);
 
@@ -115,7 +127,14 @@ function Film(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${url}/review`} className="btn film-card__button">
+                <Link
+                  to={`${url}/review`}
+                  className={classNames('btn film-card__button', {
+                    'visually-hidden': !(
+                      authorizationStatus === AuthorizationStatus.Auth
+                    ),
+                  })}
+                >
                   Add review
                 </Link>
               </div>
