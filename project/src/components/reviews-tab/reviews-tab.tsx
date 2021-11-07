@@ -22,6 +22,9 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function ReviewsTab(props: PropsFromRedux): JSX.Element {
   const {comments} = props;
 
+  // eslint-disable-next-line no-console
+  console.log(comments);
+
   return (
     <div className="film-card__reviews film-card__row" style={FILM_CARD_REVIEWS_STYLE}>
       {comments.map((comment) => (<Comment key={comment.id}/>))}

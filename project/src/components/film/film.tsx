@@ -152,7 +152,7 @@ function Film(props: PropsFromRedux): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film} />
+            <FilmCardTabs />
           </div>
         </div>
       </section>
