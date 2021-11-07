@@ -14,9 +14,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function DetailsTab (prop: PropsFromRedux): JSX.Element {
   const {film} = prop;
 
-  // eslint-disable-next-line no-console
-  console.log(film);
-
   const starring = joinArrayByComma(film.starring);
 
   return (

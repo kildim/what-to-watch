@@ -12,9 +12,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function OverviewTab (props: PropsFromRedux) {
   const {film} = props;
 
-  // eslint-disable-next-line no-console
-  console.log(film);
-
   const starring = `${film.starring.join(', ')}.`;
 
   return (
