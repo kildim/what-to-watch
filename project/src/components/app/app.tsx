@@ -6,13 +6,13 @@ import { AppRoute } from '../../const';
 import SignIn from '../sign-in/sign-in';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-import LoadingScreen from '../loading-screen/loading-screen';
-import Film from '../film/film';
+// import LoadingScreen from '../loading-screen/loading-screen';
 import Review from '../review/review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
+import Film from '../film/film';
 import { StateType } from '../../types/state';
-import { isCheckedAuth } from '../../utils/utils';
+// import { isCheckedAuth } from '../../utils/utils';
 import browserHistory from '../../browser-history';
 
 const mapStateToProps = ({ authorizationStatus, isDataLoaded }: StateType) => ({
@@ -25,11 +25,11 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, isDataLoaded } = props;
+  // const { authorizationStatus, isDataLoaded } = props;
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
-    return <LoadingScreen />;
-  }
+  // if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  //   return <LoadingScreen />;
+  // }
 
   return (
     <BrowserRouter history={browserHistory}>
@@ -38,11 +38,7 @@ function App(props: PropsFromRedux): JSX.Element {
         <Route exact path={AppRoute.SignIn} render={() => <SignIn />} />
         <Route path={AppRoute.Film} render={() => <Film />} />
         <Route exact path={AppRoute.MyList} render={() => <MyList />} />
-        <Route
-          exact
-          path={AppRoute.Player}
-          render={() => <Player />}
-        />
+        <Route exact path={AppRoute.Player} render={() => <Player />} />
         <PrivateRoute
           exact
           path={AppRoute.Favorites}

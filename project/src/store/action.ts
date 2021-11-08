@@ -1,6 +1,7 @@
-import {CommentType, FilmType} from '../types/types';
-import {AppRoute, AuthorizationStatus} from '../const';
-import {getGenres} from '../utils/utils';
+import { CommentType, FilmType } from '../types/types';
+import { AppRoute, AuthorizationStatus } from '../const';
+import { getGenres } from '../utils/utils';
+import { createAction } from '@reduxjs/toolkit';
 
 export enum Action {
   SetGenre = 'film/setGenre',
@@ -13,66 +14,87 @@ export enum Action {
   LoadSimilarFilms = 'data/loadSimilarFilms',
   SetIsDataLoaded = 'user/setIsDataLoaded',
   SetAuthorizationStatus = 'user/setAuthorizationStatus',
-  RedirectToRoute = 'game/redirectToRoute'
+  RedirectToRoute = 'game/redirectToRoute',
+  RequireAuthorization = 'user/requireAuthorization',
+  RequireLogout = 'user/requireLogout',
 }
 
-export const setGenre = (genre: string) => ({
-  type: Action.SetGenre,
-  payload: genre,
-} as const);
+export const setGenre = (genre: string) =>
+  ({
+    type: Action.SetGenre,
+    payload: genre,
+  } as const);
 
-export const getGenreFilms = (genre: string) => ({
-  type: Action.GetGenre,
-  payload: {
-    genre,
-  },
-} as const);
+export const getGenreFilms = (genre: string) =>
+  ({
+    type: Action.GetGenre,
+    payload: {
+      genre,
+    },
+  } as const);
 
-export const loadFilms = (films: FilmType[]) => ({
-  type: Action.LoadFilms,
-  payload: {
-    films: films,
-    genres: getGenres(films),
-  },
-} as const);
+export const loadFilms = (films: FilmType[]) =>
+  ({
+    type: Action.LoadFilms,
+    payload: {
+      films: films,
+      genres: getGenres(films),
+    },
+  } as const);
 
-export const loadPromo = (promo: FilmType) => ({
-  type: Action.LoadPromo,
-  payload: {
-    promo: promo,
-  },
-} as const);
+export const loadPromo = (promo: FilmType) =>
+  ({
+    type: Action.LoadPromo,
+    payload: {
+      promo: promo,
+    },
+  } as const);
 
-export const loadFilm = (film: FilmType) => ({
-  type: Action.LoadFilm,
-  payload: {
-    film: film,
-  },
-} as const);
+export const loadFilm = (film: FilmType) =>
+  ({
+    type: Action.LoadFilm,
+    payload: {
+      film: film,
+    },
+  } as const);
 
-export const loadFilmComments = (comments: CommentType[]) => ({
-  type: Action.LoadFilmComments,
-  payload: comments,
-} as const);
+export const loadFilmComments = (comments: CommentType[]) =>
+  ({
+    type: Action.LoadFilmComments,
+    payload: comments,
+  } as const);
 
-export const loadSimilarFilms = (films: FilmType[]) => ({
-  type: Action.LoadSimilarFilms,
-  payload: {
-    similarFilms: films,
-  },
-} as const);
+export const loadSimilarFilms = (films: FilmType[]) =>
+  ({
+    type: Action.LoadSimilarFilms,
+    payload: {
+      similarFilms: films,
+    },
+  } as const);
 
-export const setIsDataLoaded = (isDataLoaded: boolean) => ({
-  type: Action.SetIsDataLoaded,
-  payload: isDataLoaded,
-} as const);
+export const setIsDataLoaded = (isDataLoaded: boolean) =>
+  ({
+    type: Action.SetIsDataLoaded,
+    payload: isDataLoaded,
+  } as const);
 
-export const setAuthorizationStatus = (authStatus: AuthorizationStatus) => ({
-  type: Action.SetAuthorizationStatus,
-  payload: authStatus,
-} as const);
+export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
+  ({
+    type: Action.SetAuthorizationStatus,
+    payload: authStatus,
+  } as const);
 
-export const redirectToRoute = (url: AppRoute) => ({
-  type: Action.RedirectToRoute,
-  payload: url,
-} as const);
+export const requireAuthorization = createAction(
+  Action.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({
+    payload: authStatus,
+  }),
+);
+
+export const requireLogout = createAction(Action.RequireLogout);
+
+export const redirectToRoute = (url: AppRoute) =>
+  ({
+    type: Action.RedirectToRoute,
+    payload: url,
+  } as const);

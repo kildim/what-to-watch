@@ -1,32 +1,31 @@
-import {Link, useParams, useRouteMatch} from 'react-router-dom';
-import { connect, ConnectedProps} from 'react-redux';
+import {generatePath, Link, useParams, useRouteMatch} from 'react-router-dom';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import Footer from '../footer/footer';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 
 import { StateType } from '../../types/state';
-// import { ThunkAppDispatch } from '../../types/action';
-
-// import {
-// fetchFilmAction,
-// fetchFilmCommentsAction,
-// fetchSimilarFilmsAction
-// } from '../../store/api-actions';
-
-// import { useEffect } from 'react';
+import { ThunkAppDispatch } from '../../types/action';
+import {
+  fetchFilmAction,
+  fetchFilmCommentsAction,
+  fetchSimilarFilmsAction
+} from '../../store/api-actions';
+import { useEffect } from 'react';
 import classNames from 'classnames';
-import Page404 from '../page-404/page-404';
+// import Page404 from '../page-404/page-404';
+// import browserHistory from '../../browser-history';
 
 const SIMILAR_NUMBER = 4;
 
 const mapStateToProps = ({
-  films,
+  film,
   similarFilms,
   comments,
   authorizationStatus,
 }: StateType) => ({
-  films,
+  film,
   similarFilms,
   comments,
   authorizationStatus,
@@ -36,33 +35,26 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Film(props: PropsFromRedux): JSX.Element | null {
-  const {films, similarFilms, authorizationStatus} = props;
+function Film(props: PropsFromRedux): JSX.Element {
+  const { film, comments, similarFilms, authorizationStatus } = props;
   const { url } = useRouteMatch();
+  const { id }: { id: string } = useParams();
+  const dispatcher = useDispatch();
 
-  const {id}: {id: string} = useParams();
+  // const film = films.find((movie) => movie.id === Number(id));
+  // if (film === undefined) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(films);
+  //   return <Redirect to={AppRoute.Page404}/>;
+  // }
 
-  const film = films.find((movie) => movie.id === Number(id));
-
-
-  if (film === undefined) {
-    return (<Page404 />);
-  }
-
-  // const similarFilmsPath = generatePath(AppRoute.Similar, { id: film.id});
-  // const commentsPath = generatePath(AppRoute.Comments, { id: film.id });
-  // const dispatcher = useDispatch();
-
-  // useEffect(() => {
-  // (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
-  // (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
-  // (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  // }, [dispatcher, similarFilmsPath, url, commentsPath]);
-
-  // eslint-disable-next-line no-console
-  // console.log(authorizationStatus);
-  // eslint-disable-next-line no-console
-  // console.log(comments);
+  const similarFilmsPath = generatePath(AppRoute.Similar, { id: id});
+  const commentsPath = generatePath(AppRoute.Comments, { id: id });
+  useEffect(() => {
+    (dispatcher as ThunkAppDispatch)(fetchFilmAction(url));
+    (dispatcher as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
+    (dispatcher as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
+  }, [dispatcher, similarFilmsPath, url, commentsPath]);
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -159,7 +151,7 @@ function Film(props: PropsFromRedux): JSX.Element | null {
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film}/>
+            <FilmCardTabs film={film} comments={comments}/>
           </div>
         </div>
       </section>

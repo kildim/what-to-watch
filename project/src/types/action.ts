@@ -1,8 +1,13 @@
 import {
-  getGenreFilms, loadFilm, loadFilmComments,
+  getGenreFilms,
+  loadFilm,
+  loadFilmComments,
   loadFilms,
-  loadPromo, loadSimilarFilms,
+  loadPromo,
+  loadSimilarFilms,
   redirectToRoute,
+  requireAuthorization,
+  requireLogout,
   setAuthorizationStatus,
   setGenre,
   setIsDataLoaded
@@ -21,6 +26,8 @@ export type ActionType =
   | ReturnType<typeof loadPromo>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof setAuthorizationStatus>
+  | ReturnType<typeof requireAuthorization>
+  | ReturnType<typeof requireLogout>
   | ReturnType<typeof setIsDataLoaded>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

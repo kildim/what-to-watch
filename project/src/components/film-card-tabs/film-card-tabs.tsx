@@ -11,7 +11,7 @@ import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
 import { useState } from 'react';
 import classNames from 'classnames';
-import { FilmType } from '../../types/types';
+import {CommentType, FilmType} from '../../types/types';
 
 enum Tab {
   Overview,
@@ -19,13 +19,14 @@ enum Tab {
   Reviews,
 }
 
-type FilmCardProps = {
+type FilmCardTabsProps = {
   film: FilmType;
+  comments: CommentType[]
 };
 
 const useCatchActiveTab = () => {
   let result;
-  if (useRouteMatch(AppRoute.Overview)?.isExact) {
+  if (useRouteMatch([AppRoute.Overview, AppRoute.Film])?.isExact) {
     result = Tab.Overview;
   }
   if (useRouteMatch(AppRoute.Details)?.isExact) {
@@ -37,7 +38,7 @@ const useCatchActiveTab = () => {
   return result;
 };
 
-function FilmCardTabs({ film }: FilmCardProps): JSX.Element {
+function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(useCatchActiveTab);
 
   const overviewNavLinkClass = classNames('film-nav__item', {
@@ -102,7 +103,7 @@ function FilmCardTabs({ film }: FilmCardProps): JSX.Element {
         <Route
           exact
           path={AppRoute.Reviews}
-          render={() => <ReviewsTab comments={[]} />}
+          render={() => <ReviewsTab comments={comments} />}
         />
       </Switch>
     </div>
