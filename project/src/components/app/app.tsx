@@ -6,7 +6,7 @@ import { AppRoute } from '../../const';
 import SignIn from '../sign-in/sign-in';
 import Page404 from '../page-404/page-404';
 import PrivateRoute from '../private-route/private-route';
-// import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import Review from '../review/review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
@@ -15,9 +15,9 @@ import { StateType } from '../../types/state';
 // import { isCheckedAuth } from '../../utils/utils';
 import browserHistory from '../../browser-history';
 
-const mapStateToProps = ({ authorizationStatus, isDataLoaded }: StateType) => ({
+const mapStateToProps = ({ authorizationStatus, isFilmsDataLoading }: StateType) => ({
   authorizationStatus,
-  isDataLoaded,
+  isFilmsDataLoading,
 });
 
 const connector = connect(mapStateToProps);
@@ -25,17 +25,22 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
-  // const { authorizationStatus, isDataLoaded } = props;
+  const {isFilmsDataLoading } = props;
 
-  // if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
-  //   return <LoadingScreen />;
-  // }
+  if (isFilmsDataLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.Main} render={() => <Main />} />
         <Route exact path={AppRoute.SignIn} render={() => <SignIn />} />
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          render={() => <Review />}
+        />
         <Route path={AppRoute.Film} render={() => <Film />} />
         <Route exact path={AppRoute.MyList} render={() => <MyList />} />
         <Route exact path={AppRoute.Player} render={() => <Player />} />
@@ -43,11 +48,6 @@ function App(props: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.Favorites}
           render={() => <MyList />}
-        />
-        <PrivateRoute
-          exact
-          path={AppRoute.AddReview}
-          render={() => <Review />}
         />
         <Route render={() => <Page404 />} />
       </Switch>

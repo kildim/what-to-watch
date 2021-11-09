@@ -9,7 +9,7 @@ import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {CommentType, FilmType} from '../../types/types';
 
@@ -41,6 +41,8 @@ const useCatchActiveTab = () => {
 function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(useCatchActiveTab);
 
+  useEffect( () => setActiveTab(useCatchActiveTab), [film]);
+
   const overviewNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Overview,
   });
@@ -50,6 +52,9 @@ function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
   const reviewsNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Reviews,
   });
+
+  // eslint-disable-next-line no-console
+  console.log(activeTab);
 
   const handleOverviewNavLinkClick = () => setActiveTab(Tab.Overview);
   const handleDetailsNavLinkClick = () => setActiveTab(Tab.Details);

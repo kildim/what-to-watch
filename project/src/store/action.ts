@@ -1,22 +1,20 @@
 import { CommentType, FilmType } from '../types/types';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { getGenres } from '../utils/utils';
-import { createAction } from '@reduxjs/toolkit';
+import { GenreType } from '../types/state';
 
 export enum Action {
   SetGenre = 'film/setGenre',
   GetGenre = 'film/getGenreFilms',
+  SetGenres = 'film/setGenres',
   SetApi = 'data/setApi',
   LoadFilms = 'data/loadFilms',
   LoadPromo = 'data/loadPromo',
   LoadFilm = 'data/loadFilm',
   LoadFilmComments = 'data/loadFilmComments',
   LoadSimilarFilms = 'data/loadSimilarFilms',
-  SetIsDataLoaded = 'user/setIsDataLoaded',
+  SetIsFilmsDataLoading = 'user/setIsFilmsDataLoading',
   SetAuthorizationStatus = 'user/setAuthorizationStatus',
   RedirectToRoute = 'game/redirectToRoute',
-  RequireAuthorization = 'user/requireAuthorization',
-  RequireLogout = 'user/requireLogout',
 }
 
 export const setGenre = (genre: string) =>
@@ -38,7 +36,14 @@ export const loadFilms = (films: FilmType[]) =>
     type: Action.LoadFilms,
     payload: {
       films: films,
-      genres: getGenres(films),
+    },
+  } as const);
+
+export const setGenres = (genres: GenreType[]) =>
+  ({
+    type: Action.SetGenres,
+    payload: {
+      genres: genres,
     },
   } as const);
 
@@ -72,10 +77,10 @@ export const loadSimilarFilms = (films: FilmType[]) =>
     },
   } as const);
 
-export const setIsDataLoaded = (isDataLoaded: boolean) =>
+export const setIsFilmsDataLoading = (isFilmsDataLoading: boolean) =>
   ({
-    type: Action.SetIsDataLoaded,
-    payload: isDataLoaded,
+    type: Action.SetIsFilmsDataLoading,
+    payload: isFilmsDataLoading,
   } as const);
 
 export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
@@ -83,15 +88,6 @@ export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
     type: Action.SetAuthorizationStatus,
     payload: authStatus,
   } as const);
-
-export const requireAuthorization = createAction(
-  Action.RequireAuthorization,
-  (authStatus: AuthorizationStatus) => ({
-    payload: authStatus,
-  }),
-);
-
-export const requireLogout = createAction(Action.RequireLogout);
 
 export const redirectToRoute = (url: AppRoute) =>
   ({

@@ -8,7 +8,7 @@ export type StateType = {
   films: FilmType[];
   genres: GenreType[];
   authorizationStatus: AuthorizationStatus,
-  isDataLoaded: boolean,
+  isFilmsDataLoading: boolean,
   promo: FilmType,
   film: FilmType,
   similarFilms: FilmType[],

@@ -1,8 +1,8 @@
 import ReviewForm from '../review-form/review-form';
-import {FilmType} from '../../types/types';
 import {StateType} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import Page404 from '../page-404/page-404';
 
 const mapStateToProps = ({ films }: StateType) => ({
   films,
@@ -17,7 +17,11 @@ function Review(props: PropsFromRedux):JSX.Element {
 
   const {id} = useParams<{id?: string}>();
 
-  const film: FilmType = films[Number(id)];
+  const film = films.find((movie) => movie.id === Number(id));
+
+  if (film === undefined) {
+    return <Page404/>;
+  }
 
   return (
     <section className="film-card film-card--full">

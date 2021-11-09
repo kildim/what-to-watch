@@ -8,7 +8,7 @@ const initialState: StateType = {
   films: [],
   genres: [ALL_GENRES_ITEM],
   authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
+  isFilmsDataLoading: false,
   promo: EMPTY_FILM,
   film: EMPTY_FILM,
   similarFilms: [],
@@ -20,7 +20,9 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
     case Action.SetGenre:
       return {...state, genre: action.payload};
     case Action.LoadFilms:
-      return {...state, films: action.payload.films, genres: action.payload.genres};
+      return {...state, films: action.payload.films};
+    case Action.SetGenres:
+      return {...state, genres: action.payload.genres};
     case Action.LoadSimilarFilms:
       return {...state, similarFilms: action.payload.similarFilms};
     case Action.LoadPromo:
@@ -31,16 +33,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, comments: action.payload};
     case Action.SetAuthorizationStatus:
       return {...state, authorizationStatus: action.payload};
-    case Action.SetIsDataLoaded:
-      return {...state, isDataLoaded: action.payload};
-    case Action.RequireAuthorization:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-        isDataLoaded: true,
-      };
-    case Action.RequireLogout:
-      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+    case Action.SetIsFilmsDataLoading:
+      return {...state, isFilmsDataLoading: action.payload};
     default:
       return state;
   }

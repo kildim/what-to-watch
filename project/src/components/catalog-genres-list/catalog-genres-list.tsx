@@ -1,7 +1,5 @@
 import {GenreType, StateType} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dispatch} from '@reduxjs/toolkit';
-import {ActionType} from '../../types/action';
+import {connect, ConnectedProps, useDispatch} from 'react-redux';
 import {setGenre} from '../../store/action';
 import classNames from 'classnames';
 import React, {MouseEvent} from 'react';
@@ -12,12 +10,8 @@ const mapStateToProps = ({genre, films, genres}: StateType) => ({
   genres,
 });
 
+const connector = connect(mapStateToProps);
 
-const mapDispatchToProps = (dispatch: Dispatch<ActionType>) => ({
-  onChangeGenre: (genre: string) => dispatch(setGenre(genre)),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 const constructLiClassName = (genre: string, currentGenre: string): string =>
@@ -26,14 +20,15 @@ const constructLiClassName = (genre: string, currentGenre: string): string =>
   });
 
 function CatalogGenresList(props: PropsFromRedux): JSX.Element {
-  const {genres, onChangeGenre, genre} = props;
+  const {genres, genre} = props;
+  const dispatch = useDispatch();
 
   const handleChangeGenre = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     const target = event.currentTarget;
     const genreName = target.textContent;
     if (genreName) {
-      onChangeGenre(genreName);
+      dispatch(setGenre(genreName));
     }
   };
 
