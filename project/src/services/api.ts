@@ -30,7 +30,7 @@ export const createAPI = (
       const { response } = error;
 
       if (response?.status === HttpCode.Unauthorized) {
-        onUnauthorized();
+        return onUnauthorized();
       }
 
       return Promise.reject(error);

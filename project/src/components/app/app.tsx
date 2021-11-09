@@ -12,11 +12,9 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import Film from '../film/film';
 import { StateType } from '../../types/state';
-// import { isCheckedAuth } from '../../utils/utils';
 import browserHistory from '../../browser-history';
 
-const mapStateToProps = ({ authorizationStatus, isFilmsDataLoading }: StateType) => ({
-  authorizationStatus,
+const mapStateToProps = ({isFilmsDataLoading }: StateType) => ({
   isFilmsDataLoading,
 });
 
@@ -25,7 +23,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
-  const {isFilmsDataLoading } = props;
+  const {isFilmsDataLoading} = props;
 
   if (isFilmsDataLoading) {
     return <LoadingScreen />;

@@ -71,9 +71,13 @@ export const fetchPromoAction =
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login).then(() => {
+    try {
+      await api.get(APIRoute.Login);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    });
+    }catch{
+      // eslint-disable-next-line no-console
+      console.log('CATCH Auth!!!');
+    }
   };
 
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
