@@ -53,9 +53,6 @@ function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
     'film-nav__item--active': activeTab === Tab.Reviews,
   });
 
-  // eslint-disable-next-line no-console
-  console.log(activeTab);
-
   const handleOverviewNavLinkClick = () => setActiveTab(Tab.Overview);
   const handleDetailsNavLinkClick = () => setActiveTab(Tab.Details);
   const handleReviewsNavLinkClick = () => setActiveTab(Tab.Reviews);

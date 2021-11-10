@@ -47,6 +47,7 @@ function Film(props: PropsFromRedux): JSX.Element {
   const film = films.find((movie) => movie.id === Number(id));
   const similarFilmsPath = generatePath(AppRoute.Similar, { id: id});
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
+  const addReviewPath = generatePath(AppRoute.AddReview, { id: id });
 
   const dispatch = useDispatch();
 
@@ -58,15 +59,6 @@ function Film(props: PropsFromRedux): JSX.Element {
   if (film === undefined) {
     return <Page404/>;
   }
-
-  // const commentsPath = generatePath(AppRoute.Comments, { id: id });
-
-  // useEffect(() => {
-  //   (dispatch as ThunkAppDispatch)(fetchFilmAction(url));
-  //   (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
-  //   (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  // }, [dispatch, similarFilmsPath, url, commentsPath]);
-
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -139,7 +131,7 @@ function Film(props: PropsFromRedux): JSX.Element {
                   <span>My list</span>
                 </button>
                 <Link
-                  to={`${url}/review`}
+                  to={addReviewPath}
                   className={classNames('btn film-card__button', {
                     'visually-hidden': !(
                       authorizationStatus === AuthorizationStatus.Auth

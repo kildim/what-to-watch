@@ -8,6 +8,7 @@ const mapStateToProps = ({ films }: StateType) => ({
   films,
 });
 
+
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
