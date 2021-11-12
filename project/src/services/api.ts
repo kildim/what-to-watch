@@ -45,7 +45,9 @@ export const createAPI = (
     }
 
     return config;
-  });
+  },
+  (error: AxiosError) => Promise.reject(error),
+  );
 
   return api;
 };

@@ -1,24 +1,32 @@
-function Comment():JSX.Element {
+import {CommentType} from '../../types/types';
+
+type CommentProps = {comment: CommentType};
+
+const DATE_FORMAT_OPTIONS = {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+};
+
+function Comment( props: CommentProps):JSX.Element {
+  const {comment} = props;
+  const commentDate = new Date(comment.date);
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">
-          Anderson&apos;s films are too precious for some, but for those of
-          us willing to lose ourselves in them, they&apos;re a delight.
-          &ldquo;The Grand Budapest Hotel&ldquo; is no different, except
-          that he has added a hint of gravitas to the mix, improving the
-          recipe.
+        <p className="review__text" style={{wordBreak: 'break-all'}}>
+          {comment.comment}
         </p>
 
         <footer className="review__details">
-          <cite className="review__author">Bill Goodykoontz</cite>
+          <cite className="review__author">{comment.user.name}</cite>
           <time className="review__date" dateTime="2015-11-18">
-            November 18, 2015
+            {commentDate.toLocaleDateString('en-US', DATE_FORMAT_OPTIONS as Intl.DateTimeFormatOptions)}
           </time>
         </footer>
       </blockquote>
 
-      <div className="review__rating">8,0</div>
+      <div className="review__rating">{comment.rating}</div>
     </div>
   );
 }

@@ -73,7 +73,7 @@ function Review(props: PropsFromRedux):JSX.Element {
       </div>
 
       <div className="add-review">
-        <ReviewForm/>
+        <ReviewForm />
       </div>
 
     </section>

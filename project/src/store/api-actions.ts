@@ -1,5 +1,5 @@
-import { ThunkActionResult } from '../types/action';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import {ThunkActionResult} from '../types/action';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {
   loadFilmComments,
   loadFilms,
@@ -10,70 +10,51 @@ import {
   setGenres,
   setIsFilmsDataLoading
 } from './action';
-import { dropToken, saveToken, Token } from '../services/token';
-import { AuthData } from '../types/auth-data';
-import { getGenres, parseFilmFromServerFormat } from '../utils/utils';
-import { FilmType, ServerFilmType } from '../types/types';
-import axios from 'axios';
-
-// export const postReview = (
-//   { rating, comment }: CommentType,
-//   filmId: string,
-// ): ThunkActionResult => {
-//   const postCommentUrl = APIRoute.PostComment.concat('/',filmId);
-//   async (dispatch, _getState, api): Promise<void> => {
-//     await api.post<{ token: Token }>(postCommentUrl, { email, password });
-//   };
-// };
+import {dropToken, saveToken, Token} from '../services/token';
+import {AuthData} from '../types/auth-data';
+import {getGenres, parseFilmFromServerFormat} from '../utils/utils';
+import {FilmType, PostCommentType, ServerFilmType} from '../types/types';
+import {generatePath} from 'react-router-dom';
 
 export const fetchFilmsAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      try {
-        dispatch(setIsFilmsDataLoading(true));
-        const { data: serverFilmsData } = await api.get(APIRoute.Films);
-        const filmsData: FilmType[] = serverFilmsData.map(
-          (film: ServerFilmType) => parseFilmFromServerFormat(film),
-        );
-        dispatch(loadFilms(filmsData));
-        dispatch(setGenres(getGenres(filmsData)));
-        dispatch(setIsFilmsDataLoading(false));
-      } catch (e) {
-      // eslint-disable-next-line no-console
-        console.log(e);
-      }
+
+      dispatch(setIsFilmsDataLoading(true));
+      const {data: serverFilmsData} = await api.get(APIRoute.Films);
+      const filmsData: FilmType[] = serverFilmsData.map(
+        (film: ServerFilmType) => parseFilmFromServerFormat(film),
+      );
+      dispatch(loadFilms(filmsData));
+      dispatch(setGenres(getGenres(filmsData)));
+      dispatch(setIsFilmsDataLoading(false));
+
     };
 
 export const fetchSimilarFilmsAction =
   (similarFilmsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      try {
-        const { data: serverFilmsData } = await api.get(similarFilmsPath);
-        const filmsData = serverFilmsData.map((film: ServerFilmType) =>
-          parseFilmFromServerFormat(film),
-        );
-        dispatch(loadSimilarFilms(filmsData));
-      } catch (e) {
-        if (axios.isAxiosError(e)) {
-        // eslint-disable-next-line no-console
-          console.log(e.response?.status);
-        } else {
-          throw e;
-        }
-      }
+
+      const {data: serverFilmsData} = await api.get(similarFilmsPath);
+      const filmsData = serverFilmsData.map((film: ServerFilmType) =>
+        parseFilmFromServerFormat(film),
+      );
+      dispatch(loadSimilarFilms(filmsData));
+
     };
+
 
 export const fetchFilmCommentsAction =
   (commentsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data: comments } = await api.get(commentsPath);
+      const {data: comments} = await api.get(commentsPath);
       dispatch(loadFilmComments(comments));
     };
 
 export const fetchPromoAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data: serverPromoData } = await api.get(APIRoute.Promo);
+      const {data: serverPromoData} = await api.get(APIRoute.Promo);
       const promoData = parseFilmFromServerFormat(serverPromoData);
       dispatch(loadPromo(promoData));
     };
@@ -83,23 +64,49 @@ export const checkAuthAction =
     try {
       await api.get(APIRoute.Login);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-    } catch {
+    } catch (e) {
       // eslint-disable-next-line no-console
-      console.log('CATCH Auth!!!');
+      console.log(e);
     }
+
   };
 
 export const loginAction =
-  ({ login: email, password }: AuthData): ThunkActionResult =>
+  ({login: email, password}: AuthData): ThunkActionResult =>
     async (dispatch, _getState, api) => {
       await api
-        .post<{ token: Token }>(APIRoute.Login, { email, password })
-        .then(({ data: { token } }) => {
+        .post<{ token: Token }>(APIRoute.Login, {email, password})
+        .then(({data: {token}}) => {
           saveToken(token);
           dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
           dispatch(redirectToRoute(AppRoute.Main));
         });
     };
+
+
+export const postReview = (
+  {rating, comment}: PostCommentType, id: string,
+): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    const postCommentUrl = generatePath(APIRoute.PostComment, {id});
+    const filmUrl = generatePath(AppRoute.Film, {id});
+    await api
+      .post<{ token: Token }>(postCommentUrl, {
+        rating,
+        comment,
+      })
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response.data);
+        dispatch(redirectToRoute(filmUrl));
+      }).catch ( (error) =>
+      {
+
+        // eslint-disable-next-line no-console
+        console.log(error);
+      });
+  };
+
 
 export const logoutAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {

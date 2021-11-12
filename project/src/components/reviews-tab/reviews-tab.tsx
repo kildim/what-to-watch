@@ -9,6 +9,7 @@ const FILM_CARD_REVIEWS_STYLE = {
   paddingTop: '20px',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
+  gridAutoColumns: 'minmax(0, 380px)',
   columnGap: '60px',
 
 };
@@ -18,7 +19,7 @@ function ReviewsTab(props: ReviewsTabProps): JSX.Element {
 
   return (
     <div className="film-card__reviews film-card__row" style={FILM_CARD_REVIEWS_STYLE}>
-      {comments.map((comment) => (<Comment key={comment.id}/>))}
+      {comments.map((comment) => (<Comment key={comment.id} comment = {comment}/>))}
     </div>
   );
 }

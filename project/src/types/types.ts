@@ -39,7 +39,28 @@ export type ServerFilmType = {
 }
 
 export type CommentType = {
-  id: string,
-  rating: string,
+  id: number,
+  user: {
+    id: number,
+    name: string,
+  },
+  rating: number,
   comment: string,
+  date: Date
+}
+
+export type PostCommentType = {
+  rating: string,
+  comment: string
+}
+
+export type ServerCommentType = {
+  id: number,
+  user: {
+    id: number,
+    name: string,
+  },
+  rating: number,
+  comment: string,
+  date: string
 }

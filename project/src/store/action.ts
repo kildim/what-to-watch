@@ -1,5 +1,5 @@
-import { CommentType, FilmType } from '../types/types';
-import { AppRoute, AuthorizationStatus } from '../const';
+import {CommentType, FilmType} from '../types/types';
+import { AuthorizationStatus } from '../const';
 import { GenreType } from '../types/state';
 
 export enum Action {
@@ -89,7 +89,7 @@ export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
     payload: authStatus,
   } as const);
 
-export const redirectToRoute = (url: AppRoute) =>
+export const redirectToRoute = (url: string) =>
   ({
     type: Action.RedirectToRoute,
     payload: url,

@@ -1,5 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import classNames from 'classnames';
+import {postReview} from '../../store/api-actions';
+import {ThunkAppDispatch} from '../../types/action';
+import {connect, ConnectedProps} from 'react-redux';
+import {PostCommentType} from '../../types/types';
+import {useParams} from 'react-router-dom';
 
 const MAX_RATING = 10;
 const DEFAULT_RATING = Array(MAX_RATING)
@@ -9,10 +14,22 @@ const MIN_RATING_BOUND = 0;
 const MIN_POST_LENGTH = 50;
 const MAX_POST_LENGTH = 400;
 
-function ReviewForm() {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  onSubmit({rating, comment}: PostCommentType, id: string) {
+    dispatch(postReview({rating, comment}, id));
+  },
+});
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function ReviewForm(props: PropsFromRedux) {
+  const {onSubmit} = props;
+
   const [rating, setRating] = useState(DEFAULT_RATING);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [review, setReview] = useState('');
+  const {id} = useParams<{id: string}>();
 
   const getRating = (): number => rating.findIndex((ratingElement) => ratingElement) +1;
 
@@ -31,14 +48,12 @@ function ReviewForm() {
     target,
   }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
-    // eslint-disable-next-line no-console
-    console.log(target.textContent);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(review);
+    const ratingValue = String(getRating());
+    onSubmit({rating: ratingValue, comment: review}, id);
   };
 
   const RATING_INPUTS = Array(MAX_RATING)
@@ -93,4 +108,5 @@ function ReviewForm() {
   );
 }
 
-export default ReviewForm;
+export { ReviewForm };
+export default connector(ReviewForm);
