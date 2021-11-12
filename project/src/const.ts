@@ -48,6 +48,13 @@ export const EMPTY_FILM = {
   isFavorite: false,
 };
 
+export const EMPTY_USER_INFO = {
+  id: -1,
+  email: '',
+  name: '',
+  avatarUrl: '',
+};
+
 export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;
 

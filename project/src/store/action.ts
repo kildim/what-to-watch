@@ -1,4 +1,4 @@
-import {CommentType, FilmType} from '../types/types';
+import {CommentType, FilmType, UserInfoType} from '../types/types';
 import { AuthorizationStatus } from '../const';
 import { GenreType } from '../types/state';
 
@@ -10,6 +10,7 @@ export enum Action {
   LoadFilms = 'data/loadFilms',
   LoadPromo = 'data/loadPromo',
   LoadFilm = 'data/loadFilm',
+  LoadUserInfo = 'data/loadUserInfo',
   LoadFilmComments = 'data/loadFilmComments',
   LoadSimilarFilms = 'data/loadSimilarFilms',
   SetIsFilmsDataLoading = 'user/setIsFilmsDataLoading',
@@ -37,6 +38,12 @@ export const loadFilms = (films: FilmType[]) =>
     payload: {
       films: films,
     },
+  } as const);
+
+export const loadUserInfo = (userInfo: UserInfoType) =>
+  ({
+    type: Action.LoadUserInfo,
+    payload: userInfo,
   } as const);
 
 export const setGenres = (genres: GenreType[]) =>

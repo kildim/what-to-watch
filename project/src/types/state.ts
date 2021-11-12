@@ -1,4 +1,4 @@
-import {CommentType, FilmType} from './types';
+import {CommentType, FilmType, UserInfoType} from './types';
 import {AuthorizationStatus} from '../const';
 
 export type GenreType = string;
@@ -13,4 +13,5 @@ export type StateType = {
   film: FilmType,
   similarFilms: FilmType[],
   comments: CommentType[],
+  userInfo: UserInfoType,
 };

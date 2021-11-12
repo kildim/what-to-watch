@@ -4,7 +4,7 @@ import {
   loadFilmComments,
   loadFilms,
   loadPromo,
-  loadSimilarFilms,
+  loadSimilarFilms, loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
   setGenres,
@@ -12,8 +12,13 @@ import {
 } from './action';
 import {dropToken, saveToken, Token} from '../services/token';
 import {AuthData} from '../types/auth-data';
-import {getGenres, parseFilmFromServerFormat} from '../utils/utils';
-import {FilmType, PostCommentType, ServerFilmType} from '../types/types';
+import {getGenres, parseAuthInfoFromServerFormat, parseFilmFromServerFormat} from '../utils/utils';
+import {
+  FilmType,
+  PostCommentType,
+  ServerFilmType,
+  UserInfoType
+} from '../types/types';
 import {generatePath} from 'react-router-dom';
 
 export const fetchFilmsAction =
@@ -75,14 +80,23 @@ export const loginAction =
   ({login: email, password}: AuthData): ThunkActionResult =>
     async (dispatch, _getState, api) => {
       await api
-        .post<{ token: Token }>(APIRoute.Login, {email, password})
-        .then(({data: {token}}) => {
-          saveToken(token);
+        .post(APIRoute.Login, {email, password})
+        .then(({data: serverAuthInfo}) => {
+          const {id: userId, email: userEmail, name: userName, avatarUrl: userAvatarUrl, token: userToken } = parseAuthInfoFromServerFormat(serverAuthInfo);
+          saveToken(userToken);
+          const userInfo: UserInfoType = {
+            id: userId,
+            email: userEmail,
+            name: userName,
+            avatarUrl: userAvatarUrl,
+          };
           dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+          dispatch(loadUserInfo(userInfo));
+          // eslint-disable-next-line no-console
+          console.log(userInfo);
           dispatch(redirectToRoute(AppRoute.Main));
         });
     };
-
 
 export const postReview = (
   {rating, comment}: PostCommentType, id: string,

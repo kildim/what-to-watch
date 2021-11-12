@@ -1,4 +1,4 @@
-import { FilmType, ServerFilmType } from '../types/types';
+import {AuthInfoType, FilmType, ServerAuthInfoType, ServerFilmType} from '../types/types';
 import { GenreType } from '../types/state';
 import { ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER } from '../const';
 
@@ -47,10 +47,19 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   isFavorite: isTrueString(film['is_favorite']),
 });
 
+const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoType  => ({
+  id: AuthInfo.id,
+  email: AuthInfo.email,
+  name: AuthInfo.name,
+  avatarUrl: AuthInfo['avatar_url'],
+  token: AuthInfo.token,
+});
+
 export {
   joinArrayByComma,
   filterFilmsByGenre,
   getGenres,
   isTrueString,
-  parseFilmFromServerFormat
+  parseFilmFromServerFormat,
+  parseAuthInfoFromServerFormat
 };

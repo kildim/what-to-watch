@@ -1,7 +1,7 @@
 import { StateType } from '../types/state';
 import { ActionType } from '../types/action';
 import { Action } from './action';
-import { ALL_GENRES_ITEM, AuthorizationStatus, EMPTY_FILM } from '../const';
+import { ALL_GENRES_ITEM, AuthorizationStatus, EMPTY_FILM, EMPTY_USER_INFO } from '../const';
 
 const initialState: StateType = {
   genre: ALL_GENRES_ITEM as string,
@@ -13,6 +13,7 @@ const initialState: StateType = {
   film: EMPTY_FILM,
   similarFilms: [],
   comments: [],
+  userInfo: EMPTY_USER_INFO,
 };
 
 const reducer = (state: StateType = initialState, action: ActionType): StateType => {
@@ -35,6 +36,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, authorizationStatus: action.payload};
     case Action.SetIsFilmsDataLoading:
       return {...state, isFilmsDataLoading: action.payload};
+    case Action.LoadUserInfo:
+      return {...state, userInfo: action.payload};
     default:
       return state;
   }
