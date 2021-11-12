@@ -8,6 +8,7 @@ import ShowButton from '../show-button/show-button';
 
 import {StateType} from '../../types/state';
 import {filterFilmsByGenre} from '../../utils/utils';
+import UserBlock from '../user-block/user-block';
 
 const CHUNK_LENGTH = 8;
 
@@ -61,21 +62,22 @@ function Main(props: PropsFromRedux): JSX.Element {
             </a>
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width="63"
-                  height="63"
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          {/*<ul className="user-block">*/}
+          {/*  <li className="user-block__item">*/}
+          {/*    <div className="user-block__avatar">*/}
+          {/*      <img*/}
+          {/*        src="img/avatar.jpg"*/}
+          {/*        alt="User avatar"*/}
+          {/*        width="63"*/}
+          {/*        height="63"*/}
+          {/*      />*/}
+          {/*    </div>*/}
+          {/*  </li>*/}
+          {/*  <li className="user-block__item">*/}
+          {/*    <a className="user-block__link">Sign out</a>*/}
+          {/*  </li>*/}
+          {/*</ul>*/}
+          <UserBlock />
         </header>
 
         <div className="film-card__wrap">

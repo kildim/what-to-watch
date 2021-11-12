@@ -6,20 +6,13 @@ import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 
 import { StateType } from '../../types/state';
-// import { ThunkAppDispatch } from '../../types/action';
-// import {
-//   fetchFilmAction,
-//   fetchFilmCommentsAction,
-//   fetchSimilarFilmsAction
-// } from '../../store/api-actions';
-// import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import Page404 from '../page-404/page-404';
 import {useEffect} from 'react';
 import {fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {ThunkAppDispatch} from '../../types/action';
-// import Page404 from '../page-404/page-404';
-// import browserHistory from '../../browser-history';
+import UserBlock from '../user-block/user-block';
 
 const SIMILAR_NUMBER = 4;
 
@@ -86,21 +79,7 @@ function Film(props: PropsFromRedux): JSX.Element {
               </Link>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width="63"
-                    height="63"
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock/>
           </header>
 
           <div className="film-card__wrap">
