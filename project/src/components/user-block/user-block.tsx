@@ -1,6 +1,8 @@
-import {connect, ConnectedProps} from 'react-redux';
+import {connect, ConnectedProps, useDispatch} from 'react-redux';
 import {StateType} from '../../types/state';
-import {AuthorizationStatus} from '../../const';
+import {APIRoute,AuthorizationStatus} from '../../const';
+import {logoutAction} from '../../store/api-actions';
+import {useHistory} from 'react-router-dom';
 
 const mapStateToProps = ({authorizationStatus, userInfo}: StateType) => ({
   authorizationStatus, userInfo,
@@ -12,6 +14,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function UserBlock(props: PropsFromRedux): JSX.Element {
   const {authorizationStatus, userInfo} = props;
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogOutClick = () => dispatch(logoutAction());
+  const handleLogInClick = () => history.push(APIRoute.Login);
 
   return (
     <ul className="user-block">
@@ -28,13 +36,13 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
+            <a className="user-block__link" onClick={handleLogOutClick}>Sign out</a>
           </li>
         </>
       )}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <li className="user-block__item">
-          <a className="user-block__link">Sign in</a>
+          <a className="user-block__link" onClick={handleLogInClick}>Sign in</a>
         </li>
       )}
     </ul>
