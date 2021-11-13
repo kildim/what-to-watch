@@ -70,6 +70,12 @@ const rangeFilm = (rating: number) => {
   }
 };
 
+const convertMinutesRepresentation = (minutesDuration: number) => {
+  const hours = Math.floor(minutesDuration/60);
+  const minutes = minutesDuration - hours * 60;
+  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+};
+
 export {
   joinArrayByComma,
   filterFilmsByGenre,
@@ -77,5 +83,6 @@ export {
   isTrueString,
   parseFilmFromServerFormat,
   parseAuthInfoFromServerFormat,
-  rangeFilm
+  rangeFilm,
+  convertMinutesRepresentation
 };
