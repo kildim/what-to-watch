@@ -1,4 +1,4 @@
-import { FilmType, ServerFilmType } from '../types/types';
+import {AuthInfoType, FilmType, ServerAuthInfoType, ServerFilmType} from '../types/types';
 import { GenreType } from '../types/state';
 import { ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER } from '../const';
 
@@ -47,10 +47,55 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   isFavorite: isTrueString(film['is_favorite']),
 });
 
+const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoType  => ({
+  id: AuthInfo.id,
+  email: AuthInfo.email,
+  name: AuthInfo.name,
+  avatarUrl: AuthInfo['avatar_url'],
+  token: AuthInfo.token,
+});
+
+const rangeFilm = (rating: number): string => {
+  switch (true) {
+    case rating < 3:
+      return 'Bad';
+    case rating < 5:
+      return 'Normal';
+    case rating < 8:
+      return 'Good';
+    case rating < 10:
+      return 'Very good';
+    default:
+      return 'Awesome';
+  }
+};
+
+const convertMinutesRepresentation = (minutesDuration: number): string => {
+  const hours = Math.floor(minutesDuration/60);
+  const minutes = minutesDuration - hours * 60;
+  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+};
+
+// TODO поставить в toLocaleDateString константу вместо объекта
+// const DATE_FORMAT_OPTIONS = {
+//   month: 'long',
+//   day: 'numeric',
+//   year: 'numeric',
+// };
+const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+
 export {
   joinArrayByComma,
   filterFilmsByGenre,
   getGenres,
   isTrueString,
-  parseFilmFromServerFormat
+  parseFilmFromServerFormat,
+  parseAuthInfoFromServerFormat,
+  rangeFilm,
+  convertMinutesRepresentation,
+  formatCommentDate
 };

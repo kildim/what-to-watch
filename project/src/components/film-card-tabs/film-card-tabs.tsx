@@ -1,16 +1,17 @@
-import { Link } from 'react-router-dom';
-import { FilmType } from '../../types/types';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {
+  generatePath,
+  Link,
+  Route,
+  Switch,
+  useRouteMatch
+} from 'react-router-dom';
+import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
 import {useEffect, useState} from 'react';
 import classNames from 'classnames';
-
-type FilmCardTabsProps = {
-  film: FilmType;
-};
+import {CommentType, FilmType} from '../../types/types';
 
 enum Tab {
   Overview,
@@ -18,9 +19,29 @@ enum Tab {
   Reviews,
 }
 
-function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
-  const { url } = useRouteMatch();
-  const [activeTab, setActiveTab] = useState(Tab.Overview);
+type FilmCardTabsProps = {
+  film: FilmType;
+  comments: CommentType[]
+};
+
+const useCatchActiveTab = () => {
+  let result;
+  if (useRouteMatch([AppRoute.Overview, AppRoute.Film])?.isExact) {
+    result = Tab.Overview;
+  }
+  if (useRouteMatch(AppRoute.Details)?.isExact) {
+    result = Tab.Details;
+  }
+  if (useRouteMatch(AppRoute.Reviews)?.isExact) {
+    result = Tab.Reviews;
+  }
+  return result;
+};
+
+function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
+  const [activeTab, setActiveTab] = useState(useCatchActiveTab);
+
+  useEffect( () => setActiveTab(useCatchActiveTab), [film]);
 
   const overviewNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Overview,
@@ -36,15 +57,13 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
   const handleDetailsNavLinkClick = () => setActiveTab(Tab.Details);
   const handleReviewsNavLinkClick = () => setActiveTab(Tab.Reviews);
 
-  useEffect(() => setActiveTab(Tab.Overview), [film.id]);
-
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
           <li className={overviewNavLinkClass}>
             <Link
-              to={url}
+              to={generatePath(AppRoute.Overview, { id: film.id })}
               className="film-nav__link"
               onClick={handleOverviewNavLinkClick}
             >
@@ -53,7 +72,7 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
           </li>
           <li className={detailsNavLinkClass}>
             <Link
-              to={`${url}/details`}
+              to={generatePath(AppRoute.Details, { id: film.id })}
               className="film-nav__link"
               onClick={handleDetailsNavLinkClick}
             >
@@ -62,7 +81,7 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
           </li>
           <li className={reviewsNavLinkClass}>
             <Link
-              to={`${url}/reviews`}
+              to={generatePath(AppRoute.Reviews, { id: film.id })}
               className="film-nav__link"
               onClick={handleReviewsNavLinkClick}
             >
@@ -73,15 +92,21 @@ function FilmCardTabs({ film }: FilmCardTabsProps): JSX.Element {
       </nav>
 
       <Switch>
-        <Route exact path={AppRoute.Details}>
-          <DetailsTab film={film} />
-        </Route>
-        <Route exact path={AppRoute.Reviews}>
-          <ReviewsTab film={film} />
-        </Route>
-        <Route exact path={AppRoute.Film}>
-          <OverviewTab film={film} />
-        </Route>
+        <Route
+          exact
+          path={[AppRoute.Overview, AppRoute.Film]}
+          render={() => <OverviewTab film={film} />}
+        />
+        <Route
+          exact
+          path={AppRoute.Details}
+          render={() => <DetailsTab film={film} />}
+        />
+        <Route
+          exact
+          path={AppRoute.Reviews}
+          render={() => <ReviewsTab comments={comments} />}
+        />
       </Switch>
     </div>
   );

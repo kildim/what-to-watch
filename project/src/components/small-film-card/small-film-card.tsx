@@ -1,6 +1,7 @@
-import {Link, useHistory} from 'react-router-dom';
+import {generatePath, Link, useHistory} from 'react-router-dom';
 import {FilmType} from '../../types/types';
 import {useEffect, useRef, useState} from 'react';
+import {AppRoute} from '../../const';
 
 type SmallFilmcardProps = {
   film: FilmType,
@@ -8,7 +9,7 @@ type SmallFilmcardProps = {
 
 
 function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
-  const filmPath = `/films/${film.id}`;
+  const filmPath = generatePath(AppRoute.Film, {id: film.id});
 
   const [isPlaying, setIsPlaying] = useState(false);
   const history = useHistory();
@@ -28,7 +29,8 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
 
   const stopPlay = (video: HTMLVideoElement | null): void => {
     if (video) {
-      video.load();
+      const videoSrc = video.src;
+      video.src = videoSrc;
     }
   };
 
@@ -46,6 +48,11 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     };
   }, [isPlaying]);
 
+  const videoStyle = {
+    width: '100%',
+    height: '100%',
+  };
+
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
@@ -54,10 +61,11 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     >
       <div className="small-film-card__image">
         <video
-          poster={film.posterImage}
+          poster={film.previewImage}
           src={film.previewVideoLink}
           ref={videoRef}
           preload="none"
+          style={videoStyle}
           loop
           muted
         />

@@ -1,5 +1,10 @@
-import axios, {AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig} from 'axios';
-import {getToken} from './token';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios';
+import { getToken } from './token';
 
 const BACKEND_URL = 'https://8.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -10,7 +15,9 @@ enum HttpCode {
 
 type UnauthorizedCallback = () => void;
 
-export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance => {
+export const createAPI = (
+  onUnauthorized: UnauthorizedCallback,
+): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -20,26 +27,26 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
     (response: AxiosResponse) => response,
 
     (error: AxiosError) => {
-      const {response} = error;
+      const { response } = error;
 
       if (response?.status === HttpCode.Unauthorized) {
-        return onUnauthorized();
+        onUnauthorized();
       }
 
       return Promise.reject(error);
     },
   );
 
-  api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-      const token = getToken();
+  api.interceptors.request.use((config: AxiosRequestConfig) => {
+    const token = getToken();
 
-      if (token) {
-        config.headers['x-token'] = token;
-      }
+    if (token) {
+      config.headers['x-token'] = token;
+    }
 
-      return config;
-    },
+    return config;
+  },
+  (error: AxiosError) => Promise.reject(error),
   );
 
   return api;

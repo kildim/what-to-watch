@@ -1,11 +1,13 @@
+import {convertMinutesRepresentation, joinArrayByComma} from '../../utils/utils';
 import {FilmType} from '../../types/types';
-import {joinArrayByComma} from '../../utils/utils';
 
 type DetailsTabProps = {
-  film: FilmType,
+  film: FilmType
 }
 
-function DetailsTab ({film}: DetailsTabProps): JSX.Element {
+function DetailsTab (prop: DetailsTabProps): JSX.Element {
+  const {film} = prop;
+
   const starring = joinArrayByComma(film.starring);
 
   return (
@@ -24,7 +26,7 @@ function DetailsTab ({film}: DetailsTabProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{film.runTime}</span>
+          <span className="film-card__details-value">{convertMinutesRepresentation(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

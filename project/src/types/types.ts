@@ -1,3 +1,5 @@
+import {Token} from '../services/token';
+
 export type FilmType = {
   id: number,
   name: string,
@@ -36,4 +38,43 @@ export type ServerFilmType = {
   genre: string,
   released: number,
   'is_favorite': string,
+}
+
+export type CommentType = {
+  id: number,
+  user: {
+    id: number,
+    name: string,
+  },
+  rating: number,
+  comment: string,
+  date: Date
+}
+
+export type PostCommentType = {
+  rating: string,
+  comment: string
+}
+
+export type AuthInfoType = {
+  id: number,
+  email: string,
+  name: string,
+  avatarUrl: string,
+  token: Token
+}
+
+export type UserInfoType = {
+  id: number,
+  email: string,
+  name: string,
+  avatarUrl: string,
+}
+
+export type ServerAuthInfoType = {
+  id: number,
+  email: string,
+  name: string,
+  'avatar_url': string,
+  token: Token
 }

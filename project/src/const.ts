@@ -2,7 +2,6 @@ export enum AppRoute {
   SignIn = '/login',
   Main = '/',
   Film = '/films/:id',
-  Review = '/films/:id/review',
   MyList = '/my-list',
   Player = '/player/:id',
   Favorites = '/favorites',
@@ -11,13 +10,16 @@ export enum AppRoute {
   Details = '/films/:id/details',
   Similar = '/films/:id/similar',
   AddReview = '/films/:id/review',
+  Comments = '/comments/:id',
+  Page404 = '/404'
 }
 
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
-  Promo = '/promo'
+  Promo = '/promo',
+  PostComment = '/comments/:id'
 }
 
 export enum AuthorizationStatus {
@@ -44,6 +46,13 @@ export const EMPTY_FILM = {
   genre: 'UNKNOWN',
   released: 0,
   isFavorite: false,
+};
+
+export const EMPTY_USER_INFO = {
+  id: -1,
+  email: '',
+  name: '',
+  avatarUrl: '',
 };
 
 export const ALL_GENRES_ITEM = 'All genres';
