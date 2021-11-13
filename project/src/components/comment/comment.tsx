@@ -10,6 +10,8 @@ function Comment( props: CommentProps):JSX.Element {
   return (
     <div className="review">
       <blockquote className="review__quote">
+
+        {/*TODO избавиться от инлайн стилей, вынести их в константу*/}
         <p className="review__text" style={{
           wordBreak: 'break-all',
         }}

@@ -76,6 +76,12 @@ const convertMinutesRepresentation = (minutesDuration: number): string => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
+// TODO поставить в toLocaleDateString константу вместо объекта
+// const DATE_FORMAT_OPTIONS = {
+//   month: 'long',
+//   day: 'numeric',
+//   year: 'numeric',
+// };
 const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
   month: 'long',
   day: 'numeric',
