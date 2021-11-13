@@ -149,6 +149,7 @@ export const postReview =
           console.log(response.data);
           dispatch(redirectToRoute(filmUrl));
           dispatch(setIsReviewPosting(false));
+
         })
         .catch((error) => {
           dispatch(setIsReviewPosting(false));

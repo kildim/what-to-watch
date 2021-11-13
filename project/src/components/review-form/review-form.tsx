@@ -5,6 +5,7 @@ import {ThunkAppDispatch} from '../../types/action';
 import {connect, ConnectedProps} from 'react-redux';
 import {PostCommentType} from '../../types/types';
 import {useParams} from 'react-router-dom';
+import {StateType} from '../../types/state';
 
 const MAX_RATING = 10;
 const DEFAULT_RATING = Array(MAX_RATING)
@@ -19,13 +20,17 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
     dispatch(postReview({rating, comment}, id));
   },
 });
+const mapStateToProps = ({
+  isReviewPosting}: StateType) => ({
+  isReviewPosting,
+});
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function ReviewForm(props: PropsFromRedux) {
-  const {onSubmit} = props;
+  const {onSubmit, isReviewPosting} = props;
 
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [review, setReview] = useState('');
@@ -69,6 +74,7 @@ function ReviewForm(props: PropsFromRedux) {
             name="rating"
             value={INPUT_VALUE}
             onChange={onChangeInputHandler}
+            disabled={isReviewPosting}
           />
           <label className="rating__label" htmlFor={`star-${INPUT_VALUE}`}>
             `Rating ${INPUT_VALUE}`
@@ -92,6 +98,7 @@ function ReviewForm(props: PropsFromRedux) {
           id="review-text"
           placeholder="Review text"
           onChange={onInputReviewTextHandler}
+          disabled={isReviewPosting}
         />
         <div className="add-review__submit">
           <button
@@ -99,6 +106,7 @@ function ReviewForm(props: PropsFromRedux) {
               'visually-hidden': !isValidToPost(),
             })}
             type="submit"
+            disabled={isReviewPosting}
           >
             Post
           </button>

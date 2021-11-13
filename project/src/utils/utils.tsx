@@ -55,7 +55,7 @@ const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoTy
   token: AuthInfo.token,
 });
 
-const rangeFilm = (rating: number) => {
+const rangeFilm = (rating: number): string => {
   switch (true) {
     case rating < 3:
       return 'Bad';
@@ -70,7 +70,7 @@ const rangeFilm = (rating: number) => {
   }
 };
 
-const convertMinutesRepresentation = (minutesDuration: number) => {
+const convertMinutesRepresentation = (minutesDuration: number): string => {
   const hours = Math.floor(minutesDuration/60);
   const minutes = minutesDuration - hours * 60;
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;

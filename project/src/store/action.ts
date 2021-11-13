@@ -95,7 +95,7 @@ export const setIsReviewPosting = (isReviewPosting: boolean) =>
   ({
     type: Action.SetIsReviewPosting,
     payload: isReviewPosting,
-  } as const)
+  } as const);
 
 
 export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
