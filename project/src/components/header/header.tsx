@@ -8,7 +8,6 @@ function Header(): JSX.Element {
           <span className="logo__letter logo__letter--3">W</span>
         </a>
       </div>
-      {/*  <h1 className="page-title user-page__title">My list</h1>*/}
 
       <ul className="user-block">
         <li className="user-block__item">

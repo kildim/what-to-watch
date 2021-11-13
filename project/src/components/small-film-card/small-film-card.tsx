@@ -48,11 +48,6 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     };
   }, [isPlaying]);
 
-  const videoStyle = {
-    width: '100%',
-    height: '100%',
-  };
-
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
@@ -65,7 +60,6 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
           src={film.previewVideoLink}
           ref={videoRef}
           preload="none"
-          style={videoStyle}
           loop
           muted
         />

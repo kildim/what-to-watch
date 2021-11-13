@@ -70,7 +70,7 @@ const rangeFilm = (rating: number): string => {
   }
 };
 
-const convertMinutesRepresentation = (minutesDuration: number): string => {
+const convertMinutesToHoursWithMinutes = (minutesDuration: number): string => {
   const hours = Math.floor(minutesDuration/60);
   const minutes = minutesDuration - hours * 60;
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
@@ -96,6 +96,6 @@ export {
   parseFilmFromServerFormat,
   parseAuthInfoFromServerFormat,
   rangeFilm,
-  convertMinutesRepresentation,
+  convertMinutesToHoursWithMinutes,
   formatCommentDate
 };

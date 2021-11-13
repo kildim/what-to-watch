@@ -1,4 +1,4 @@
-import {convertMinutesRepresentation, joinArrayByComma} from '../../utils/utils';
+import {convertMinutesToHoursWithMinutes, joinArrayByComma} from '../../utils/utils';
 import {FilmType} from '../../types/types';
 
 type DetailsTabProps = {
@@ -26,7 +26,7 @@ function DetailsTab (prop: DetailsTabProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{convertMinutesRepresentation(film.runTime)}</span>
+          <span className="film-card__details-value">{convertMinutesToHoursWithMinutes(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

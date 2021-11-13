@@ -112,9 +112,9 @@ function Film(props: PropsFromRedux): JSX.Element {
                 <Link
                   to={addReviewPath}
                   className={classNames('btn film-card__button', {
-                    'visually-hidden': !(
-                      authorizationStatus === AuthorizationStatus.Auth
-                    ),
+                    'visually-hidden':
+                      authorizationStatus !== AuthorizationStatus.Auth
+                    ,
                   })}
                 >
                   Add review
