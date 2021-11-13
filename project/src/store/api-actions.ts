@@ -71,7 +71,7 @@ export const checkAuthAction =
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e);
+      console.log('checkAuthAction Error');
     }
 
   };

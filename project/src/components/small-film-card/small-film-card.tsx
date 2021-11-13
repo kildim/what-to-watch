@@ -29,7 +29,9 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
 
   const stopPlay = (video: HTMLVideoElement | null): void => {
     if (video) {
-      video.load();
+      const videoSrc=video.currentSrc;
+      video.src='';
+      video.src=videoSrc;
     }
   };
 

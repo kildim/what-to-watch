@@ -1,5 +1,5 @@
 import { Route, Router as BrowserRouter, Switch } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 
 import Main from '../main/main';
 import { AppRoute } from '../../const';
@@ -24,6 +24,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App(props: PropsFromRedux): JSX.Element {
   const {isFilmsDataLoading} = props;
+
+  // const store = useStore();
+
+  // (store.dispatch as ThunkAppDispatch)(checkAuthAction());
+  // (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
+  // (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
 
   if (isFilmsDataLoading) {
     return <LoadingScreen />;
