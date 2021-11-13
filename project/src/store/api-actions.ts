@@ -29,31 +29,48 @@ import { generatePath } from 'react-router-dom';
 export const fetchFilmsAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      dispatch(setIsFilmsDataLoading(true));
-      const { data: serverFilmsData } = await api.get(APIRoute.Films);
-      const filmsData: FilmType[] = serverFilmsData.map((film: ServerFilmType) =>
-        parseFilmFromServerFormat(film),
-      );
-      dispatch(loadFilms(filmsData));
-      dispatch(setGenres(getGenres(filmsData)));
-      dispatch(setIsFilmsDataLoading(false));
+      try {
+        dispatch(setIsFilmsDataLoading(true));
+        const { data: serverFilmsData } = await api.get(APIRoute.Films);
+        const filmsData: FilmType[] = serverFilmsData.map((film: ServerFilmType) =>
+          parseFilmFromServerFormat(film),
+        );
+        dispatch(loadFilms(filmsData));
+        dispatch(setGenres(getGenres(filmsData)));
+        dispatch(setIsFilmsDataLoading(false));
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('fetchFilmsAction Error');
+      }
     };
 
 export const fetchSimilarFilmsAction =
   (similarFilmsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data: serverFilmsData } = await api.get(similarFilmsPath);
-      const filmsData = serverFilmsData.map((film: ServerFilmType) =>
-        parseFilmFromServerFormat(film),
-      );
-      dispatch(loadSimilarFilms(filmsData));
+      try {
+        const { data: serverFilmsData } = await api.get(similarFilmsPath);
+        const filmsData = serverFilmsData.map((film: ServerFilmType) =>
+          parseFilmFromServerFormat(film),
+        );
+        dispatch(loadSimilarFilms(filmsData));
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('fetchSimilarFilmsAction Error');
+      }
+
     };
 
 export const fetchFilmCommentsAction =
   (commentsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const { data: comments } = await api.get(commentsPath);
-      dispatch(loadFilmComments(comments));
+      try {
+        const { data: comments } = await api.get(commentsPath);
+        dispatch(loadFilmComments(comments));
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('fetchFilmCommentsAction Error');
+      }
+
     };
 
 export const fetchPromoAction =
