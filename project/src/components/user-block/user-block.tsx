@@ -1,6 +1,6 @@
 import {connect, ConnectedProps, useDispatch} from 'react-redux';
 import {StateType} from '../../types/state';
-import {APIRoute,AuthorizationStatus} from '../../const';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {useHistory} from 'react-router-dom';
 
@@ -20,6 +20,7 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
 
   const handleLogOutClick = () => dispatch(logoutAction());
   const handleLogInClick = () => history.push(APIRoute.Login);
+  const handleAvatarClick = () => history.push(AppRoute.MyList);
 
   return (
     <ul className="user-block">
@@ -32,6 +33,7 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
                 alt="User avatar"
                 width="63"
                 height="63"
+                onClick={handleAvatarClick}
               />
             </div>
           </li>
