@@ -76,6 +76,12 @@ const convertMinutesRepresentation = (minutesDuration: number): string => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
+const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
+
 export {
   joinArrayByComma,
   filterFilmsByGenre,
@@ -84,5 +90,6 @@ export {
   parseFilmFromServerFormat,
   parseAuthInfoFromServerFormat,
   rangeFilm,
-  convertMinutesRepresentation
+  convertMinutesRepresentation,
+  formatCommentDate
 };

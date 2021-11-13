@@ -1,12 +1,7 @@
 import {CommentType} from '../../types/types';
+import {formatCommentDate} from '../../utils/utils';
 
 type CommentProps = {comment: CommentType};
-
-const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-});
 
 function Comment( props: CommentProps):JSX.Element {
   const {comment} = props;
