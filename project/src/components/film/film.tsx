@@ -149,5 +149,5 @@ function Film(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Film };
+export {Film};
 export default connector(Film);

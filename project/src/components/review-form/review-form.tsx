@@ -116,5 +116,5 @@ function ReviewForm(props: PropsFromRedux) {
   );
 }
 
-export { ReviewForm };
+export {ReviewForm};
 export default connector(ReviewForm);

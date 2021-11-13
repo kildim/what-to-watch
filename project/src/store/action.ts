@@ -16,7 +16,7 @@ export enum Action {
   SetIsFilmsDataLoading = 'user/setIsFilmsDataLoading',
   SetAuthorizationStatus = 'user/setAuthorizationStatus',
   SetIsReviewPosting = 'user/isReviewPosting',
-  RedirectToRoute = 'game/redirectToRoute',
+  RedirectToRoute = 'data/redirectToRoute',
 }
 
 export const setGenre = (genre: string) =>

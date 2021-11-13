@@ -2,26 +2,30 @@ import {CommentType} from '../../types/types';
 
 type CommentProps = {comment: CommentType};
 
-const DATE_FORMAT_OPTIONS = {
+const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
   month: 'long',
   day: 'numeric',
   year: 'numeric',
-};
+});
 
 function Comment( props: CommentProps):JSX.Element {
   const {comment} = props;
   const commentDate = new Date(comment.date);
+
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text" style={{wordBreak: 'break-all'}}>
+        <p className="review__text" style={{
+          wordBreak: 'break-all',
+        }}
+        >
           {comment.comment}
         </p>
 
         <footer className="review__details">
           <cite className="review__author">{comment.user.name}</cite>
-          <time className="review__date" dateTime="2015-11-18">
-            {commentDate.toLocaleDateString('en-US', DATE_FORMAT_OPTIONS as Intl.DateTimeFormatOptions)}
+          <time className="review__date" dateTime={commentDate.toISOString()}>
+            {formatCommentDate(commentDate)}
           </time>
         </footer>
       </blockquote>

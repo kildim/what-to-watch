@@ -38,7 +38,7 @@ export const fetchFilmsAction =
         dispatch(loadFilms(filmsData));
         dispatch(setGenres(getGenres(filmsData)));
         dispatch(setIsFilmsDataLoading(false));
-      } catch (e) {
+      } catch (error) {
         // eslint-disable-next-line no-console
         console.log('fetchFilmsAction Error');
       }
@@ -102,7 +102,7 @@ export const checkAuthAction =
         dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(loadUserInfo(userInfo));
       });
-    } catch (e) {
+    } catch (error) {
       // eslint-disable-next-line no-console
       console.log('checkAuthAction Error');
     }
