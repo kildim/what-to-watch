@@ -1,65 +1,65 @@
-import {ThunkActionResult} from '../types/action';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import { ThunkActionResult } from '../types/action';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import {
   loadFilmComments,
   loadFilms,
   loadPromo,
-  loadSimilarFilms, loadUserInfo,
+  loadSimilarFilms,
+  loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
   setGenres,
   setIsFilmsDataLoading
 } from './action';
-import {dropToken, saveToken, Token} from '../services/token';
-import {AuthData} from '../types/auth-data';
-import {getGenres, parseAuthInfoFromServerFormat, parseFilmFromServerFormat} from '../utils/utils';
+import { dropToken, saveToken, Token } from '../services/token';
+import { AuthData } from '../types/auth-data';
+import {
+  getGenres,
+  parseAuthInfoFromServerFormat,
+  parseFilmFromServerFormat
+} from '../utils/utils';
 import {
   FilmType,
   PostCommentType,
   ServerFilmType,
   UserInfoType
 } from '../types/types';
-import {generatePath} from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
 export const fetchFilmsAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-
       dispatch(setIsFilmsDataLoading(true));
-      const {data: serverFilmsData} = await api.get(APIRoute.Films);
-      const filmsData: FilmType[] = serverFilmsData.map(
-        (film: ServerFilmType) => parseFilmFromServerFormat(film),
+      const { data: serverFilmsData } = await api.get(APIRoute.Films);
+      const filmsData: FilmType[] = serverFilmsData.map((film: ServerFilmType) =>
+        parseFilmFromServerFormat(film),
       );
       dispatch(loadFilms(filmsData));
       dispatch(setGenres(getGenres(filmsData)));
       dispatch(setIsFilmsDataLoading(false));
-
     };
 
 export const fetchSimilarFilmsAction =
   (similarFilmsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-
-      const {data: serverFilmsData} = await api.get(similarFilmsPath);
+      const { data: serverFilmsData } = await api.get(similarFilmsPath);
       const filmsData = serverFilmsData.map((film: ServerFilmType) =>
         parseFilmFromServerFormat(film),
       );
       dispatch(loadSimilarFilms(filmsData));
-
     };
-
 
 export const fetchFilmCommentsAction =
   (commentsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const {data: comments} = await api.get(commentsPath);
+      const { data: comments } = await api.get(commentsPath);
       dispatch(loadFilmComments(comments));
     };
 
 export const fetchPromoAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const {data: serverPromoData} = await api.get(APIRoute.Promo);
+      const { data: serverPromoData } = await api.get(APIRoute.Promo);
       const promoData = parseFilmFromServerFormat(serverPromoData);
       dispatch(loadPromo(promoData));
     };
@@ -67,22 +67,42 @@ export const fetchPromoAction =
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
     try {
-      await api.get(APIRoute.Login);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+      await api.get(APIRoute.Login).then(({ data: serverAuthInfo }) => {
+        const {
+          id: userId,
+          email: userEmail,
+          name: userName,
+          avatarUrl: userAvatarUrl,
+          token: userToken,
+        } = parseAuthInfoFromServerFormat(serverAuthInfo);
+        saveToken(userToken);
+        const userInfo: UserInfoType = {
+          id: userId,
+          email: userEmail,
+          name: userName,
+          avatarUrl: userAvatarUrl,
+        };
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+        dispatch(loadUserInfo(userInfo));
+      });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log('checkAuthAction Error');
     }
-
   };
-
 export const loginAction =
-  ({login: email, password}: AuthData): ThunkActionResult =>
+  ({ login: email, password }: AuthData): ThunkActionResult =>
     async (dispatch, _getState, api) => {
       await api
-        .post(APIRoute.Login, {email, password})
-        .then(({data: serverAuthInfo}) => {
-          const {id: userId, email: userEmail, name: userName, avatarUrl: userAvatarUrl, token: userToken } = parseAuthInfoFromServerFormat(serverAuthInfo);
+        .post(APIRoute.Login, { email, password })
+        .then(({ data: serverAuthInfo }) => {
+          const {
+            id: userId,
+            email: userEmail,
+            name: userName,
+            avatarUrl: userAvatarUrl,
+            token: userToken,
+          } = parseAuthInfoFromServerFormat(serverAuthInfo);
           saveToken(userToken);
           const userInfo: UserInfoType = {
             id: userId,
@@ -92,35 +112,30 @@ export const loginAction =
           };
           dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
           dispatch(loadUserInfo(userInfo));
-          // eslint-disable-next-line no-console
-          console.log(userInfo);
           dispatch(redirectToRoute(AppRoute.Main));
         });
     };
 
-export const postReview = (
-  {rating, comment}: PostCommentType, id: string,
-): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    const postCommentUrl = generatePath(APIRoute.PostComment, {id});
-    const filmUrl = generatePath(AppRoute.Film, {id});
-    await api
-      .post<{ token: Token }>(postCommentUrl, {
-        rating,
-        comment,
-      })
-      .then((response) => {
+export const postReview =
+  ({ rating, comment }: PostCommentType, id: string): ThunkActionResult =>
+    async (dispatch, _getState, api) => {
+      const postCommentUrl = generatePath(APIRoute.PostComment, { id });
+      const filmUrl = generatePath(AppRoute.Film, { id });
+      await api
+        .post<{ token: Token }>(postCommentUrl, {
+          rating,
+          comment,
+        })
+        .then((response) => {
         // eslint-disable-next-line no-console
-        console.log(response.data);
-        dispatch(redirectToRoute(filmUrl));
-      }).catch ( (error) =>
-      {
-
+          console.log(response.data);
+          dispatch(redirectToRoute(filmUrl));
+        })
+        .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error);
-      });
-  };
-
+          console.log(error);
+        });
+    };
 
 export const logoutAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {

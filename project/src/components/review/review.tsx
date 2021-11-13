@@ -1,8 +1,9 @@
-import ReviewForm from '../review-form/review-form';
-import {StateType} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {useParams} from 'react-router-dom';
+import ReviewForm from '../review-form/review-form';
+import {StateType} from '../../types/state';
 import Page404 from '../page-404/page-404';
+import UserBlock from '../user-block/user-block';
 
 const mapStateToProps = ({ films }: StateType) => ({
   films,
@@ -53,16 +54,7 @@ function Review(props: PropsFromRedux):JSX.Element {
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

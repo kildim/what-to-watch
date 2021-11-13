@@ -25,12 +25,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 function App(props: PropsFromRedux): JSX.Element {
   const {isFilmsDataLoading} = props;
 
-  // const store = useStore();
-
-  // (store.dispatch as ThunkAppDispatch)(checkAuthAction());
-  // (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
-  // (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
-
   if (isFilmsDataLoading) {
     return <LoadingScreen />;
   }
