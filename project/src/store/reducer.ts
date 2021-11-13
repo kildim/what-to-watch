@@ -9,6 +9,7 @@ const initialState: StateType = {
   genres: [ALL_GENRES_ITEM],
   authorizationStatus: AuthorizationStatus.Unknown,
   isFilmsDataLoading: false,
+  isReviewPosting: false,
   promo: EMPTY_FILM,
   film: EMPTY_FILM,
   similarFilms: [],
@@ -36,6 +37,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, authorizationStatus: action.payload};
     case Action.SetIsFilmsDataLoading:
       return {...state, isFilmsDataLoading: action.payload};
+    case Action.SetIsReviewPosting:
+      return {...state, isReviewPosting: action.payload};
     case Action.LoadUserInfo:
       return {...state, userInfo: action.payload};
     default:

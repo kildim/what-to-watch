@@ -8,7 +8,7 @@ import {
   redirectToRoute,
   setAuthorizationStatus,
   setGenre, setGenres,
-  setIsFilmsDataLoading
+  setIsFilmsDataLoading, setIsReviewPosting
 } from '../store/action';
 import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
@@ -26,6 +26,7 @@ export type ActionType =
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof setAuthorizationStatus>
   | ReturnType<typeof setIsFilmsDataLoading>
+  | ReturnType<typeof setIsReviewPosting>
   | ReturnType<typeof loadUserInfo>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

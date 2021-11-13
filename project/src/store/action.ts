@@ -15,6 +15,7 @@ export enum Action {
   LoadSimilarFilms = 'data/loadSimilarFilms',
   SetIsFilmsDataLoading = 'user/setIsFilmsDataLoading',
   SetAuthorizationStatus = 'user/setAuthorizationStatus',
+  SetIsReviewPosting = 'user/isReviewPosting',
   RedirectToRoute = 'game/redirectToRoute',
 }
 
@@ -89,6 +90,13 @@ export const setIsFilmsDataLoading = (isFilmsDataLoading: boolean) =>
     type: Action.SetIsFilmsDataLoading,
     payload: isFilmsDataLoading,
   } as const);
+
+export const setIsReviewPosting = (isReviewPosting: boolean) =>
+  ({
+    type: Action.SetIsReviewPosting,
+    payload: isReviewPosting,
+  } as const)
+
 
 export const setAuthorizationStatus = (authStatus: AuthorizationStatus) =>
   ({

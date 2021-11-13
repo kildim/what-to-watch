@@ -9,7 +9,7 @@ import {
   redirectToRoute,
   setAuthorizationStatus,
   setGenres,
-  setIsFilmsDataLoading
+  setIsFilmsDataLoading, setIsReviewPosting
 } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
 import { AuthData } from '../types/auth-data';
@@ -138,6 +138,7 @@ export const postReview =
     async (dispatch, _getState, api) => {
       const postCommentUrl = generatePath(APIRoute.PostComment, { id });
       const filmUrl = generatePath(AppRoute.Film, { id });
+      dispatch(setIsReviewPosting(true));
       await api
         .post<{ token: Token }>(postCommentUrl, {
           rating,
@@ -147,9 +148,11 @@ export const postReview =
         // eslint-disable-next-line no-console
           console.log(response.data);
           dispatch(redirectToRoute(filmUrl));
+          dispatch(setIsReviewPosting(false));
         })
         .catch((error) => {
-        // eslint-disable-next-line no-console
+          dispatch(setIsReviewPosting(false));
+          // eslint-disable-next-line no-console
           console.log(error);
         });
     };
