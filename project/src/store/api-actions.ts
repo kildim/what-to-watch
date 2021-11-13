@@ -142,4 +142,5 @@ export const logoutAction =
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
