@@ -5,22 +5,27 @@ import UserBlock from '../user-block/user-block';
 import {useEffect} from 'react';
 import {ThunkAppDispatch} from '../../types/action';
 import {fetchFavorites} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-const mapStateToProps = ({films, favorites}: StateType) => ({
-  films, favorites,
+const mapStateToProps = ({films, favorites, isFavoritesLoading}: StateType) => ({
+  films, favorites, isFavoritesLoading,
 });
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MyList(props: PropsFromRedux): JSX.Element {
-  const {favorites} = props;
+  const {favorites, isFavoritesLoading} = props;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchFavorites());
   }, []);
+
+  if (isFavoritesLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="user-page">
