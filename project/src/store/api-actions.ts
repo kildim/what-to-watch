@@ -1,6 +1,7 @@
 import { ThunkActionResult } from '../types/action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import {
+  loadFavorites,
   loadFilmComments,
   loadFilms,
   loadPromo,
@@ -8,8 +9,9 @@ import {
   loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
-  setGenres,
-  setIsFilmsDataLoading, setIsReviewPosting
+  setGenres, setIsFavoritesLoading,
+  setIsFilmsDataLoading,
+  setIsReviewPosting
 } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
 import { AuthData } from '../types/auth-data';
@@ -32,15 +34,36 @@ export const fetchFilmsAction =
       try {
         dispatch(setIsFilmsDataLoading(true));
         const { data: serverFilmsData } = await api.get(APIRoute.Films);
-        const filmsData: FilmType[] = serverFilmsData.map((film: ServerFilmType) =>
-          parseFilmFromServerFormat(film),
+        const filmsData: FilmType[] = serverFilmsData.map(
+          (film: ServerFilmType) => parseFilmFromServerFormat(film),
         );
         dispatch(loadFilms(filmsData));
         dispatch(setGenres(getGenres(filmsData)));
         dispatch(setIsFilmsDataLoading(false));
       } catch (error) {
-        // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
         console.log('fetchFilmsAction Error');
+        dispatch(setIsFilmsDataLoading(false));
+      }
+    };
+
+export const fetchFavorites =
+  (): ThunkActionResult =>
+    async (dispatch, _getState, api): Promise<void> => {
+      try {
+        dispatch(setIsFavoritesLoading(true));
+        const { data: serverFavorites } = await api.get(APIRoute.Favorites);
+        // eslint-disable-next-line no-console
+        console.log(serverFavorites);
+        const favoritesData: FilmType[] = serverFavorites.map(
+          (film: ServerFilmType) => parseFilmFromServerFormat(film),
+        );
+        dispatch(loadFavorites(favoritesData));
+        dispatch(setIsFavoritesLoading(false));
+      } catch (error) {
+      // eslint-disable-next-line no-console
+        console.log('fetchFavorites Error');
+        dispatch(setIsFavoritesLoading(false));
       }
     };
 
@@ -54,10 +77,9 @@ export const fetchSimilarFilmsAction =
         );
         dispatch(loadSimilarFilms(filmsData));
       } catch (error) {
-        // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
         console.log('fetchSimilarFilmsAction Error');
       }
-
     };
 
 export const fetchFilmCommentsAction =
@@ -67,10 +89,9 @@ export const fetchFilmCommentsAction =
         const { data: comments } = await api.get(commentsPath);
         dispatch(loadFilmComments(comments));
       } catch (error) {
-        // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
         console.log('fetchFilmCommentsAction Error');
       }
-
     };
 
 export const fetchPromoAction =
@@ -149,7 +170,6 @@ export const postReview =
           console.log(response.data);
           dispatch(redirectToRoute(filmUrl));
           dispatch(setIsReviewPosting(false));
-
         })
         .catch((error) => {
           dispatch(setIsReviewPosting(false));

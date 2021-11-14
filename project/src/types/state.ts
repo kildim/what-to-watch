@@ -15,4 +15,6 @@ export type StateType = {
   similarFilms: FilmType[],
   comments: CommentType[],
   userInfo: UserInfoType,
+  favorites: FilmType[],
+  isFavoritesLoading: boolean,
 };

@@ -1,5 +1,5 @@
 import {
-  getGenreFilms,
+  getGenreFilms, loadFavorites,
   loadFilm,
   loadFilmComments,
   loadFilms,
@@ -7,7 +7,7 @@ import {
   loadSimilarFilms, loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
-  setGenre, setGenres,
+  setGenre, setGenres, setIsFavoritesLoading,
   setIsFilmsDataLoading, setIsReviewPosting
 } from '../store/action';
 import { ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
@@ -27,7 +27,9 @@ export type ActionType =
   | ReturnType<typeof setAuthorizationStatus>
   | ReturnType<typeof setIsFilmsDataLoading>
   | ReturnType<typeof setIsReviewPosting>
-  | ReturnType<typeof loadUserInfo>;
+  | ReturnType<typeof loadUserInfo>
+  | ReturnType<typeof loadFavorites>
+  | ReturnType<typeof setIsFavoritesLoading>;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<
   R,

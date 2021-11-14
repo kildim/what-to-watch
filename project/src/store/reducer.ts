@@ -15,6 +15,8 @@ const initialState: StateType = {
   similarFilms: [],
   comments: [],
   userInfo: EMPTY_USER_INFO,
+  favorites: [],
+  isFavoritesLoading: false,
 };
 
 const reducer = (state: StateType = initialState, action: ActionType): StateType => {
@@ -31,6 +33,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, promo: action.payload.promo};
     case Action.LoadFilm:
       return {...state, film: action.payload.film};
+    case Action.LoadFavorites:
+      return {...state, favorites: action.payload};
     case Action.LoadFilmComments:
       return {...state, comments: action.payload};
     case Action.SetAuthorizationStatus:
@@ -39,6 +43,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, isFilmsDataLoading: action.payload};
     case Action.SetIsReviewPosting:
       return {...state, isReviewPosting: action.payload};
+    case Action.SetIsFavoritesLoading:
+      return {...state, isFavoritesLoading: action.payload};
     case Action.LoadUserInfo:
       return {...state, userInfo: action.payload};
     default:
