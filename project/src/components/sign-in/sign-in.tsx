@@ -2,7 +2,10 @@ import {FormEvent, useRef} from 'react';
 import {ThunkAppDispatch} from '../../types/action';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect, ConnectedProps, useStore} from 'react-redux';
+import {StateType} from '../../types/state';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {redirectToRoute} from '../../store/action';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -10,12 +13,22 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const mapStateToProps = ({authorizationStatus}: StateType) => ({
+  authorizationStatus,
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function SignIn(props: PropsFromRedux): JSX.Element {
-  const {onSubmit} = props;
+  const {onSubmit, authorizationStatus} = props;
+
+  const store = useStore();
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    store.dispatch(redirectToRoute(AppRoute.Main));
+  }
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
