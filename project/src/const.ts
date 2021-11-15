@@ -11,7 +11,6 @@ export enum AppRoute {
   Similar = '/films/:id/similar',
   AddReview = '/films/:id/review',
   Comments = '/comments/:id',
-  Page404 = '/404'
 }
 
 export enum APIRoute {
@@ -20,7 +19,8 @@ export enum APIRoute {
   Logout = '/logout',
   Promo = '/promo',
   PostComment = '/comments/:id',
-  Favorites = '/favorite'
+  Favorites = '/favorite',
+  FavoriteStatus = '/favorite/:film_id/:status'
 }
 
 export enum AuthorizationStatus {

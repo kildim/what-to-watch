@@ -63,14 +63,6 @@ export const setGenres = (genres: GenreType[]) =>
     },
   } as const);
 
-export const loadPromo = (promo: FilmType) =>
-  ({
-    type: Action.LoadPromo,
-    payload: {
-      promo: promo,
-    },
-  } as const);
-
 export const loadFilm = (film: FilmType) =>
   ({
     type: Action.LoadFilm,

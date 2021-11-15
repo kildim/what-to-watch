@@ -2,14 +2,15 @@ import { ThunkActionResult } from '../types/action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import {
   loadFavorites,
+  loadFilm,
   loadFilmComments,
   loadFilms,
-  loadPromo,
   loadSimilarFilms,
   loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
-  setGenres, setIsFavoritesLoading,
+  setGenres,
+  setIsFavoritesLoading,
   setIsFilmsDataLoading,
   setIsReviewPosting
 } from './action';
@@ -99,7 +100,7 @@ export const fetchPromoAction =
     async (dispatch, _getState, api): Promise<void> => {
       const { data: serverPromoData } = await api.get(APIRoute.Promo);
       const promoData = parseFilmFromServerFormat(serverPromoData);
-      dispatch(loadPromo(promoData));
+      dispatch(loadFilm(promoData));
     };
 
 export const checkAuthAction =
@@ -185,3 +186,17 @@ export const logoutAction =
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(redirectToRoute(AppRoute.Main));
   };
+
+export const setFavorite =
+  (isFavorite: boolean, id: number): ThunkActionResult =>
+    async (dispatch, _getState, api) => {
+      const status = isFavorite ? '0' : '1';
+      const postFavorite = generatePath(APIRoute.FavoriteStatus, {
+        'film_id': id,
+        status: status,
+      });
+      await api.post(postFavorite).then(({data: serverFilmData}) => {
+        const filmData = parseFilmFromServerFormat(serverFilmData);
+        dispatch(loadFilm(filmData));
+      });
+    };

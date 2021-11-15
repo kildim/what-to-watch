@@ -1,5 +1,5 @@
 import {useEffect, useState, useMemo} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect, ConnectedProps, useStore} from 'react-redux';
 
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
@@ -9,13 +9,16 @@ import ShowButton from '../show-button/show-button';
 import {StateType} from '../../types/state';
 import {filterFilmsByGenre} from '../../utils/utils';
 import UserBlock from '../user-block/user-block';
+import AddMyList from '../add-my-list/add-my-list';
+import {ThunkAppDispatch} from '../../types/action';
+import {fetchPromoAction} from '../../store/api-actions';
 
 const CHUNK_LENGTH = 8;
 
-const mapStateToProps = ({genre, films, promo}: StateType) => ({
+const mapStateToProps = ({genre, films, film}: StateType) => ({
   genre,
   films,
-  promo,
+  film,
 });
 
 const connector = connect(mapStateToProps);
@@ -23,9 +26,14 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const {genre, films, promo} = props;
+  const {genre, films, film} = props;
 
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
+  const store = useStore();
+  useEffect( () => {
+    (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
+  }, []);
+
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);
@@ -46,7 +54,7 @@ function Main(props: PropsFromRedux): JSX.Element {
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={promo.backgroundImage}
+            src={film.backgroundImage}
             alt="The Grand Budapest Hotel"
           />
         </div>
@@ -69,18 +77,18 @@ function Main(props: PropsFromRedux): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src={promo.posterImage}
-                alt={`${promo.name} poster`}
+                src={film.posterImage}
+                alt={`${film.name} poster`}
                 width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -93,15 +101,7 @@ function Main(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <AddMyList />
               </div>
             </div>
           </div>

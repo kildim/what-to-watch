@@ -11,7 +11,7 @@ import {createAPI} from './services/api';
 import {setAuthorizationStatus} from './store/action';
 import {AuthorizationStatus} from './const';
 import {ThunkAppDispatch} from './types/action';
-import {checkAuthAction, fetchFilmsAction, fetchPromoAction} from './store/api-actions';
+import {checkAuthAction, fetchFavorites, fetchFilmsAction} from './store/api-actions';
 import {redirect} from './store/middlewares/redirect';
 
 const api = createAPI(
@@ -24,7 +24,7 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.wit
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
-(store.dispatch as ThunkAppDispatch)(fetchPromoAction());
+(store.dispatch as ThunkAppDispatch)(fetchFavorites());
 
 ReactDOM.render(
   <React.StrictMode>

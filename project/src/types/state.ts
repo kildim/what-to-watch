@@ -10,7 +10,6 @@ export type StateType = {
   authorizationStatus: AuthorizationStatus,
   isFilmsDataLoading: boolean,
   isReviewPosting: boolean,
-  promo: FilmType,
   film: FilmType,
   similarFilms: FilmType[],
   comments: CommentType[],

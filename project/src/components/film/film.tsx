@@ -13,6 +13,8 @@ import {useEffect} from 'react';
 import {fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
 import {ThunkAppDispatch} from '../../types/action';
 import UserBlock from '../user-block/user-block';
+import AddMyList from '../add-my-list/add-my-list';
+import {loadFilm} from '../../store/action';
 
 const SIMILAR_NUMBER = 4;
 
@@ -36,13 +38,12 @@ function Film(props: PropsFromRedux): JSX.Element {
   const { films, comments, authorizationStatus, similarFilms } = props;
   const { url } = useRouteMatch();
   const { id }: { id: string } = useParams();
+  const dispatch = useDispatch();
 
   const film = films.find((movie) => movie.id === Number(id));
   const similarFilmsPath = generatePath(AppRoute.Similar, { id: id});
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
   const addReviewPath = generatePath(AppRoute.AddReview, { id: id });
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
@@ -52,6 +53,8 @@ function Film(props: PropsFromRedux): JSX.Element {
   if (film === undefined) {
     return <Page404/>;
   }
+
+  dispatch(loadFilm(film));
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -100,15 +103,7 @@ function Film(props: PropsFromRedux): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <AddMyList />
                 <Link
                   to={addReviewPath}
                   className={classNames('btn film-card__button', {

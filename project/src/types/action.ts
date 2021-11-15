@@ -3,7 +3,6 @@ import {
   loadFilm,
   loadFilmComments,
   loadFilms,
-  loadPromo,
   loadSimilarFilms, loadUserInfo,
   redirectToRoute,
   setAuthorizationStatus,
@@ -22,7 +21,6 @@ export type ActionType =
   | ReturnType<typeof loadSimilarFilms>
   | ReturnType<typeof loadFilmComments>
   | ReturnType<typeof loadFilm>
-  | ReturnType<typeof loadPromo>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof setAuthorizationStatus>
   | ReturnType<typeof setIsFilmsDataLoading>
