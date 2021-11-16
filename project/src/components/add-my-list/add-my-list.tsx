@@ -3,13 +3,17 @@ import { connect, ConnectedProps, useStore } from 'react-redux';
 import { FilmType } from '../../types/types';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchFavorites, setFavorite } from '../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {redirectToRoute} from '../../store/action';
 
 const mapStateToProps = ({
   favorites,
   film,
+  authorizationStatus,
 }: StateType) => ({
   favorites,
   film,
+  authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);
@@ -22,10 +26,14 @@ const isFavorite = (favorites: FilmType[], film: FilmType): boolean =>
   !!favorites.find((favorite) => favorite.id === film.id);
 
 function AddMyList(props: ConnectedComponentProps): JSX.Element {
-  const { favorites, film } = props;
+  const { favorites, film, authorizationStatus} = props;
   const store = useStore();
 
   const handleMyList = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+
+      store.dispatch(redirectToRoute(AppRoute.SignIn));
+    }
     (store.dispatch as ThunkAppDispatch)(
       setFavorite(isFavorite(favorites, film), film.id),
     );
