@@ -34,8 +34,9 @@ function SignIn(props: PropsFromRedux): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    const validPassword = /\D\d|\d\D/i;
     evt.preventDefault();
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && validPassword.test(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,

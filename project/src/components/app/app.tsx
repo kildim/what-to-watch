@@ -39,6 +39,7 @@ function App(props: PropsFromRedux): JSX.Element {
           path={AppRoute.AddReview}
           render={() => <Review />}
         />
+        <Route exact path={AppRoute.Page404} render={() => <Page404 />} />
         <Route path={AppRoute.Film} render={() => <Film />} />
         <PrivateRoute exact path={AppRoute.MyList} render={() => <MyList />} />
         <Route exact path={AppRoute.Player} render={() => <Player />} />

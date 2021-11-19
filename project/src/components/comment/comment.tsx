@@ -1,21 +1,21 @@
-import {CommentType} from '../../types/types';
-import {formatCommentDate} from '../../utils/utils';
+import { CommentType } from '../../types/types';
+import { formatCommentDate } from '../../utils/utils';
+import { CSSProperties } from 'react';
 
-type CommentProps = {comment: CommentType};
+type CommentProps = { comment: CommentType };
 
-function Comment( props: CommentProps):JSX.Element {
-  const {comment} = props;
+const REVIEW_TEXT_STYLE: CSSProperties = {
+  wordBreak: 'break-all',
+};
+
+function Comment(props: CommentProps): JSX.Element {
+  const { comment } = props;
   const commentDate = new Date(comment.date);
 
   return (
     <div className="review">
       <blockquote className="review__quote">
-
-        {/*TODO избавиться от инлайн стилей, вынести их в константу*/}
-        <p className="review__text" style={{
-          wordBreak: 'break-all',
-        }}
-        >
+        <p className="review__text" style={REVIEW_TEXT_STYLE}>
           {comment.comment}
         </p>
 
