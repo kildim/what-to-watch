@@ -12,6 +12,7 @@ import UserBlock from '../user-block/user-block';
 import AddMyList from '../add-my-list/add-my-list';
 import {ThunkAppDispatch} from '../../types/action';
 import {fetchPromoAction} from '../../store/api-actions';
+import PlayFilm from '../play-film/play-film';
 
 const CHUNK_LENGTH = 8;
 
@@ -92,15 +93,7 @@ function Main(props: PropsFromRedux): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <PlayFilm />
                 <AddMyList />
               </div>
             </div>
