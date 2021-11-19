@@ -60,3 +60,8 @@ export const EMPTY_USER_INFO = {
 export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;
 
+export const TOAST_MESSAGE = {
+  AUTH_SUGGESTION : 'Предлягаем Авторизоваться',
+  POST_ERROR: 'Ошибка при публикации на сервере',
+};
+

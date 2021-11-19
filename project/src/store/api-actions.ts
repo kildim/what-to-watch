@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../types/action';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus, TOAST_MESSAGE} from '../const';
 import {
   loadFavorites,
   loadFilm,
@@ -28,6 +28,7 @@ import {
   UserInfoType
 } from '../types/types';
 import { generatePath } from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 export const fetchFilmsAction =
   (): ThunkActionResult =>
@@ -54,8 +55,6 @@ export const fetchFavorites =
       try {
         dispatch(setIsFavoritesLoading(true));
         const { data: serverFavorites } = await api.get(APIRoute.Favorites);
-        // eslint-disable-next-line no-console
-        console.log(serverFavorites);
         const favoritesData: FilmType[] = serverFavorites.map(
           (film: ServerFilmType) => parseFilmFromServerFormat(film),
         );
@@ -125,8 +124,7 @@ export const checkAuthAction =
         dispatch(loadUserInfo(userInfo));
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('checkAuthAction Error');
+      toast.info(TOAST_MESSAGE.AUTH_SUGGESTION);
     }
   };
 export const loginAction =
@@ -166,16 +164,13 @@ export const postReview =
           rating,
           comment,
         })
-        .then((response) => {
-        // eslint-disable-next-line no-console
-          console.log(response.data);
+        .then(() => {
           dispatch(redirectToRoute(filmUrl));
           dispatch(setIsReviewPosting(false));
         })
-        .catch((error) => {
+        .catch(() => {
           dispatch(setIsReviewPosting(false));
-          // eslint-disable-next-line no-console
-          console.log(error);
+          toast.info(TOAST_MESSAGE.POST_ERROR);
         });
     };
 
