@@ -5,7 +5,7 @@ type OverviewTabProps = {
   film: FilmType
 }
 
-function OverviewTab (props: OverviewTabProps) {
+function OverviewTab (props: OverviewTabProps):JSX.Element {
   const {film} = props;
 
   const starring = `${film.starring.join(', ')}.`;

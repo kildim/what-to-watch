@@ -12,9 +12,7 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type ConnectedComponentProps = PropsFromRedux;
-
-function PlayFilm (props: ConnectedComponentProps): JSX.Element {
+function PlayFilm (props: PropsFromRedux): JSX.Element {
   const {film} = props;
   const store = useStore();
 

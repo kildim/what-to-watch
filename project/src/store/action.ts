@@ -85,10 +85,10 @@ export const loadSimilarFilms = (films: FilmType[]) =>
     },
   } as const);
 
-export const setIsFilmsDataLoading = (isFavoritesLoading: boolean) =>
+export const setIsFilmsDataLoading = (isFilmsDataLoading: boolean) =>
   ({
     type: Action.SetIsFilmsDataLoading,
-    payload: isFavoritesLoading,
+    payload: isFilmsDataLoading,
   } as const);
 
 export const setIsFavoritesLoading = (isFavoritesLoading: boolean) =>

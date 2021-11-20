@@ -20,16 +20,14 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type ConnectedComponentProps = PropsFromRedux;
-
 const isFavorite = (favorites: FilmType[], film: FilmType): boolean =>
   !!favorites.find((favorite) => favorite.id === film.id);
 
-function AddMyList(props: ConnectedComponentProps): JSX.Element {
+function AddMyList(props: PropsFromRedux): JSX.Element {
   const { favorites, film, authorizationStatus} = props;
   const store = useStore();
 
-  const handleMyList = () => {
+  const handleMyListClick = () => {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
 
       store.dispatch(redirectToRoute(AppRoute.SignIn));
@@ -44,13 +42,13 @@ function AddMyList(props: ConnectedComponentProps): JSX.Element {
     <button
       className="btn btn--list film-card__button"
       type="button"
-      onClick={handleMyList}
+      onClick={handleMyListClick}
     >
       <svg viewBox="0 0 19 20" width="19" height="20">
         {isFavorite(favorites, film) ? (
-          <use xlinkHref="#in-list"></use>
+          <use xlinkHref="#in-list"/>
         ) : (
-          <use xlinkHref="#add"></use>
+          <use xlinkHref="#add"/>
         )}
       </svg>
       <span>My list</span>

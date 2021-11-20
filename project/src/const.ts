@@ -61,7 +61,13 @@ export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;
 
 export const TOAST_MESSAGE = {
-  AUTH_SUGGESTION : 'Предлягаем Авторизоваться',
+  AUTH_SUGGESTION: 'Предлягаем Авторизоваться',
   POST_ERROR: 'Ошибка при публикации на сервере',
+  FETCH_FILMS_ERROR: 'Возникла ошибка при загрузке фильмов',
+  FETCH_FAVORITES_ERROR_MESSAGE: 'Возникла ошибка при загрузке избранных фильмов',
+  FETCH_SIMILAR_ERROR_MESSAGE: 'Возникла ошибка при загрузке похожих фильмов',
+  FETCH_COMMENTS_ERROR_MESSAGE: 'Возникла ошибка при загрузке комментариев',
+  POST_LOGIN_ACTION_ERROR_MESSAGE: 'Возникла ошибка при отправке параметров аутентификации',
+  POST_SET_FAVORITE_ERROR_MESSAGE: 'Возникла ошибка при внесении в список избранного',
 };
 

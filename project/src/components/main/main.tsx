@@ -33,7 +33,7 @@ function Main(props: PropsFromRedux): JSX.Element {
   const store = useStore();
   useEffect( () => {
     (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
-  }, []);
+  }, [store.dispatch]);
 
 
   useEffect(() => {

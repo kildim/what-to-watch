@@ -82,8 +82,8 @@ const convertMinutesToHoursWithMinutes = (minutesDuration: number): string => {
 const formatCommentDate = (commentDate: Date): string => dayjs(commentDate).format('MMMM D, YYYY');
 
 const formatRemainingTime = (remaining: number): string => {
-  const HOUR = 3600;
-  const format = remaining >= HOUR ? '-HH:mm:ss' : '-mm:ss';
+  const HOUR_IN_MS = 3600;
+  const format = remaining >= HOUR_IN_MS ? '-HH:mm:ss' : '-mm:ss';
   return dayjs.duration(remaining, 'seconds').format(format);
 };
 

@@ -32,7 +32,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function ReviewForm(props: PropsFromRedux) {
+function ReviewForm(props: PropsFromRedux):JSX.Element {
   const {onSubmit, isReviewPosting} = props;
 
   const [rating, setRating] = useState(DEFAULT_RATING);

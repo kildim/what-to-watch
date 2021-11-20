@@ -49,7 +49,7 @@ function Film(props: PropsFromRedux): JSX.Element {
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
     (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  }, [url]);
+  }, [url, commentsPath, dispatch, similarFilmsPath]);
 
   if (film === undefined) {
     return <Page404/>;

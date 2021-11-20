@@ -33,7 +33,7 @@ function Player(props: PropsFromRedux): JSX.Element {
       return;
     }
     isPlaying ? videoElement.play() : videoElement.pause();
-  }, [isPlaying]);
+  }, [isPlaying, videoElement]);
 
   useEffect(() => {
     if (!videoElement) {
@@ -69,7 +69,7 @@ function Player(props: PropsFromRedux): JSX.Element {
     const currentRemainingTime = Math.round(duration * (100 - currentPercentage) / 100);
 
     setDuration((state) => ({
-      ...state, remainingTime: currentRemainingTime,
+      duration: state.duration, remainingTime: currentRemainingTime,
     }));
     setCurrentTime(currentPercentage);
     progressBarElement.value = currentVideoTime;
@@ -81,13 +81,13 @@ function Player(props: PropsFromRedux): JSX.Element {
     return <Page404 />;
   }
 
-  const handleFullscreen = () => {
+  const handleFullscreenClick = () => {
     if (videoElement) {
       videoElement.requestFullscreen();
     }
   };
 
-  const handleExit = () => history.go(-1);
+  const handleExitClick = () => history.go(-1);
 
   return (
     <div className="player">
@@ -101,7 +101,7 @@ function Player(props: PropsFromRedux): JSX.Element {
         onTimeUpdate={handlePlaybackPosition}
       />
 
-      <button type="button" className="player__exit" onClick={handleExit}>
+      <button type="button" className="player__exit" onClick={handleExitClick}>
         Exit
       </button>
 
@@ -141,7 +141,7 @@ function Player(props: PropsFromRedux): JSX.Element {
           </button>
           <div className="player__name">{film.name}</div>
 
-          <button type="button" className="player__full-screen" onClick={handleFullscreen}>
+          <button type="button" className="player__full-screen" onClick={handleFullscreenClick}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen" />
             </svg>

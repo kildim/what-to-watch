@@ -21,7 +21,7 @@ function MyList(props: PropsFromRedux): JSX.Element {
 
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchFavorites());
-  }, []);
+  }, [dispatch]);
 
   if (isFavoritesLoading) {
     return <LoadingScreen />;
