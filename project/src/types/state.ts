@@ -10,10 +10,10 @@ export type StateType = {
   authorizationStatus: AuthorizationStatus,
   isFilmsDataLoading: boolean,
   isReviewPosting: boolean,
-  film: FilmType,
+  film: FilmType | null,
   similarFilms: FilmType[],
   comments: CommentType[],
-  userInfo: UserInfoType,
+  userInfo: UserInfoType | null,
   favorites: FilmType[],
   isFavoritesLoading: boolean,
 };

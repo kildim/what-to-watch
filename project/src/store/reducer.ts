@@ -1,7 +1,7 @@
 import { StateType } from '../types/state';
 import { ActionType } from '../types/action';
 import { Action } from './action';
-import { ALL_GENRES_ITEM, AuthorizationStatus, EMPTY_FILM, EMPTY_USER_INFO } from '../const';
+import { ALL_GENRES_ITEM, AuthorizationStatus } from '../const';
 
 const initialState: StateType = {
   genre: ALL_GENRES_ITEM as string,
@@ -10,10 +10,10 @@ const initialState: StateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isFilmsDataLoading: false,
   isReviewPosting: false,
-  film: EMPTY_FILM,
+  film: null,
   similarFilms: [],
   comments: [],
-  userInfo: EMPTY_USER_INFO,
+  userInfo: null,
   favorites: [],
   isFavoritesLoading: false,
 };

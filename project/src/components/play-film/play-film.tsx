@@ -17,8 +17,10 @@ function PlayFilm (props: PropsFromRedux): JSX.Element {
   const store = useStore();
 
   const handlePlayFilm = () => {
-    const playerRoute = generatePath(AppRoute.Player, {id: film.id});
-    store.dispatch(redirectToRoute(playerRoute));
+    if (film) {
+      const playerRoute = generatePath(AppRoute.Player, {id: film.id});
+      store.dispatch(redirectToRoute(playerRoute));
+    }
   };
 
   return (

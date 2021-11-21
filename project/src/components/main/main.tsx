@@ -13,6 +13,7 @@ import AddMyList from '../add-my-list/add-my-list';
 import {ThunkAppDispatch} from '../../types/action';
 import {fetchPromoAction} from '../../store/api-actions';
 import PlayFilm from '../play-film/play-film';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const CHUNK_LENGTH = 8;
 
@@ -50,13 +51,17 @@ function Main(props: PropsFromRedux): JSX.Element {
   const filmsList = filterFilmsByGenre(films, genre);
   const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length, listCount]);
 
+  if (!film) {
+    return <LoadingScreen/>;
+  }
+
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
             src={film.backgroundImage}
-            alt="The Grand Budapest Hotel"
+            alt="Film background"
           />
         </div>
 
