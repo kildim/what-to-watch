@@ -9,6 +9,7 @@ import { redirectToRoute } from '../../store/action';
 import { toast } from 'react-toastify';
 
 const VALID_PASSWORD_REGEXP = /\D\d|\d\D/i;
+const VALID_EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -21,8 +22,10 @@ const mapStateToProps = ({ authorizationStatus }: StateType) => ({
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-const isValidPassword = (password: string) =>
+const isValidPassword = (password: string): boolean =>
   VALID_PASSWORD_REGEXP.test(password);
+const isValidEmail = (email: string): boolean =>
+  VALID_EMAIL_REGEXP.test(email);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -43,17 +46,18 @@ function SignIn(props: PropsFromRedux): JSX.Element {
     if (
       loginRef.current &&
       passwordRef.current &&
-      isValidPassword(passwordRef.current.value)
+      isValidPassword(passwordRef.current.value) &&
+      isValidEmail(loginRef.current.value)
     ) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
     }
-    if (
-      passwordRef.current &&
-      !isValidPassword(passwordRef.current.value)
-    ) {
+    if (loginRef.current && !isValidEmail(loginRef.current.value)) {
+      toast('В качестве логина используяте валидный адрес электронной почты');
+    }
+    if (passwordRef.current && !isValidPassword(passwordRef.current.value)) {
       toast('Пароль должен содержать цифру и букву!');
     }
   };
