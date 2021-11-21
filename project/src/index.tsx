@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import thunk from 'redux-thunk';
 import App from './components/app/app';
 
-import { applyMiddleware, createStore } from '@reduxjs/toolkit';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import {configureStore} from '@reduxjs/toolkit';
 import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
 import { createAPI } from './services/api';
@@ -24,13 +22,15 @@ const api = createAPI(() => {
   store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
 });
 
-const store = createStore(
-  reducer,
-  composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
-  ),
-);
+const store = configureStore({
+  reducer: reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
