@@ -6,7 +6,7 @@ const initialState: StateType = {
   genre: ALL_GENRES_ITEM as string,
   films: [],
   genres: [ALL_GENRES_ITEM],
-  authorizationStatus: AuthorizationStatus.Unknown,
+  // authorizationStatus: AuthorizationStatus.Unknown,
   isFilmsDataLoading: false,
   isReviewPosting: false,
   film: null,
@@ -33,8 +33,8 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, favorites: action.payload};
     case Action.LoadFilmComments:
       return {...state, comments: action.payload};
-    case Action.SetAuthorizationStatus:
-      return {...state, authorizationStatus: action.payload};
+    // case Action.SetAuthorizationStatus:
+    //   return {...state, authorizationStatus: action.payload};
     case Action.SetIsFilmsDataLoading:
       return {...state, isFilmsDataLoading: action.payload};
     case Action.SetIsReviewPosting:
