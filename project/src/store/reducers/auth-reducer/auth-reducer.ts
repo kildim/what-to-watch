@@ -7,11 +7,11 @@ const initialState: AuthReducerType = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
-const AuthReducer = createReducer(initialState, (builder) => {
+const authReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setAuthorizationStatus, (state, action) => {
       state.authorizationStatus = action.payload;
     });
 });
 
-export {AuthReducer};
+export {authReducer};
