@@ -30,32 +30,25 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const EMPTY_FILM = {
-  id: -1,
-  name: 'UNKNOWN',
-  posterImage: 'UNKNOWN',
-  previewImage: 'UNKNOWN',
-  backgroundImage: 'UNKNOWN',
-  backgroundColor: 'UNKNOWN',
-  videoLink: 'UNKNOWN',
-  previewVideoLink: 'UNKNOWN',
-  description: 'UNKNOWN',
-  rating: -1,
-  scoresCount: 0,
-  director: 'UNKNOWN',
-  starring: ['UNKNOWN'],
-  runTime: 0,
-  genre: 'UNKNOWN',
-  released: 0,
-  isFavorite: false,
-};
+export enum Action {
+  SetGenre = 'genre/setGenre',
+  GetGenre = 'genre/getGenreFilms',
+  SetGenres = 'genre/setGenres',
 
-export const EMPTY_USER_INFO = {
-  id: -1,
-  email: '',
-  name: '',
-  avatarUrl: '',
-};
+  SetApi = 'data/setApi',
+  LoadFilms = 'data/loadFilms',
+  LoadFilm = 'data/loadFilm',
+  LoadFilmComments = 'data/loadFilmComments',
+  LoadSimilarFilms = 'data/loadSimilarFilms',
+  LoadFavorites = 'data/loadFavorites',
+  RedirectToRoute = 'data/redirectToRoute',
+  SetIsFavoritesLoading = 'data/setIsFavoritesLoading',
+  SetIsFilmsDataLoading = 'data/setIsFilmsDataLoading',
+  SetIsReviewPosting = 'data/isReviewPosting',
+  LoadUserInfo = 'data/loadUserInfo',
+
+  SetAuthorizationStatus = 'user/setAuthorizationStatus',
+}
 
 export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;

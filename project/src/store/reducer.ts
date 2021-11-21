@@ -1,7 +1,6 @@
 import { StateType } from '../types/state';
 import { ActionType } from '../types/action';
-import { Action } from './action';
-import { ALL_GENRES_ITEM, AuthorizationStatus } from '../const';
+import {Action, ALL_GENRES_ITEM, AuthorizationStatus} from '../const';
 
 const initialState: StateType = {
   genre: ALL_GENRES_ITEM as string,
