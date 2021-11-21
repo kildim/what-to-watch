@@ -180,9 +180,7 @@ export const setFavorite =
         status: status,
       });
       try {
-        const {data} = await api.post(postFavorite);
-        const filmData = parseFilmFromServerFormat(data);
-        dispatch(loadFilm(filmData));
+        await api.post(postFavorite);
       } catch (error) {
         toast(TOAST_MESSAGE.POST_SET_FAVORITE_ERROR_MESSAGE);
       }
