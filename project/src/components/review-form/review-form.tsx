@@ -7,13 +7,16 @@ import {PostCommentType} from '../../types/types';
 import {useParams} from 'react-router-dom';
 import {StateType} from '../../types/state';
 
-const MAX_RATING = 10;
-const DEFAULT_RATING = Array(MAX_RATING)
+const ReviewConfig = {
+  maxRating: 10,
+  minRatingBound: 0,
+  minPostLength: 50,
+  maxPostLength: 400,
+};
+
+const DEFAULT_RATING = Array(ReviewConfig.maxRating)
   .fill(null)
   .map(() => false);
-const MIN_RATING_BOUND = 0;
-const MIN_POST_LENGTH = 50;
-const MAX_POST_LENGTH = 400;
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit({rating, comment}: PostCommentType, id: string) {
@@ -29,7 +32,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function ReviewForm(props: PropsFromRedux) {
+function ReviewForm(props: PropsFromRedux):JSX.Element {
   const {onSubmit, isReviewPosting} = props;
 
   const [rating, setRating] = useState(DEFAULT_RATING);
@@ -39,9 +42,14 @@ function ReviewForm(props: PropsFromRedux) {
   const getRating = (): number => rating.findIndex((ratingElement) => ratingElement) +1;
 
   const isValidToPost = () =>
-    getRating() > MIN_RATING_BOUND &&
-    review.length >= MIN_POST_LENGTH &&
-    review.length <= MAX_POST_LENGTH;
+    getRating() > ReviewConfig.minRatingBound &&
+    review.length >= ReviewConfig.minPostLength &&
+    review.length <= ReviewConfig.maxPostLength;
+
+
+  const SUBMIT_STYLE = classNames('add-review__btn', {
+    'visually-hidden': !isValidToPost(),
+  });
 
   const onChangeInputHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const indexOfChecked = Number(target.value) - 1;
@@ -61,10 +69,10 @@ function ReviewForm(props: PropsFromRedux) {
     onSubmit({rating: ratingValue, comment: review}, id);
   };
 
-  const RATING_INPUTS = Array(MAX_RATING)
+  const RATING_INPUTS = Array(ReviewConfig.maxRating)
     .fill(null)
     .map((value, index) => {
-      const INPUT_VALUE = (MAX_RATING - index).toString();
+      const INPUT_VALUE = (ReviewConfig.maxRating - index).toString();
       return (
         <>
           <input
@@ -89,8 +97,6 @@ function ReviewForm(props: PropsFromRedux) {
         <div className="rating__stars">{RATING_INPUTS}</div>
       </div>
 
-      <p>{isValidToPost()}</p>
-
       <div className="add-review__text">
         <textarea
           className="add-review__textarea"
@@ -102,9 +108,7 @@ function ReviewForm(props: PropsFromRedux) {
         />
         <div className="add-review__submit">
           <button
-            className={classNames('add-review__btn', {
-              'visually-hidden': !isValidToPost(),
-            })}
+            className={SUBMIT_STYLE}
             type="submit"
             disabled={isReviewPosting}
           >

@@ -9,9 +9,9 @@ import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import {CommentType, FilmType} from '../../types/types';
+import { CommentType, FilmType } from '../../types/types';
 
 enum Tab {
   Overview,
@@ -21,7 +21,7 @@ enum Tab {
 
 type FilmCardTabsProps = {
   film: FilmType;
-  comments: CommentType[]
+  comments: CommentType[];
 };
 
 const useCatchActiveTab = () => {
@@ -41,7 +41,7 @@ const useCatchActiveTab = () => {
 function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(useCatchActiveTab);
 
-  useEffect( () => setActiveTab(useCatchActiveTab), [film]);
+  useEffect(() => setActiveTab(useCatchActiveTab), [film]);
 
   const overviewNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Overview,

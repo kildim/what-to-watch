@@ -1,5 +1,5 @@
 import {useEffect, useState, useMemo} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect, ConnectedProps, useStore} from 'react-redux';
 
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
@@ -8,14 +8,18 @@ import ShowButton from '../show-button/show-button';
 
 import {StateType} from '../../types/state';
 import {filterFilmsByGenre} from '../../utils/utils';
-import UserBlock from '../user-block/user-block';
+import {ThunkAppDispatch} from '../../types/action';
+import {fetchPromoAction} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import MainHeader from './main-header';
+import MainPromo from './main-promo';
 
 const CHUNK_LENGTH = 8;
 
-const mapStateToProps = ({genre, films, promo}: StateType) => ({
+const mapStateToProps = ({genre, films, film}: StateType) => ({
   genre,
   films,
-  promo,
+  film,
 });
 
 const connector = connect(mapStateToProps);
@@ -23,9 +27,14 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const {genre, films, promo} = props;
+  const {genre, films, film} = props;
 
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
+  const store = useStore();
+  useEffect( () => {
+    (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
+  }, [store.dispatch]);
+
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);
@@ -41,71 +50,23 @@ function Main(props: PropsFromRedux): JSX.Element {
   const filmsList = filterFilmsByGenre(films, genre);
   const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length, listCount]);
 
+  if (!film) {
+    return <LoadingScreen/>;
+  }
+
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={promo.backgroundImage}
-            alt="The Grand Budapest Hotel"
+            src={film.backgroundImage}
+            alt="Film background"
           />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <UserBlock />
-        </header>
-
-        <div className="film-card__wrap">
-          <div className="film-card__info">
-            <div className="film-card__poster">
-              <img
-                src={promo.posterImage}
-                alt={`${promo.name} poster`}
-                width="218"
-                height="327"
-              />
-            </div>
-
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MainHeader />
+        <MainPromo film={film} />
       </section>
       <div className="page-content">
         <section className="catalog">

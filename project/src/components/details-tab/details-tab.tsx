@@ -1,9 +1,12 @@
-import {convertMinutesRepresentation, joinArrayByComma} from '../../utils/utils';
+import {convertMinutesToHoursWithMinutes, joinArrayByComma} from '../../utils/utils';
 import {FilmType} from '../../types/types';
+import {CSSProperties} from 'react';
 
 type DetailsTabProps = {
   film: FilmType
 }
+
+const STARRING_STYLE: CSSProperties = {whiteSpace: 'pre-line'};
 
 function DetailsTab (prop: DetailsTabProps): JSX.Element {
   const {film} = prop;
@@ -19,14 +22,14 @@ function DetailsTab (prop: DetailsTabProps): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value" style={{whiteSpace: 'pre-line'}}>{starring}</span>
+          <span className="film-card__details-value" style={STARRING_STYLE}>{starring}</span>
         </p>
       </div>
 
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{convertMinutesRepresentation(film.runTime)}</span>
+          <span className="film-card__details-value">{convertMinutesToHoursWithMinutes(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

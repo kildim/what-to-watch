@@ -1,6 +1,6 @@
 import {generatePath, Link, useHistory} from 'react-router-dom';
 import {FilmType} from '../../types/types';
-import {useEffect, useRef, useState} from 'react';
+import {memo, useEffect, useRef, useState} from 'react';
 import {AppRoute} from '../../const';
 
 type SmallFilmcardProps = {
@@ -48,11 +48,6 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     };
   }, [isPlaying]);
 
-  const videoStyle = {
-    width: '100%',
-    height: '100%',
-  };
-
   return (
     <article className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
@@ -65,7 +60,6 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
           src={film.previewVideoLink}
           ref={videoRef}
           preload="none"
-          style={videoStyle}
           loop
           muted
         />
@@ -77,4 +71,4 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
   );
 }
 
-export default SmallFilmCard;
+export default memo(SmallFilmCard);

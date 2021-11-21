@@ -1,6 +1,9 @@
 import {AuthInfoType, FilmType, ServerAuthInfoType, ServerFilmType} from '../types/types';
 import { GenreType } from '../types/state';
 import { ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER } from '../const';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 
 const joinArrayByComma = (ingoingArray: string[]): string =>
   ingoingArray.join(',\n');
@@ -70,23 +73,19 @@ const rangeFilm = (rating: number): string => {
   }
 };
 
-const convertMinutesRepresentation = (minutesDuration: number): string => {
+const convertMinutesToHoursWithMinutes = (minutesDuration: number): string => {
   const hours = Math.floor(minutesDuration/60);
   const minutes = minutesDuration - hours * 60;
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-// TODO поставить в toLocaleDateString константу вместо объекта
-// const DATE_FORMAT_OPTIONS = {
-//   month: 'long',
-//   day: 'numeric',
-//   year: 'numeric',
-// };
-const formatCommentDate = (commentDate: Date): string => commentDate.toLocaleDateString('en-US', {
-  month: 'long',
-  day: 'numeric',
-  year: 'numeric',
-});
+const formatCommentDate = (commentDate: Date): string => dayjs(commentDate).format('MMMM D, YYYY');
+
+const formatRemainingTime = (remaining: number): string => {
+  const HOUR_IN_MS = 3600;
+  const format = remaining >= HOUR_IN_MS ? '-HH:mm:ss' : '-mm:ss';
+  return dayjs.duration(remaining, 'seconds').format(format);
+};
 
 export {
   joinArrayByComma,
@@ -96,6 +95,7 @@ export {
   parseFilmFromServerFormat,
   parseAuthInfoFromServerFormat,
   rangeFilm,
-  convertMinutesRepresentation,
-  formatCommentDate
+  convertMinutesToHoursWithMinutes,
+  formatCommentDate,
+  formatRemainingTime
 };

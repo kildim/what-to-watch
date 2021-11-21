@@ -1,11 +1,12 @@
-import {connect, ConnectedProps, useDispatch} from 'react-redux';
-import {StateType} from '../../types/state';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../../const';
-import {logoutAction} from '../../store/api-actions';
-import {useHistory} from 'react-router-dom';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { StateType } from '../../types/state';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
+import { logoutAction } from '../../store/api-actions';
+import { useHistory } from 'react-router-dom';
 
-const mapStateToProps = ({authorizationStatus, userInfo}: StateType) => ({
-  authorizationStatus, userInfo,
+const mapStateToProps = ({ authorizationStatus, userInfo }: StateType) => ({
+  authorizationStatus,
+  userInfo,
 });
 
 const connector = connect(mapStateToProps);
@@ -13,7 +14,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function UserBlock(props: PropsFromRedux): JSX.Element {
-  const {authorizationStatus, userInfo} = props;
+  const { authorizationStatus, userInfo } = props;
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -24,7 +25,7 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
 
   return (
     <ul className="user-block">
-      {authorizationStatus === AuthorizationStatus.Auth && (
+      {authorizationStatus === AuthorizationStatus.Auth && userInfo && (
         <>
           <li className="user-block__item">
             <div className="user-block__avatar">
@@ -38,18 +39,22 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link" onClick={handleLogOutClick}>Sign out</a>
+            <a className="user-block__link" onClick={handleLogOutClick}>
+              Sign out
+            </a>
           </li>
         </>
       )}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <li className="user-block__item">
-          <a className="user-block__link" onClick={handleLogInClick}>Sign in</a>
+          <a className="user-block__link" onClick={handleLogInClick}>
+            Sign in
+          </a>
         </li>
       )}
     </ul>
   );
 }
 
-export {UserBlock};
+export { UserBlock };
 export default connector(UserBlock);

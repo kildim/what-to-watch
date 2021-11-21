@@ -1,30 +1,28 @@
-import {generatePath, Link, useParams, useRouteMatch} from 'react-router-dom';
-import {connect, ConnectedProps, useDispatch} from 'react-redux';
+import { generatePath, Link, useParams, useRouteMatch } from 'react-router-dom';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import Footer from '../footer/footer';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 
 import { StateType } from '../../types/state';
 
-import classNames from 'classnames';
 import Page404 from '../page-404/page-404';
-import {useEffect} from 'react';
-import {fetchFilmCommentsAction, fetchSimilarFilmsAction} from '../../store/api-actions';
-import {ThunkAppDispatch} from '../../types/action';
+import { useEffect } from 'react';
+import {
+  fetchFilmCommentsAction,
+  fetchSimilarFilmsAction
+} from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
 import UserBlock from '../user-block/user-block';
+import { loadFilm } from '../../store/action';
+import FilmCard from './film-card';
 
 const SIMILAR_NUMBER = 4;
 
-const mapStateToProps = ({
+const mapStateToProps = ({ films, comments, similarFilms }: StateType) => ({
   films,
   comments,
-  authorizationStatus,
-  similarFilms,
-}: StateType) => ({
-  films,
-  comments,
-  authorizationStatus,
   similarFilms,
 });
 
@@ -33,25 +31,25 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Film(props: PropsFromRedux): JSX.Element {
-  const { films, comments, authorizationStatus, similarFilms } = props;
+  const { films, comments, similarFilms } = props;
   const { url } = useRouteMatch();
   const { id }: { id: string } = useParams();
+  const dispatch = useDispatch();
 
   const film = films.find((movie) => movie.id === Number(id));
-  const similarFilmsPath = generatePath(AppRoute.Similar, { id: id});
+  const similarFilmsPath = generatePath(AppRoute.Similar, { id: id });
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
-  const addReviewPath = generatePath(AppRoute.AddReview, { id: id });
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
     (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  }, [url]);
+  }, [url, commentsPath, dispatch, similarFilmsPath]);
 
   if (film === undefined) {
-    return <Page404/>;
+    return <Page404 />;
   }
+
+  dispatch(loadFilm(film));
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -79,49 +77,10 @@ function Film(props: PropsFromRedux): JSX.Element {
               </Link>
             </div>
 
-            <UserBlock/>
+            <UserBlock />
           </header>
 
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button
-                  className="btn btn--play film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <Link
-                  to={addReviewPath}
-                  className={classNames('btn film-card__button', {
-                    'visually-hidden': !(
-                      authorizationStatus === AuthorizationStatus.Auth
-                    ),
-                  })}
-                >
-                  Add review
-                </Link>
-              </div>
-            </div>
-          </div>
+          <FilmCard film={film} />
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
@@ -134,7 +93,7 @@ function Film(props: PropsFromRedux): JSX.Element {
                 height="327"
               />
             </div>
-            <FilmCardTabs film={film} comments={comments}/>
+            <FilmCardTabs film={film} comments={comments} />
           </div>
         </div>
       </section>
@@ -149,5 +108,5 @@ function Film(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {Film};
+export { Film };
 export default connector(Film);

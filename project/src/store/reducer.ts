@@ -1,20 +1,20 @@
 import { StateType } from '../types/state';
 import { ActionType } from '../types/action';
-import { Action } from './action';
-import { ALL_GENRES_ITEM, AuthorizationStatus, EMPTY_FILM, EMPTY_USER_INFO } from '../const';
+import {Action, ALL_GENRES_ITEM, AuthorizationStatus} from '../const';
 
 const initialState: StateType = {
   genre: ALL_GENRES_ITEM as string,
   films: [],
   genres: [ALL_GENRES_ITEM],
-  authorizationStatus: AuthorizationStatus.Unknown,
+  // authorizationStatus: AuthorizationStatus.Unknown,
   isFilmsDataLoading: false,
   isReviewPosting: false,
-  promo: EMPTY_FILM,
-  film: EMPTY_FILM,
+  film: null,
   similarFilms: [],
   comments: [],
-  userInfo: EMPTY_USER_INFO,
+  userInfo: null,
+  favorites: [],
+  isFavoritesLoading: false,
 };
 
 const reducer = (state: StateType = initialState, action: ActionType): StateType => {
@@ -27,18 +27,20 @@ const reducer = (state: StateType = initialState, action: ActionType): StateType
       return {...state, genres: action.payload.genres};
     case Action.LoadSimilarFilms:
       return {...state, similarFilms: action.payload.similarFilms};
-    case Action.LoadPromo:
-      return {...state, promo: action.payload.promo};
     case Action.LoadFilm:
       return {...state, film: action.payload.film};
+    case Action.LoadFavorites:
+      return {...state, favorites: action.payload};
     case Action.LoadFilmComments:
       return {...state, comments: action.payload};
-    case Action.SetAuthorizationStatus:
-      return {...state, authorizationStatus: action.payload};
+    // case Action.SetAuthorizationStatus:
+    //   return {...state, authorizationStatus: action.payload};
     case Action.SetIsFilmsDataLoading:
       return {...state, isFilmsDataLoading: action.payload};
     case Action.SetIsReviewPosting:
       return {...state, isReviewPosting: action.payload};
+    case Action.SetIsFavoritesLoading:
+      return {...state, isFavoritesLoading: action.payload};
     case Action.LoadUserInfo:
       return {...state, userInfo: action.payload};
     default:
