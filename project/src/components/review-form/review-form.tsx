@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import classNames from 'classnames';
-import {postReview} from '../../store/api-actions';
-import {ThunkAppDispatch} from '../../types/action';
-import {connect, ConnectedProps} from 'react-redux';
-import {PostCommentType} from '../../types/types';
-import {useParams} from 'react-router-dom';
-import {StateType} from '../../types/state';
+import { postReview } from '../../store/api-actions';
+import { ThunkAppDispatch } from '../../types/action';
+import { connect, ConnectedProps } from 'react-redux';
+import { PostCommentType } from '../../types/types';
+import { useParams } from 'react-router-dom';
+import { StateType } from '../../types/state';
 
 const ReviewConfig = {
   maxRating: 10,
@@ -19,33 +19,32 @@ const DEFAULT_RATING = Array(ReviewConfig.maxRating)
   .map(() => false);
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit({rating, comment}: PostCommentType, id: string) {
-    dispatch(postReview({rating, comment}, id));
+  onSubmit({ rating, comment }: PostCommentType, id: string) {
+    dispatch(postReview({ rating, comment }, id));
   },
 });
-const mapStateToProps = ({
-  isReviewPosting}: StateType) => ({
-  isReviewPosting,
+const mapStateToProps = ({ STATUS }: StateType) => ({
+  isReviewPosting: STATUS.isReviewPosting,
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function ReviewForm(props: PropsFromRedux):JSX.Element {
-  const {onSubmit, isReviewPosting} = props;
+function ReviewForm(props: PropsFromRedux): JSX.Element {
+  const { onSubmit, isReviewPosting } = props;
 
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [review, setReview] = useState('');
-  const {id} = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
 
-  const getRating = (): number => rating.findIndex((ratingElement) => ratingElement) +1;
+  const getRating = (): number =>
+    rating.findIndex((ratingElement) => ratingElement) + 1;
 
   const isValidToPost = () =>
     getRating() > ReviewConfig.minRatingBound &&
     review.length >= ReviewConfig.minPostLength &&
     review.length <= ReviewConfig.maxPostLength;
-
 
   const SUBMIT_STYLE = classNames('add-review__btn', {
     'visually-hidden': !isValidToPost(),
@@ -66,7 +65,7 @@ function ReviewForm(props: PropsFromRedux):JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const ratingValue = String(getRating());
-    onSubmit({rating: ratingValue, comment: review}, id);
+    onSubmit({ rating: ratingValue, comment: review }, id);
   };
 
   const RATING_INPUTS = Array(ReviewConfig.maxRating)
@@ -120,5 +119,5 @@ function ReviewForm(props: PropsFromRedux):JSX.Element {
   );
 }
 
-export {ReviewForm};
+export { ReviewForm };
 export default connector(ReviewForm);

@@ -11,8 +11,8 @@ type FilmCardProps = {
   film: FilmType;
 };
 
-const mapStateToProps = ({ authorizationStatus }: StateType) => ({
-  authorizationStatus,
+const mapStateToProps = ({ AUTH }: StateType) => ({
+  authorizationStatus: AUTH.authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);

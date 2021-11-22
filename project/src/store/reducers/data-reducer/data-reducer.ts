@@ -9,7 +9,7 @@ import {
   loadSimilarFilms,
   loadUserInfo,
   setGenre,
-  setGenres,
+  setGenres
 } from '../../action';
 
 const initialState: DataReducerType = {

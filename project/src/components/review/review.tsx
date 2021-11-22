@@ -1,35 +1,34 @@
-import {connect, ConnectedProps} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import { connect, ConnectedProps } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import ReviewForm from '../review-form/review-form';
-import {StateType} from '../../types/state';
+import { StateType } from '../../types/state';
 import Page404 from '../page-404/page-404';
 import UserBlock from '../user-block/user-block';
 
-const mapStateToProps = ({ films }: StateType) => ({
-  films,
+const mapStateToProps = ({ DATA }: StateType) => ({
+  films: DATA.films,
 });
-
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function Review(props: PropsFromRedux):JSX.Element {
+function Review(props: PropsFromRedux): JSX.Element {
   const { films } = props;
 
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
 
   const film = films.find((movie) => movie.id === Number(id));
 
   if (film === undefined) {
-    return <Page404/>;
+    return <Page404 />;
   }
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.backgroundImage} alt={film.name}/>
+          <img src={film.backgroundImage} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -46,7 +45,9 @@ function Review(props: PropsFromRedux):JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
+                <a href="film-page.html" className="breadcrumbs__link">
+                  {film.name}
+                </a>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -58,7 +59,10 @@ function Review(props: PropsFromRedux):JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film.posterImage} alt={film.name} width="218"
+          <img
+            src={film.posterImage}
+            alt={film.name}
+            width="218"
             height="327"
           />
         </div>
@@ -67,11 +71,10 @@ function Review(props: PropsFromRedux):JSX.Element {
       <div className="add-review">
         <ReviewForm />
       </div>
-
     </section>
   );
 }
 
-export {Review};
+export { Review };
 export default connector(Review);
 

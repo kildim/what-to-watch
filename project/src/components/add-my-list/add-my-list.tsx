@@ -9,15 +9,12 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import {useState} from 'react';
 
 const mapStateToProps = ({
-  favorites,
-  film,
-  authorizationStatus,
-  isFavoritesLoading,
+  AUTH, STATUS, DATA,
 }: StateType) => ({
-  favorites,
-  film,
-  authorizationStatus,
-  isFavoritesLoading,
+  favorites: DATA.favorites,
+  film: DATA.film,
+  authorizationStatus: AUTH.authorizationStatus,
+  isFavoritesLoading: STATUS.isFavoritesLoading,
 });
 
 const connector = connect(mapStateToProps);

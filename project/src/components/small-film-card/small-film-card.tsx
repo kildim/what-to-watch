@@ -71,4 +71,4 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
   );
 }
 
-export default memo(SmallFilmCard);
+export default SmallFilmCard;

@@ -4,10 +4,10 @@ import {setGenre} from '../../store/action';
 import classNames from 'classnames';
 import React, {MouseEvent} from 'react';
 
-const mapStateToProps = ({genre, films, genres}: StateType) => ({
-  genre,
-  films,
-  genres,
+const mapStateToProps = ({DATA}: StateType) => ({
+  genre: DATA.genre,
+  films: DATA.films,
+  genres: DATA.genres,
 });
 
 const connector = connect(mapStateToProps);

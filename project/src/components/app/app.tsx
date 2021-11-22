@@ -14,8 +14,8 @@ import Film from '../film/film';
 import { StateType } from '../../types/state';
 import browserHistory from '../../browser-history';
 
-const mapStateToProps = ({ isFilmsDataLoading }: StateType) => ({
-  isFilmsDataLoading,
+const mapStateToProps = ({ STATUS }: StateType) => ({
+  isFilmsDataLoading: STATUS.isFilmsDataLoading,
 });
 
 const connector = connect(mapStateToProps);

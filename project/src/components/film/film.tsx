@@ -20,10 +20,10 @@ import FilmCard from './film-card';
 
 const SIMILAR_NUMBER = 4;
 
-const mapStateToProps = ({ films, comments, similarFilms }: StateType) => ({
-  films,
-  comments,
-  similarFilms,
+const mapStateToProps = ({ DATA }: StateType) => ({
+  films: DATA.films,
+  comments: DATA.comments,
+  similarFilms: DATA.similarFilms,
 });
 
 const connector = connect(mapStateToProps);

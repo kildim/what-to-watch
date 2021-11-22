@@ -1,24 +1,22 @@
-import {generatePath} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps, useStore} from 'react-redux';
-import {redirectToRoute} from '../../store/action';
+import { generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { StateType } from '../../types/state';
+import { connect, ConnectedProps, useStore } from 'react-redux';
+import { redirectToRoute } from '../../store/action';
 
-const mapStateToProps = ({film}: StateType) => (
-  {film}
-);
+const mapStateToProps = ({ DATA }: StateType) => ({ film: DATA.film });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function PlayFilm (props: PropsFromRedux): JSX.Element {
-  const {film} = props;
+function PlayFilm(props: PropsFromRedux): JSX.Element {
+  const { film } = props;
   const store = useStore();
 
   const handlePlayFilm = () => {
     if (film) {
-      const playerRoute = generatePath(AppRoute.Player, {id: film.id});
+      const playerRoute = generatePath(AppRoute.Player, { id: film.id });
       store.dispatch(redirectToRoute(playerRoute));
     }
   };

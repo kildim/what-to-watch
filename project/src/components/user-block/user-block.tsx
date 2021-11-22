@@ -4,9 +4,9 @@ import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { useHistory } from 'react-router-dom';
 
-const mapStateToProps = ({ authorizationStatus, userInfo }: StateType) => ({
-  authorizationStatus,
-  userInfo,
+const mapStateToProps = ({ AUTH, DATA }: StateType) => ({
+  authorizationStatus: AUTH.authorizationStatus,
+  userInfo: DATA.userInfo,
 });
 
 const connector = connect(mapStateToProps);

@@ -1,21 +1,23 @@
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps, useDispatch} from 'react-redux';
+import { StateType } from '../../types/state';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import UserBlock from '../user-block/user-block';
-import {useEffect} from 'react';
-import {ThunkAppDispatch} from '../../types/action';
-import {fetchFavorites} from '../../store/api-actions';
+import { useEffect } from 'react';
+import { ThunkAppDispatch } from '../../types/action';
+import { fetchFavorites } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const mapStateToProps = ({films, favorites, isFavoritesLoading}: StateType) => ({
-  films, favorites, isFavoritesLoading,
+const mapStateToProps = ({ DATA, STATUS }: StateType) => ({
+  films: DATA.films,
+  favorites: DATA.favorites,
+  isFavoritesLoading: STATUS.isFavoritesLoading,
 });
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MyList(props: PropsFromRedux): JSX.Element {
-  const {favorites, isFavoritesLoading} = props;
+  const { favorites, isFavoritesLoading } = props;
 
   const dispatch = useDispatch();
 
@@ -45,7 +47,7 @@ function MyList(props: PropsFromRedux): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <CatalogFilmsList films={favorites}/>
+        <CatalogFilmsList films={favorites} />
       </section>
 
       <footer className="page-footer">
@@ -65,5 +67,5 @@ function MyList(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export  {MyList};
+export { MyList };
 export default connector(MyList);

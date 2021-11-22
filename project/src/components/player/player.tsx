@@ -8,9 +8,9 @@ import {formatRemainingTime} from '../../utils/utils';
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const mapStateToProps = ({ genre, films }: StateType) => ({
-  genre,
-  films,
+const mapStateToProps = ({ DATA }: StateType) => ({
+  genre: DATA.genre,
+  films: DATA.films,
 });
 const connector = connect(mapStateToProps);
 

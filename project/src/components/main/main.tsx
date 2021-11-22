@@ -1,25 +1,25 @@
-import {useEffect, useState, useMemo} from 'react';
-import {connect, ConnectedProps, useStore} from 'react-redux';
+import { useEffect, useMemo, useState } from 'react';
+import { connect, ConnectedProps, useStore } from 'react-redux';
 
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import ShowButton from '../show-button/show-button';
 
-import {StateType} from '../../types/state';
-import {filterFilmsByGenre} from '../../utils/utils';
-import {ThunkAppDispatch} from '../../types/action';
-import {fetchPromoAction} from '../../store/api-actions';
+import { StateType } from '../../types/state';
+import { filterFilmsByGenre } from '../../utils/utils';
+import { ThunkAppDispatch } from '../../types/action';
+import { fetchPromoAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import MainHeader from './main-header';
 import MainPromo from './main-promo';
 
 const CHUNK_LENGTH = 8;
 
-const mapStateToProps = ({genre, films, film}: StateType) => ({
-  genre,
-  films,
-  film,
+const mapStateToProps = ({ DATA }: StateType) => ({
+  genre: DATA.genre,
+  films: DATA.films,
+  film: DATA.film,
 });
 
 const connector = connect(mapStateToProps);
@@ -27,14 +27,13 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Main(props: PropsFromRedux): JSX.Element {
-  const {genre, films, film} = props;
+  const { genre, films, film } = props;
 
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
   const store = useStore();
-  useEffect( () => {
+  useEffect(() => {
     (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
   }, [store.dispatch]);
-
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);
@@ -48,20 +47,20 @@ function Main(props: PropsFromRedux): JSX.Element {
   };
 
   const filmsList = filterFilmsByGenre(films, genre);
-  const isShowButtonVisible: boolean = useMemo(() => filmsList.length > listCount, [filmsList.length, listCount]);
+  const isShowButtonVisible: boolean = useMemo(
+    () => filmsList.length > listCount,
+    [filmsList.length, listCount],
+  );
 
   if (!film) {
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   }
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img
-            src={film.backgroundImage}
-            alt="Film background"
-          />
+          <img src={film.backgroundImage} alt="Film background" />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -71,15 +70,18 @@ function Main(props: PropsFromRedux): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <CatalogGenresList/>
-          <CatalogFilmsList films={filmsList.slice(0, listCount)}/>
-          <ShowButton onClickHandler={handleShowButtonClick} visibility={isShowButtonVisible}/>
+          <CatalogGenresList />
+          <CatalogFilmsList films={filmsList.slice(0, listCount)} />
+          <ShowButton
+            onClickHandler={handleShowButtonClick}
+            visibility={isShowButtonVisible}
+          />
         </section>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );
 }
 
-export {Main};
+export { Main };
 export default connector(Main);
