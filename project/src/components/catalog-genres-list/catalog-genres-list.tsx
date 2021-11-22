@@ -1,26 +1,18 @@
-import {GenreType, StateType} from '../../types/state';
-import {connect, ConnectedProps, useDispatch} from 'react-redux';
+import {GenreType} from '../../types/state';
+import {useDispatch, useSelector} from 'react-redux';
 import {setGenre} from '../../store/action';
 import classNames from 'classnames';
 import React, {MouseEvent} from 'react';
-
-const mapStateToProps = ({DATA}: StateType) => ({
-  genre: DATA.genre,
-  films: DATA.films,
-  genres: DATA.genres,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import {getGenre, getGenres} from '../../store/reducers/data-reducer/selectors';
 
 const constructLiClassName = (genre: string, currentGenre: string): string =>
   classNames('catalog__genres-item', {
     'catalog__genres-item--active': genre === currentGenre,
   });
 
-function CatalogGenresList(props: PropsFromRedux): JSX.Element {
-  const {genres, genre} = props;
+function CatalogGenresList(): JSX.Element {
+  const genres = useSelector(getGenres);
+  const genre = useSelector(getGenre);
   const dispatch = useDispatch();
 
   const handleChangeGenre = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -50,5 +42,5 @@ function CatalogGenresList(props: PropsFromRedux): JSX.Element {
   return <ul className="catalog__genres-list">{listItems}</ul>;
 }
 
-export {CatalogGenresList};
-export default connector(CatalogGenresList);
+export default CatalogGenresList;
+

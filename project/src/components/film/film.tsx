@@ -1,12 +1,9 @@
 import { generatePath, Link, useParams, useRouteMatch } from 'react-router-dom';
-import { connect, ConnectedProps, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../footer/footer';
 import { AppRoute } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-
-import { StateType } from '../../types/state';
-
 import Page404 from '../page-404/page-404';
 import { useEffect } from 'react';
 import {
@@ -17,21 +14,18 @@ import { ThunkAppDispatch } from '../../types/action';
 import UserBlock from '../user-block/user-block';
 import { loadFilm } from '../../store/action';
 import FilmCard from './film-card';
+import {
+  getComments,
+  getFilms,
+  getSimilarFilms
+} from '../../store/reducers/data-reducer/selectors';
 
 const SIMILAR_NUMBER = 4;
 
-const mapStateToProps = ({ DATA }: StateType) => ({
-  films: DATA.films,
-  comments: DATA.comments,
-  similarFilms: DATA.similarFilms,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Film(props: PropsFromRedux): JSX.Element {
-  const { films, comments, similarFilms } = props;
+function Film(): JSX.Element {
+  const films = useSelector(getFilms);
+  const comments = useSelector(getComments);
+  const similarFilms = useSelector(getSimilarFilms);
   const { url } = useRouteMatch();
   const { id }: { id: string } = useParams();
   const dispatch = useDispatch();
@@ -108,5 +102,5 @@ function Film(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Film };
-export default connector(Film);
+export default Film;
+

@@ -1,34 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
-import { connect, ConnectedProps, useStore } from 'react-redux';
-
+import { useSelector, useStore } from 'react-redux';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import ShowButton from '../show-button/show-button';
-
-import { StateType } from '../../types/state';
 import { filterFilmsByGenre } from '../../utils/utils';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchPromoAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import MainHeader from './main-header';
 import MainPromo from './main-promo';
+import {
+  getFilm,
+  getFilms,
+  getGenre
+} from '../../store/reducers/data-reducer/selectors';
 
 const CHUNK_LENGTH = 8;
 
-const mapStateToProps = ({ DATA }: StateType) => ({
-  genre: DATA.genre,
-  films: DATA.films,
-  film: DATA.film,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Main(props: PropsFromRedux): JSX.Element {
-  const { genre, films, film } = props;
-
+function Main(): JSX.Element {
+  const genre = useSelector(getGenre);
+  const films = useSelector(getFilms);
+  const film = useSelector(getFilm);
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
   const store = useStore();
   useEffect(() => {
@@ -83,5 +76,4 @@ function Main(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Main };
-export default connector(Main);
+export default Main;

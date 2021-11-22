@@ -1,11 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import classNames from 'classnames';
 import { postReview } from '../../store/api-actions';
-import { ThunkAppDispatch } from '../../types/action';
-import { connect, ConnectedProps } from 'react-redux';
-import { PostCommentType } from '../../types/types';
+import {useDispatch, useSelector} from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { StateType } from '../../types/state';
+import {getIsReviewPosting} from '../../store/reducers/status-reducer/selectors';
 
 const ReviewConfig = {
   maxRating: 10,
@@ -18,22 +16,9 @@ const DEFAULT_RATING = Array(ReviewConfig.maxRating)
   .fill(null)
   .map(() => false);
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit({ rating, comment }: PostCommentType, id: string) {
-    dispatch(postReview({ rating, comment }, id));
-  },
-});
-const mapStateToProps = ({ STATUS }: StateType) => ({
-  isReviewPosting: STATUS.isReviewPosting,
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function ReviewForm(props: PropsFromRedux): JSX.Element {
-  const { onSubmit, isReviewPosting } = props;
-
+function ReviewForm(): JSX.Element {
+  const isReviewPosting = useSelector(getIsReviewPosting);
+  const dispatch = useDispatch();
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [review, setReview] = useState('');
   const { id } = useParams<{ id: string }>();
@@ -65,7 +50,8 @@ function ReviewForm(props: PropsFromRedux): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const ratingValue = String(getRating());
-    onSubmit({ rating: ratingValue, comment: review }, id);
+    // onSubmit({ rating: ratingValue, comment: review }, id);
+    dispatch(postReview({comment: review, rating: ratingValue }, id));
   };
 
   const RATING_INPUTS = Array(ReviewConfig.maxRating)
@@ -119,5 +105,4 @@ function ReviewForm(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { ReviewForm };
-export default connector(ReviewForm);
+export default ReviewForm;

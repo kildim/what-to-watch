@@ -1,21 +1,13 @@
-import { connect, ConnectedProps, useDispatch } from 'react-redux';
-import { StateType } from '../../types/state';
+import { useDispatch, useSelector } from 'react-redux';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { useHistory } from 'react-router-dom';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
+import { getUserInfo } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ AUTH, DATA }: StateType) => ({
-  authorizationStatus: AUTH.authorizationStatus,
-  userInfo: DATA.userInfo,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function UserBlock(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, userInfo } = props;
-
+function UserBlock(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthStatus);
+  const userInfo = useSelector(getUserInfo);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -56,5 +48,4 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { UserBlock };
-export default connector(UserBlock);
+export default UserBlock;

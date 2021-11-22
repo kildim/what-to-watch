@@ -15,7 +15,7 @@ import {
   setIsReviewPosting
 } from './action';
 import {dropToken, saveToken, Token} from '../services/token';
-import {AuthData} from '../types/auth-data';
+import {AuthDataType} from '../types/auth-data-type';
 import {getGenres, parseAuthInfoFromServerFormat, parseFilmFromServerFormat} from '../utils/utils';
 import {FilmType, PostCommentType, ServerFilmType, UserInfoType} from '../types/types';
 import {generatePath} from 'react-router-dom';
@@ -115,7 +115,7 @@ export const checkAuthAction =
     }
   };
 export const loginAction =
-  ({login: email, password}: AuthData): ThunkActionResult =>
+  ({login: email, password}: AuthDataType): ThunkActionResult =>
     async (dispatch, _getState, api) => {
       try {
         const {data} = await api.post(APIRoute.Login, {email, password});

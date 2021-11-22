@@ -4,24 +4,15 @@ import { generatePath, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { FilmType } from '../../types/types';
-import { StateType } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 
 type FilmCardProps = {
   film: FilmType;
 };
 
-const mapStateToProps = ({ AUTH }: StateType) => ({
-  authorizationStatus: AUTH.authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type PropsType = PropsFromRedux & FilmCardProps;
-
-function FilmCard(props: PropsType): JSX.Element {
-  const { film, authorizationStatus } = props;
+function FilmCard({ film }: FilmCardProps): JSX.Element {
+  const authorizationStatus = useSelector(getAuthStatus);
   const addReviewPath = generatePath(AppRoute.AddReview, { id: film.id });
 
   return (
@@ -51,5 +42,5 @@ function FilmCard(props: PropsType): JSX.Element {
   );
 }
 
-export { FilmCard };
-export default connector(FilmCard);
+export default FilmCard;
+

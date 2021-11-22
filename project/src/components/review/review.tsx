@@ -1,20 +1,12 @@
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ReviewForm from '../review-form/review-form';
-import { StateType } from '../../types/state';
 import Page404 from '../page-404/page-404';
 import UserBlock from '../user-block/user-block';
+import { getFilms } from '../../store/reducers/data-reducer/selectors';
 
-const mapStateToProps = ({ DATA }: StateType) => ({
-  films: DATA.films,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Review(props: PropsFromRedux): JSX.Element {
-  const { films } = props;
+function Review(): JSX.Element {
+  const films = useSelector(getFilms);
 
   const { id } = useParams<{ id?: string }>();
 
@@ -75,6 +67,5 @@ function Review(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Review };
-export default connector(Review);
+export default Review;
 

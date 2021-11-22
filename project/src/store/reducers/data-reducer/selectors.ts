@@ -4,6 +4,8 @@ import { CommentType, FilmType, UserInfoType } from '../../../types/types';
 
 export const getFilms = (state: StateType): FilmType[] =>
   state[NameSpace.data].films;
+export const getGenre = (state: StateType): string =>
+  state[NameSpace.data].genre;
 export const getGenres = (state: StateType): GenreType[] =>
   state[NameSpace.data].genres;
 export const getFilm = (state: StateType): FilmType =>
