@@ -33,6 +33,7 @@ const isFavoriteFilm = (favorites: FilmType[], film: FilmType | null): boolean =
 };
 
 function AddMyList(props: PropsFromRedux): JSX.Element {
+// function AddMyList(): JSX.Element {
   const { favorites, film, authorizationStatus, isFavoritesLoading } = props;
   const store = useStore();
 

@@ -17,14 +17,14 @@ import {
 import { redirect } from './store/middlewares/redirect';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/root-reducer';
 
 const api = createAPI(() => {
   store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
 });
 
 const store = configureStore({
-  reducer: reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {

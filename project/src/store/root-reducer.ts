@@ -1,5 +1,7 @@
 import {combineReducers} from '@reduxjs/toolkit';
 import {authReducer} from './reducers/auth-reducer/auth-reducer';
+import {statusReducer} from './reducers/status-reducer/status-reducer';
+import {dataReducer} from './reducers/data-reducer/data-reducer';
 
 export enum NameSpace {
   auth = 'AUTH',
