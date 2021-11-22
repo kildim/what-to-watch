@@ -133,8 +133,8 @@ export const loginAction =
           name: userName,
           avatarUrl: userAvatarUrl,
         };
-        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(loadUserInfo(userInfo));
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(redirectToRoute(AppRoute.Main));
       } catch (error) {
         toast.info(TOAST_MESSAGE.POST_LOGIN_ACTION_ERROR_MESSAGE);

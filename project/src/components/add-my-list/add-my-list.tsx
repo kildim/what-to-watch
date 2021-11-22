@@ -6,27 +6,24 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { redirectToRoute } from '../../store/action';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useState } from 'react';
-import {
-  getFavorites,
-  getFilm
-} from '../../store/reducers/data-reducer/selectors';
+import { getFavorites } from '../../store/reducers/data-reducer/selectors';
 import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 import { getIsFavoritesLoading } from '../../store/reducers/status-reducer/selectors';
 
-const isFavoriteFilm = (
-  favorites: FilmType[],
-  film: FilmType | null,
-): boolean => {
+type AddMyListPropsType = {
+  film: FilmType;
+};
+
+const isFavoriteFilm = (favorites: FilmType[], film: FilmType): boolean => {
   if (film) {
-    return !!favorites.find((favorite) => favorite.id === film.id);
+    return !!favorites.find((favorite) => favorite?.id === film.id);
   } else {
     return false;
   }
 };
 
-function AddMyList(): JSX.Element {
+function AddMyList({ film }: AddMyListPropsType): JSX.Element {
   const favorites = useSelector(getFavorites);
-  const film = useSelector(getFilm);
   const authorizationStatus = useSelector(getAuthStatus);
   const isFavoritesLoading = useSelector(getIsFavoritesLoading);
   const dispatch = useDispatch();

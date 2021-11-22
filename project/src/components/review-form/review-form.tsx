@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import classNames from 'classnames';
 import { postReview } from '../../store/api-actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {getIsReviewPosting} from '../../store/reducers/status-reducer/selectors';
+import { getIsReviewPosting } from '../../store/reducers/status-reducer/selectors';
+import ReviewStar from './review-star';
 
 const ReviewConfig = {
   maxRating: 10,
@@ -35,51 +36,42 @@ function ReviewForm(): JSX.Element {
     'visually-hidden': !isValidToPost(),
   });
 
-  const onChangeInputHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleReviewStarClick = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const indexOfChecked = Number(target.value) - 1;
     setRating(
       rating.map((member, memberIndex) => memberIndex === indexOfChecked),
     );
   };
-  const onInputReviewTextHandler = ({
+  const handleReviewTextChange = ({
     target,
   }: ChangeEvent<HTMLTextAreaElement>) => {
     setReview(target.value);
   };
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const ratingValue = String(getRating());
-    // onSubmit({ rating: ratingValue, comment: review }, id);
-    dispatch(postReview({comment: review, rating: ratingValue }, id));
+    dispatch(postReview({ comment: review, rating: ratingValue }, id));
   };
 
-  const RATING_INPUTS = Array(ReviewConfig.maxRating)
+  const starsInputs = Array(ReviewConfig.maxRating)
     .fill(null)
-    .map((value, index) => {
-      const INPUT_VALUE = (ReviewConfig.maxRating - index).toString();
+    .map((_, index) => {
+      const inputValue = (ReviewConfig.maxRating - index).toString();
       return (
-        <>
-          <input
-            className="rating__input"
-            id={`star-${INPUT_VALUE}`}
-            type="radio"
-            name="rating"
-            value={INPUT_VALUE}
-            onChange={onChangeInputHandler}
-            disabled={isReviewPosting}
-          />
-          <label className="rating__label" htmlFor={`star-${INPUT_VALUE}`}>
-            `Rating ${INPUT_VALUE}`
-          </label>
-        </>
+        <ReviewStar
+          isReviewPosting={isReviewPosting}
+          handleReviewStarClick={handleReviewStarClick}
+          value={inputValue}
+          key={inputValue}
+        />
       );
     });
 
   return (
-    <form action="#" className="add-review__form" onSubmit={handleSubmit}>
+    <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
-        <div className="rating__stars">{RATING_INPUTS}</div>
+        <div className="rating__stars">{starsInputs}</div>
       </div>
 
       <div className="add-review__text">
@@ -88,7 +80,7 @@ function ReviewForm(): JSX.Element {
           name="review-text"
           id="review-text"
           placeholder="Review text"
-          onChange={onInputReviewTextHandler}
+          onChange={handleReviewTextChange}
           disabled={isReviewPosting}
         />
         <div className="add-review__submit">

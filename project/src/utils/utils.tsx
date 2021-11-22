@@ -12,12 +12,12 @@ const filterFilmsByGenre = (
   ingoingArray: FilmType[],
   genre: string,
 ): FilmType[] =>
-  ingoingArray.filter((film: FilmType) =>
-    genre === ALL_GENRES_ITEM ? true : film.genre === genre,
+  ingoingArray.filter((film) =>
+    genre === ALL_GENRES_ITEM ? true : film?.genre === genre,
   );
 
 const getGenres = (films: FilmType[]): GenreType[] => {
-  const genres = films.map((film) => film.genre);
+  const genres = films.map((film) => film?.genre || '' );
   return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(
     0,
     GENRES_NUMBER + 1,

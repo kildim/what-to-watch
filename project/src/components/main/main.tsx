@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
@@ -23,10 +23,10 @@ function Main(): JSX.Element {
   const films = useSelector(getFilms);
   const film = useSelector(getFilm);
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
-  const store = useStore();
+  const dispatch = useDispatch();
   useEffect(() => {
-    (store.dispatch as ThunkAppDispatch)(fetchPromoAction());
-  }, [store.dispatch]);
+    (dispatch as ThunkAppDispatch)(fetchPromoAction());
+  }, [dispatch]);
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);

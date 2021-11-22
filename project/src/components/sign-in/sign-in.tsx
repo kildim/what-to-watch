@@ -1,26 +1,24 @@
 import { FormEvent, useRef } from 'react';
 import { loginAction } from '../../store/api-actions';
-import {useDispatch, useSelector, useStore} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { redirectToRoute } from '../../store/action';
 import { toast } from 'react-toastify';
-import {getAuthStatus} from '../../store/reducers/auth-reducer/selectors';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 
 const VALID_PASSWORD_REGEXP = /\D\d|\d\D/i;
 const VALID_EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
 const isValidPassword = (password: string): boolean =>
   VALID_PASSWORD_REGEXP.test(password);
-const isValidEmail = (email: string): boolean =>
-  VALID_EMAIL_REGEXP.test(email);
+const isValidEmail = (email: string): boolean => VALID_EMAIL_REGEXP.test(email);
 
 function SignIn(): JSX.Element {
   const authorizationStatus = useSelector(getAuthStatus);
   const dispatch = useDispatch();
-  const store = useStore();
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
-    store.dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(redirectToRoute(AppRoute.Main));
   }
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -34,10 +32,12 @@ function SignIn(): JSX.Element {
       isValidPassword(passwordRef.current.value) &&
       isValidEmail(loginRef.current.value)
     ) {
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      }));
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        }),
+      );
     }
     if (loginRef.current && !isValidEmail(loginRef.current.value)) {
       toast('В качестве логина используяте валидный адрес электронной почты');
@@ -89,6 +89,7 @@ function SignIn(): JSX.Element {
                 className="sign-in__input"
                 type="password"
                 placeholder="Password"
+                autoComplete={'off'}
                 name="user-password"
                 id="user-password"
                 ref={passwordRef}

@@ -76,9 +76,9 @@ function Player(): JSX.Element {
     progressBarElement.value = currentVideoTime;
   };
 
-  const film = films.find((movie) => movie.id === Number(id));
+  const film = films.find((movie) => movie?.id === Number(id));
 
-  if (film === undefined) {
+  if (!film) {
     return <Page404 />;
   }
 

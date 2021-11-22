@@ -12,7 +12,6 @@ import {
 } from '../../store/api-actions';
 import { ThunkAppDispatch } from '../../types/action';
 import UserBlock from '../user-block/user-block';
-import { loadFilm } from '../../store/action';
 import FilmCard from './film-card';
 import {
   getComments,
@@ -30,7 +29,7 @@ function Film(): JSX.Element {
   const { id }: { id: string } = useParams();
   const dispatch = useDispatch();
 
-  const film = films.find((movie) => movie.id === Number(id));
+  const film = films.find((movie) => movie?.id === Number(id));
   const similarFilmsPath = generatePath(AppRoute.Similar, { id: id });
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
 
@@ -39,11 +38,9 @@ function Film(): JSX.Element {
     (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
   }, [url, commentsPath, dispatch, similarFilmsPath]);
 
-  if (film === undefined) {
+  if (!film) {
     return <Page404 />;
   }
-
-  dispatch(loadFilm(film));
 
   const FILM_CARD_INLINE_STYLE = {
     backgroundColor: film.backgroundColor,
@@ -74,7 +71,7 @@ function Film(): JSX.Element {
             <UserBlock />
           </header>
 
-          <FilmCard film={film} />
+          <FilmCard film={film}/>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">

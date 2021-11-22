@@ -2,6 +2,7 @@ import { FilmType } from '../../types/types';
 import PlayFilm from '../play-film/play-film';
 import AddMyList from '../add-my-list/add-my-list';
 import {memo} from 'react';
+import Page404 from '../page-404/page-404';
 
 type MainPromoPropsType = {
   film: FilmType;
@@ -9,6 +10,9 @@ type MainPromoPropsType = {
 
 function MainPromo(props: MainPromoPropsType): JSX.Element {
   const { film } = props;
+  if (!film) {
+    return <Page404 />;
+  }
 
   return (
     <div className="film-card__wrap">
@@ -30,8 +34,8 @@ function MainPromo(props: MainPromoPropsType): JSX.Element {
           </p>
 
           <div className="film-card__buttons">
-            <PlayFilm />
-            <AddMyList />
+            <PlayFilm film={film}/>
+            <AddMyList film={film}/>
           </div>
         </div>
       </div>

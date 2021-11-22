@@ -1,18 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
-import { logoutAction } from '../../store/api-actions';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useHistory } from 'react-router-dom';
 import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 import { getUserInfo } from '../../store/reducers/data-reducer/selectors';
+import { logoutAction } from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {
   const authorizationStatus = useSelector(getAuthStatus);
   const userInfo = useSelector(getUserInfo);
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleLogOutClick = () => dispatch(logoutAction());
-  const handleLogInClick = () => history.push(APIRoute.Login);
   const handleAvatarClick = () => history.push(AppRoute.MyList);
 
   return (
@@ -31,15 +30,18 @@ function UserBlock(): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link" onClick={handleLogOutClick}>
+            <p
+              className="user-block__link"
+              onClick={handleLogOutClick}
+            >
               Sign out
-            </a>
+            </p>
           </li>
         </>
       )}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <li className="user-block__item">
-          <a className="user-block__link" onClick={handleLogInClick}>
+          <a className="user-block__link" href={AppRoute.SignIn}>
             Sign in
           </a>
         </li>

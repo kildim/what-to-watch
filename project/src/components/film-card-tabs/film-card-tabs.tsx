@@ -1,16 +1,12 @@
-import {
-  generatePath,
-  Link,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { generatePath, Link, Route, Switch } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import OverviewTab from '../overview-tab/overview-tab';
 import DetailsTab from '../details-tab/details-tab';
 import ReviewsTab from '../reviews-tab/reviews-tab';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { CommentType, FilmType } from '../../types/types';
+import Page404 from '../page-404/page-404';
 
 enum Tab {
   Overview,
@@ -26,7 +22,11 @@ type FilmCardTabsProps = {
 function FilmCardTabs({ film, comments }: FilmCardTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(Tab.Overview);
 
-  useEffect(() => setActiveTab(Tab.Overview), [film]);
+  useEffect(() => setActiveTab(Tab.Overview), []);
+
+  if (film === null) {
+    return <Page404 />;
+  }
 
   const overviewNavLinkClass = classNames('film-nav__item', {
     'film-nav__item--active': activeTab === Tab.Overview,

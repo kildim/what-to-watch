@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
 import { configureStore } from '@reduxjs/toolkit';
-// import { reducer } from './store/reducer';
 import { Provider } from 'react-redux';
 import { createAPI } from './services/api';
 import { setAuthorizationStatus } from './store/action';
@@ -11,7 +10,6 @@ import { AuthorizationStatus } from './const';
 import { ThunkAppDispatch } from './types/action';
 import {
   checkAuthAction,
-  fetchFavorites,
   fetchFilmsAction
 } from './store/api-actions';
 import { redirect } from './store/middlewares/redirect';
@@ -35,7 +33,6 @@ const store = configureStore({
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
-(store.dispatch as ThunkAppDispatch)(fetchFavorites());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -9,12 +9,12 @@ export const getGenre = (state: StateType): string =>
 export const getGenres = (state: StateType): GenreType[] =>
   state[NameSpace.data].genres;
 export const getFilm = (state: StateType): FilmType =>
-  <FilmType>state[NameSpace.data].film;
+  state[NameSpace.data].film;
 export const getSimilarFilms = (state: StateType): FilmType[] =>
   state[NameSpace.data].similarFilms;
 export const getComments = (state: StateType): CommentType[] =>
   state[NameSpace.data].comments;
 export const getUserInfo = (state: StateType): UserInfoType =>
-  <UserInfoType>state[NameSpace.data].userInfo;
+  state[NameSpace.data].userInfo;
 export const getFavorites = (state: StateType): FilmType[] =>
   state[NameSpace.data].favorites;

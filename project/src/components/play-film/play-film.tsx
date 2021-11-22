@@ -1,11 +1,14 @@
 import { generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { redirectToRoute } from '../../store/action';
-import { getFilm } from '../../store/reducers/data-reducer/selectors';
+import {FilmType} from '../../types/types';
 
-function PlayFilm(): JSX.Element {
-  const film = useSelector(getFilm);
+type PlayFilmPropsType = {
+  film: FilmType
+}
+
+function PlayFilm({film}: PlayFilmPropsType): JSX.Element {
   const dispatch = useDispatch();
 
   const handlePlayFilm = () => {

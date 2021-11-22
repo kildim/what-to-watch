@@ -3,16 +3,21 @@ import AddMyList from '../add-my-list/add-my-list';
 import { generatePath, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { FilmType } from '../../types/types';
 import { useSelector } from 'react-redux';
 import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
+import Page404 from '../page-404/page-404';
+import {FilmType} from '../../types/types';
 
 type FilmCardProps = {
-  film: FilmType;
-};
+  film: FilmType
+}
 
-function FilmCard({ film }: FilmCardProps): JSX.Element {
+function FilmCard({film}: FilmCardProps): JSX.Element {
   const authorizationStatus = useSelector(getAuthStatus);
+
+  if (film === null) {
+    return <Page404 />;
+  }
   const addReviewPath = generatePath(AppRoute.AddReview, { id: film.id });
 
   return (
@@ -25,8 +30,8 @@ function FilmCard({ film }: FilmCardProps): JSX.Element {
         </p>
 
         <div className="film-card__buttons">
-          <PlayFilm />
-          <AddMyList />
+          <PlayFilm film={film}/>
+          <AddMyList film={film}/>
           <Link
             to={addReviewPath}
             className={classNames('btn film-card__button', {
