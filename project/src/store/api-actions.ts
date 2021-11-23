@@ -179,9 +179,12 @@ export const setFavorite =
         'film_id': id,
         status: status,
       });
+      dispatch(setIsFavoritesLoading(true));
       try {
         await api.post(postFavorite);
+        dispatch(setIsFavoritesLoading(false));
       } catch (error) {
+        dispatch(setIsFavoritesLoading(false));
         toast(TOAST_MESSAGE.POST_SET_FAVORITE_ERROR_MESSAGE);
       }
     };
