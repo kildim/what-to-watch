@@ -69,7 +69,7 @@ function ReviewForm(): JSX.Element {
     });
 
   return (
-    <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
+    <form className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">{starsInputs}</div>
       </div>

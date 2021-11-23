@@ -12,7 +12,7 @@ const filterFilmsByGenre = (
   ingoingArray: FilmType[],
   genre: string,
 ): FilmType[] =>
-  ingoingArray.filter((film) =>
+  ingoingArray.filter((film: FilmType) =>
     genre === ALL_GENRES_ITEM ? true : film?.genre === genre,
   );
 

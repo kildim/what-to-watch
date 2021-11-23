@@ -40,7 +40,7 @@ function Review(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={filmPath}>{film.name} className={'breadcrumbs__link'}</Link>
+                <Link to={filmPath} className={'breadcrumbs__link'}>{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link className="breadcrumbs__link" to={location.pathname}>Add review</Link>
