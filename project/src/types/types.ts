@@ -18,7 +18,7 @@ export type FilmType = {
   genre: string,
   released: number,
   isFavorite: boolean,
-}
+} | null
 
 export type ServerFilmType = {
   id: string,
@@ -37,7 +37,7 @@ export type ServerFilmType = {
   'run_time': string,
   genre: string,
   released: number,
-  'is_favorite': string,
+  'is_favorite': boolean,
 }
 
 export type CommentType = {
@@ -69,7 +69,7 @@ export type UserInfoType = {
   email: string,
   name: string,
   avatarUrl: string,
-}
+} | null
 
 export type ServerAuthInfoType = {
   id: number,

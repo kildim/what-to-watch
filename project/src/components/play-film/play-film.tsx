@@ -1,25 +1,20 @@
-import {generatePath} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {StateType} from '../../types/state';
-import {connect, ConnectedProps, useStore} from 'react-redux';
-import {redirectToRoute} from '../../store/action';
+import { generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useDispatch } from 'react-redux';
+import { redirectToRoute } from '../../store/action';
+import {FilmType} from '../../types/types';
 
-const mapStateToProps = ({film}: StateType) => (
-  {film}
-);
+type PlayFilmPropsType = {
+  film: FilmType
+}
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function PlayFilm (props: PropsFromRedux): JSX.Element {
-  const {film} = props;
-  const store = useStore();
+function PlayFilm({film}: PlayFilmPropsType): JSX.Element {
+  const dispatch = useDispatch();
 
   const handlePlayFilm = () => {
     if (film) {
-      const playerRoute = generatePath(AppRoute.Player, {id: film.id});
-      store.dispatch(redirectToRoute(playerRoute));
+      const playerRoute = generatePath(AppRoute.Player, { id: film.id });
+      dispatch(redirectToRoute(playerRoute));
     }
   };
 
@@ -37,6 +32,4 @@ function PlayFilm (props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { PlayFilm };
-export default connector(PlayFilm);
-
+export default PlayFilm;

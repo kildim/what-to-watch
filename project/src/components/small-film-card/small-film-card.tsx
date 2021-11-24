@@ -1,16 +1,14 @@
-import {generatePath, Link, useHistory} from 'react-router-dom';
-import {FilmType} from '../../types/types';
-import {memo, useEffect, useRef, useState} from 'react';
-import {AppRoute} from '../../const';
+import { generatePath, Link, useHistory } from 'react-router-dom';
+import { FilmType } from '../../types/types';
+import { useEffect, useRef, useState } from 'react';
+import { AppRoute } from '../../const';
+import Page404 from '../page-404/page-404';
 
-type SmallFilmcardProps = {
-  film: FilmType,
-}
+type SmallFilmСardProps = {
+  film: FilmType;
+};
 
-
-function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
-  const filmPath = generatePath(AppRoute.Film, {id: film.id});
-
+function SmallFilmCard({ film }: SmallFilmСardProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
   const history = useHistory();
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -48,8 +46,14 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
     };
   }, [isPlaying]);
 
+  if (!film) {
+    return <Page404 />;
+  }
+  const filmPath = generatePath(AppRoute.Film, { id: film.id });
+
   return (
-    <article className="small-film-card catalog__films-card"
+    <article
+      className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
@@ -65,10 +69,12 @@ function SmallFilmCard({film}: SmallFilmcardProps): JSX.Element {
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={filmPath}>{film.name}</Link>
+        <Link className="small-film-card__link" to={filmPath}>
+          {film.name}
+        </Link>
       </h3>
     </article>
   );
 }
 
-export default memo(SmallFilmCard);
+export default SmallFilmCard;

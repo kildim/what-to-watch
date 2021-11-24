@@ -1,5 +1,5 @@
 import { Route, Router as BrowserRouter, Switch } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import Main from '../main/main';
 import { AppRoute } from '../../const';
@@ -11,19 +11,11 @@ import Review from '../review/review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import Film from '../film/film';
-import { StateType } from '../../types/state';
 import browserHistory from '../../browser-history';
+import {getIsFilmsDataLoading} from '../../store/reducers/status-reducer/selectors';
 
-const mapStateToProps = ({ isFilmsDataLoading }: StateType) => ({
-  isFilmsDataLoading,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function App(props: PropsFromRedux): JSX.Element {
-  const { isFilmsDataLoading } = props;
+function App(): JSX.Element {
+  const isFilmsDataLoading = useSelector(getIsFilmsDataLoading);
 
   if (isFilmsDataLoading) {
     return <LoadingScreen />;
@@ -54,5 +46,5 @@ function App(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { App };
-export default connector(App);
+export default App;
+

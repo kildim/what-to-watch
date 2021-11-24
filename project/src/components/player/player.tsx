@@ -1,31 +1,25 @@
-import { StateType } from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {useHistory, useParams} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import Page404 from '../page-404/page-404';
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {formatRemainingTime} from '../../utils/utils';
+import { formatRemainingTime } from '../../utils/utils';
+import { getFilms } from '../../store/reducers/data-reducer/selectors';
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const mapStateToProps = ({ genre, films }: StateType) => ({
-  genre,
-  films,
-});
-const connector = connect(mapStateToProps);
-
-function Player(props: PropsFromRedux): JSX.Element {
-  const { films } = props;
-
+function Player(): JSX.Element {
+  const films = useSelector(getFilms);
   const { id } = useParams<{ id?: string }>();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const {current: videoElement} = videoRef;
+  const { current: videoElement } = videoRef;
   const progressBarRef = useRef<HTMLProgressElement>(null);
-  const {current: progressBarElement} = progressBarRef;
+  const { current: progressBarElement } = progressBarRef;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
-  const [{duration, remainingTime}, setDuration] = useState({duration: 0, remainingTime: 0});
+  const [{ duration, remainingTime }, setDuration] = useState({
+    duration: 0,
+    remainingTime: 0,
+  });
   const history = useHistory();
 
   useEffect(() => {
@@ -43,7 +37,9 @@ function Player(props: PropsFromRedux): JSX.Element {
     const videoDuration = Math.round(videoElement.duration);
 
     setDuration((state) => ({
-      ...state, duration: videoDuration, remainingTime: videoDuration,
+      ...state,
+      duration: videoDuration,
+      remainingTime: videoDuration,
     }));
   }, [isVideoLoading, videoElement]);
 
@@ -51,7 +47,9 @@ function Player(props: PropsFromRedux): JSX.Element {
     return <Page404 />;
   }
 
-  const RemainingMovieTime = !isVideoLoading ? formatRemainingTime(remainingTime) : '';
+  const RemainingMovieTime = !isVideoLoading
+    ? formatRemainingTime(remainingTime)
+    : '';
 
   const handlePlayClick = () => {
     setIsPlaying((prevState) => !prevState);
@@ -65,19 +63,22 @@ function Player(props: PropsFromRedux): JSX.Element {
     }
 
     const currentVideoTime = videoElement.currentTime;
-    const currentPercentage = currentVideoTime / duration * 100;
-    const currentRemainingTime = Math.round(duration * (100 - currentPercentage) / 100);
+    const currentPercentage = (currentVideoTime / duration) * 100;
+    const currentRemainingTime = Math.round(
+      (duration * (100 - currentPercentage)) / 100,
+    );
 
     setDuration((state) => ({
-      duration: state.duration, remainingTime: currentRemainingTime,
+      duration: state.duration,
+      remainingTime: currentRemainingTime,
     }));
     setCurrentTime(currentPercentage);
     progressBarElement.value = currentVideoTime;
   };
 
-  const film = films.find((movie) => movie.id === Number(id));
+  const film = films.find((movie) => movie?.id === Number(id));
 
-  if (film === undefined) {
+  if (!film) {
     return <Page404 />;
   }
 
@@ -108,8 +109,15 @@ function Player(props: PropsFromRedux): JSX.Element {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" max={duration} ref={progressBarRef}/>
-            <div className="player__toggler" style={{left: `${currentTime}%`}}>
+            <progress
+              className="player__progress"
+              max={duration}
+              ref={progressBarRef}
+            />
+            <div
+              className="player__toggler"
+              style={{ left: `${currentTime}%` }}
+            >
               Toggler
             </div>
           </div>
@@ -141,7 +149,11 @@ function Player(props: PropsFromRedux): JSX.Element {
           </button>
           <div className="player__name">{film.name}</div>
 
-          <button type="button" className="player__full-screen" onClick={handleFullscreenClick}>
+          <button
+            type="button"
+            className="player__full-screen"
+            onClick={handleFullscreenClick}
+          >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen" />
             </svg>
@@ -153,5 +165,4 @@ function Player(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export  {Player};
-export default connector(Player);
+export default Player;

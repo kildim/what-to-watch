@@ -1,16 +1,23 @@
-import {convertMinutesToHoursWithMinutes, joinArrayByComma} from '../../utils/utils';
-import {FilmType} from '../../types/types';
-import {CSSProperties} from 'react';
+import {
+  convertMinutesToHoursWithMinutes,
+  joinArrayByComma
+} from '../../utils/utils';
+import { FilmType } from '../../types/types';
+import { CSSProperties } from 'react';
+import Page404 from '../page-404/page-404';
 
 type DetailsTabProps = {
-  film: FilmType
-}
+  film: FilmType;
+};
 
-const STARRING_STYLE: CSSProperties = {whiteSpace: 'pre-line'};
+const STARRING_STYLE: CSSProperties = { whiteSpace: 'pre-line' };
 
-function DetailsTab (prop: DetailsTabProps): JSX.Element {
-  const {film} = prop;
+function DetailsTab(prop: DetailsTabProps): JSX.Element {
+  const { film } = prop;
 
+  if (!film) {
+    return <Page404 />;
+  }
   const starring = joinArrayByComma(film.starring);
 
   return (
@@ -22,14 +29,18 @@ function DetailsTab (prop: DetailsTabProps): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value" style={STARRING_STYLE}>{starring}</span>
+          <span className="film-card__details-value" style={STARRING_STYLE}>
+            {starring}
+          </span>
         </p>
       </div>
 
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{convertMinutesToHoursWithMinutes(film.runTime)}</span>
+          <span className="film-card__details-value">
+            {convertMinutesToHoursWithMinutes(film.runTime)}
+          </span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

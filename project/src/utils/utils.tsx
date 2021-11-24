@@ -13,11 +13,11 @@ const filterFilmsByGenre = (
   genre: string,
 ): FilmType[] =>
   ingoingArray.filter((film: FilmType) =>
-    genre === ALL_GENRES_ITEM ? true : film.genre === genre,
+    genre === ALL_GENRES_ITEM ? true : film?.genre === genre,
   );
 
 const getGenres = (films: FilmType[]): GenreType[] => {
-  const genres = films.map((film) => film.genre);
+  const genres = films.map((film) => film?.genre || '' );
   return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(
     0,
     GENRES_NUMBER + 1,
@@ -47,7 +47,7 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   runTime: Number(film['run_time']),
   genre: film['genre'],
   released: film['released'],
-  isFavorite: isTrueString(film['is_favorite']),
+  isFavorite: film['is_favorite'],
 });
 
 const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoType  => ({

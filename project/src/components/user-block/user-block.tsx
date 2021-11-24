@@ -1,26 +1,17 @@
-import { connect, ConnectedProps, useDispatch } from 'react-redux';
-import { StateType } from '../../types/state';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../../const';
-import { logoutAction } from '../../store/api-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useHistory } from 'react-router-dom';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
+import { getUserInfo } from '../../store/reducers/data-reducer/selectors';
+import { logoutAction } from '../../store/api-actions';
 
-const mapStateToProps = ({ authorizationStatus, userInfo }: StateType) => ({
-  authorizationStatus,
-  userInfo,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function UserBlock(props: PropsFromRedux): JSX.Element {
-  const { authorizationStatus, userInfo } = props;
-
-  const dispatch = useDispatch();
+function UserBlock(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthStatus);
+  const userInfo = useSelector(getUserInfo);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleLogOutClick = () => dispatch(logoutAction());
-  const handleLogInClick = () => history.push(APIRoute.Login);
   const handleAvatarClick = () => history.push(AppRoute.MyList);
 
   return (
@@ -39,15 +30,18 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link" onClick={handleLogOutClick}>
+            <p
+              className="user-block__link"
+              onClick={handleLogOutClick}
+            >
               Sign out
-            </a>
+            </p>
           </li>
         </>
       )}
       {authorizationStatus !== AuthorizationStatus.Auth && (
         <li className="user-block__item">
-          <a className="user-block__link" onClick={handleLogInClick}>
+          <a className="user-block__link" href={AppRoute.SignIn}>
             Sign in
           </a>
         </li>
@@ -56,5 +50,4 @@ function UserBlock(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { UserBlock };
-export default connector(UserBlock);
+export default UserBlock;

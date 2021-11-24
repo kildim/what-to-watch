@@ -1,41 +1,24 @@
 import { FormEvent, useRef } from 'react';
-import { ThunkAppDispatch } from '../../types/action';
-import { AuthData } from '../../types/auth-data';
 import { loginAction } from '../../store/api-actions';
-import { connect, ConnectedProps, useStore } from 'react-redux';
-import { StateType } from '../../types/state';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { redirectToRoute } from '../../store/action';
 import { toast } from 'react-toastify';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 
 const VALID_PASSWORD_REGEXP = /\D\d|\d\D/i;
 const VALID_EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthData) {
-    dispatch(loginAction(authData));
-  },
-});
-
-const mapStateToProps = ({ authorizationStatus }: StateType) => ({
-  authorizationStatus,
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
 const isValidPassword = (password: string): boolean =>
   VALID_PASSWORD_REGEXP.test(password);
-const isValidEmail = (email: string): boolean =>
-  VALID_EMAIL_REGEXP.test(email);
+const isValidEmail = (email: string): boolean => VALID_EMAIL_REGEXP.test(email);
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function SignIn(props: PropsFromRedux): JSX.Element {
-  const { onSubmit, authorizationStatus } = props;
-
-  const store = useStore();
+function SignIn(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthStatus);
+  const dispatch = useDispatch();
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
-    store.dispatch(redirectToRoute(AppRoute.Main));
+    dispatch(redirectToRoute(AppRoute.Main));
   }
 
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -49,10 +32,12 @@ function SignIn(props: PropsFromRedux): JSX.Element {
       isValidPassword(passwordRef.current.value) &&
       isValidEmail(loginRef.current.value)
     ) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        }),
+      );
     }
     if (loginRef.current && !isValidEmail(loginRef.current.value)) {
       toast('В качестве логина используяте валидный адрес электронной почты');
@@ -104,6 +89,7 @@ function SignIn(props: PropsFromRedux): JSX.Element {
                 className="sign-in__input"
                 type="password"
                 placeholder="Password"
+                autoComplete="off"
                 name="user-password"
                 id="user-password"
                 ref={passwordRef}
@@ -126,7 +112,7 @@ function SignIn(props: PropsFromRedux): JSX.Element {
 
       <footer className="page-footer">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <a href="/" className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -141,5 +127,4 @@ function SignIn(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export { SignIn };
-export default connector(SignIn);
+export default SignIn;

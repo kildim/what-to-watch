@@ -3,25 +3,18 @@ import AddMyList from '../add-my-list/add-my-list';
 import { generatePath, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { FilmType } from '../../types/types';
-import { StateType } from '../../types/state';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
+import Page404 from '../page-404/page-404';
+import {getFilm} from '../../store/reducers/data-reducer/selectors';
 
-type FilmCardProps = {
-  film: FilmType;
-};
+function FilmCard(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthStatus);
+  const film = useSelector(getFilm);
 
-const mapStateToProps = ({ authorizationStatus }: StateType) => ({
-  authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type PropsType = PropsFromRedux & FilmCardProps;
-
-function FilmCard(props: PropsType): JSX.Element {
-  const { film, authorizationStatus } = props;
+  if (film === null) {
+    return <Page404 />;
+  }
   const addReviewPath = generatePath(AppRoute.AddReview, { id: film.id });
 
   return (
@@ -34,8 +27,8 @@ function FilmCard(props: PropsType): JSX.Element {
         </p>
 
         <div className="film-card__buttons">
-          <PlayFilm />
-          <AddMyList />
+          <PlayFilm film={film}/>
+          <AddMyList film={film}/>
           <Link
             to={addReviewPath}
             className={classNames('btn film-card__button', {
@@ -51,5 +44,5 @@ function FilmCard(props: PropsType): JSX.Element {
   );
 }
 
-export { FilmCard };
-export default connector(FilmCard);
+export default FilmCard;
+

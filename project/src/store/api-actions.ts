@@ -1,5 +1,10 @@
-import {ThunkActionResult} from '../types/action';
-import {APIRoute, AppRoute, AuthorizationStatus, TOAST_MESSAGE} from '../const';
+import { ThunkActionResult } from '../types/action';
+import {
+  APIRoute,
+  AppRoute,
+  AuthorizationStatus,
+  TOAST_MESSAGE
+} from '../const';
 import {
   loadFavorites,
   loadFilm,
@@ -14,19 +19,29 @@ import {
   setIsFilmsDataLoading,
   setIsReviewPosting
 } from './action';
-import {dropToken, saveToken, Token} from '../services/token';
-import {AuthData} from '../types/auth-data';
-import {getGenres, parseAuthInfoFromServerFormat, parseFilmFromServerFormat} from '../utils/utils';
-import {FilmType, PostCommentType, ServerFilmType, UserInfoType} from '../types/types';
-import {generatePath} from 'react-router-dom';
-import {toast} from 'react-toastify';
+import { dropToken, saveToken, Token } from '../services/token';
+import { AuthDataType } from '../types/auth-data-type';
+import {
+  getGenres,
+  parseAuthInfoFromServerFormat,
+  parseFilmFromServerFormat
+} from '../utils/utils';
+import {
+  FilmType,
+  PostCommentType,
+  ServerFilmType,
+  UserInfoType
+} from '../types/types';
+import { generatePath } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { AxiosResponse } from 'axios';
 
 export const fetchFilmsAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
       try {
         dispatch(setIsFilmsDataLoading(true));
-        const {data: serverFilmsData} = await api.get(APIRoute.Films);
+        const { data: serverFilmsData } = await api.get(APIRoute.Films);
         const filmsData: FilmType[] = serverFilmsData.map(
           (film: ServerFilmType) => parseFilmFromServerFormat(film),
         );
@@ -44,7 +59,7 @@ export const fetchFavorites =
     async (dispatch, _getState, api): Promise<void> => {
       try {
         dispatch(setIsFavoritesLoading(true));
-        const {data: serverFavorites} = await api.get(APIRoute.Favorites);
+        const { data: serverFavorites } = await api.get(APIRoute.Favorites);
         const favoritesData: FilmType[] = serverFavorites.map(
           (film: ServerFilmType) => parseFilmFromServerFormat(film),
         );
@@ -60,7 +75,7 @@ export const fetchSimilarFilmsAction =
   (similarFilmsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
       try {
-        const {data: serverFilmsData} = await api.get(similarFilmsPath);
+        const { data: serverFilmsData } = await api.get(similarFilmsPath);
         const filmsData = serverFilmsData.map((film: ServerFilmType) =>
           parseFilmFromServerFormat(film),
         );
@@ -74,7 +89,7 @@ export const fetchFilmCommentsAction =
   (commentsPath: string): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
       try {
-        const {data: comments} = await api.get(commentsPath);
+        const { data: comments } = await api.get(commentsPath);
         dispatch(loadFilmComments(comments));
       } catch (error) {
         toast(TOAST_MESSAGE.FETCH_COMMENTS_ERROR_MESSAGE);
@@ -84,7 +99,7 @@ export const fetchFilmCommentsAction =
 export const fetchPromoAction =
   (): ThunkActionResult =>
     async (dispatch, _getState, api): Promise<void> => {
-      const {data: serverPromoData} = await api.get(APIRoute.Promo);
+      const { data: serverPromoData } = await api.get(APIRoute.Promo);
       const promoData = parseFilmFromServerFormat(serverPromoData);
       dispatch(loadFilm(promoData));
     };
@@ -92,7 +107,7 @@ export const fetchPromoAction =
 export const checkAuthAction =
   (): ThunkActionResult => async (dispatch, _getState, api) => {
     try {
-      await api.get(APIRoute.Login).then(({data: serverAuthInfo}) => {
+      await api.get(APIRoute.Login).then(({ data: serverAuthInfo }) => {
         const {
           id: userId,
           email: userEmail,
@@ -115,10 +130,10 @@ export const checkAuthAction =
     }
   };
 export const loginAction =
-  ({login: email, password}: AuthData): ThunkActionResult =>
+  ({ login: email, password }: AuthDataType): ThunkActionResult =>
     async (dispatch, _getState, api) => {
       try {
-        const {data} = await api.post(APIRoute.Login, {email, password});
+        const { data } = await api.post(APIRoute.Login, { email, password });
         const {
           id: userId,
           email: userEmail,
@@ -133,8 +148,8 @@ export const loginAction =
           name: userName,
           avatarUrl: userAvatarUrl,
         };
-        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(loadUserInfo(userInfo));
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(redirectToRoute(AppRoute.Main));
       } catch (error) {
         toast.info(TOAST_MESSAGE.POST_LOGIN_ACTION_ERROR_MESSAGE);
@@ -142,10 +157,10 @@ export const loginAction =
     };
 
 export const postReview =
-  ({rating, comment}: PostCommentType, id: string): ThunkActionResult =>
+  ({ rating, comment }: PostCommentType, id: string): ThunkActionResult =>
     async (dispatch, _getState, api) => {
-      const postCommentUrl = generatePath(APIRoute.PostComment, {id});
-      const filmUrl = generatePath(AppRoute.Film, {id});
+      const postCommentUrl = generatePath(APIRoute.PostComment, { id });
+      const filmUrl = generatePath(AppRoute.Film, { id });
       dispatch(setIsReviewPosting(true));
       try {
         await api
@@ -171,17 +186,39 @@ export const logoutAction =
     dispatch(redirectToRoute(AppRoute.Main));
   };
 
-export const setFavorite =
-  (isFavorite: boolean, id: number): ThunkActionResult =>
-    async (dispatch, _getState, api) => {
-      const status = isFavorite ? '0' : '1';
+export const setFavoriteFlag =
+  (isFavoriteFlag: boolean, id: number): ThunkActionResult =>
+    async (dispatch, getState, api) => {
+      const status = isFavoriteFlag ? '1' : '0';
       const postFavorite = generatePath(APIRoute.FavoriteStatus, {
         'film_id': id,
         status: status,
       });
+      dispatch(setIsFavoritesLoading(true));
       try {
-        await api.post(postFavorite);
-      } catch (error) {
+        const responce: AxiosResponse = await api.post<{ token: Token }>(
+          postFavorite,
+        );
+        if (responce.status === 200) {
+          const film = parseFilmFromServerFormat(responce.data);
+          const films = [...getState().DATA.films];
+          const updatedFilms = films.map((movie): FilmType => {
+            if (movie?.id === film?.id) {
+              // eslint-disable-next-line no-console
+              return film;
+            }
+            return movie;
+          });
+          // eslint-disable-next-line no-console
+          console.log(updatedFilms);
+          // }
+          dispatch(loadFilms(updatedFilms));
+        }
+      } catch {
+      // eslint-disable-next-line no-console
+      //   console.log(error);
         toast(TOAST_MESSAGE.POST_SET_FAVORITE_ERROR_MESSAGE);
+      } finally {
+        dispatch(setIsFavoritesLoading(false));
       }
     };

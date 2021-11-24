@@ -1,5 +1,6 @@
 import {FilmType} from '../../types/types';
 import {rangeFilm} from '../../utils/utils';
+import Page404 from '../page-404/page-404';
 
 type OverviewTabProps = {
   film: FilmType
@@ -8,6 +9,9 @@ type OverviewTabProps = {
 function OverviewTab (props: OverviewTabProps):JSX.Element {
   const {film} = props;
 
+  if (!film) {
+    return <Page404 />;
+  }
   const starring = `${film.starring.join(', ')}.`;
 
   return (
