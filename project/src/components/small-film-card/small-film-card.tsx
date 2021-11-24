@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { AppRoute } from '../../const';
 import Page404 from '../page-404/page-404';
 
-type SmallFilmcardProps = {
+type SmallFilmСardProps = {
   film: FilmType;
 };
 
-function SmallFilmCard({ film }: SmallFilmcardProps): JSX.Element {
+function SmallFilmCard({ film }: SmallFilmСardProps): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
   const history = useHistory();
   const videoRef = useRef<HTMLVideoElement | null>(null);

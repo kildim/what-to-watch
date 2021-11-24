@@ -6,14 +6,11 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useSelector } from 'react-redux';
 import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 import Page404 from '../page-404/page-404';
-import {FilmType} from '../../types/types';
+import {getFilm} from '../../store/reducers/data-reducer/selectors';
 
-type FilmCardProps = {
-  film: FilmType
-}
-
-function FilmCard({film}: FilmCardProps): JSX.Element {
+function FilmCard(): JSX.Element {
   const authorizationStatus = useSelector(getAuthStatus);
+  const film = useSelector(getFilm);
 
   if (film === null) {
     return <Page404 />;

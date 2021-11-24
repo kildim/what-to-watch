@@ -47,7 +47,7 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   runTime: Number(film['run_time']),
   genre: film['genre'],
   released: film['released'],
-  isFavorite: isTrueString(film['is_favorite']),
+  isFavorite: film['is_favorite'],
 });
 
 const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoType  => ({

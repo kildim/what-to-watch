@@ -1,15 +1,12 @@
-import { FilmType } from '../../types/types';
 import PlayFilm from '../play-film/play-film';
 import AddMyList from '../add-my-list/add-my-list';
 import {memo} from 'react';
 import Page404 from '../page-404/page-404';
+import {useSelector} from 'react-redux';
+import {getFilm} from '../../store/reducers/data-reducer/selectors';
 
-type MainPromoPropsType = {
-  film: FilmType;
-};
-
-function MainPromo(props: MainPromoPropsType): JSX.Element {
-  const { film } = props;
+function MainPromo(): JSX.Element {
+  const film = useSelector(getFilm);
   if (!film) {
     return <Page404 />;
   }

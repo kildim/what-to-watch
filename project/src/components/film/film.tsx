@@ -5,7 +5,7 @@ import { AppRoute } from '../../const';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Page404 from '../page-404/page-404';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {
   fetchFilmCommentsAction,
   fetchSimilarFilmsAction
@@ -18,6 +18,7 @@ import {
   getFilms,
   getSimilarFilms
 } from '../../store/reducers/data-reducer/selectors';
+import {loadFilm} from '../../store/action';
 
 const SIMILAR_NUMBER = 4;
 
@@ -30,13 +31,15 @@ function Film(): JSX.Element {
   const dispatch = useDispatch();
 
   const film = films.find((movie) => movie?.id === Number(id));
+
   const similarFilmsPath = generatePath(AppRoute.Similar, { id: id });
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
 
   useEffect(() => {
+    dispatch(loadFilm(film ? film : null));
     (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
     (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
-  }, [url, commentsPath, dispatch, similarFilmsPath]);
+  }, [url, commentsPath, dispatch, similarFilmsPath, film]);
 
   if (!film) {
     return <Page404 />;
@@ -71,7 +74,8 @@ function Film(): JSX.Element {
             <UserBlock />
           </header>
 
-          <FilmCard film={film}/>
+          {/*пробрасываем Film пропсами до кнопки AddList*/}
+          <FilmCard/>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">

@@ -26,7 +26,7 @@ function Main(): JSX.Element {
   const dispatch = useDispatch();
   useEffect(() => {
     (dispatch as ThunkAppDispatch)(fetchPromoAction());
-  }, [dispatch]);
+  }, [dispatch, films]);
 
   useEffect(() => {
     setListCount(CHUNK_LENGTH);
@@ -58,7 +58,7 @@ function Main(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
         <MainHeader />
-        <MainPromo film={film} />
+        <MainPromo />
       </section>
       <div className="page-content">
         <section className="catalog">

@@ -37,7 +37,7 @@ export type ServerFilmType = {
   'run_time': string,
   genre: string,
   released: number,
-  'is_favorite': string,
+  'is_favorite': boolean,
 }
 
 export type CommentType = {
