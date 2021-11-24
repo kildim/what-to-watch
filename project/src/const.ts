@@ -61,5 +61,5 @@ export const ToastMessage = {
   FetchCommentsErrorMessage: 'Возникла ошибка при загрузке комментариев',
   PostLoginActionErrorMessage: 'Возникла ошибка при отправке параметров аутентификации',
   PostSetFavoriteErrorMessage: 'Возникла ошибка при внесении в список избранного',
-};
+} as const;
 
