@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import classNames from 'classnames';
 import { postReview } from '../../store/api-actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -11,7 +10,7 @@ const ReviewConfig = {
   minRatingBound: 0,
   minPostLength: 50,
   maxPostLength: 400,
-};
+} as const;
 
 const DEFAULT_RATING = Array(ReviewConfig.maxRating)
   .fill(null)
@@ -31,10 +30,6 @@ function ReviewForm(): JSX.Element {
     getRating() > ReviewConfig.minRatingBound &&
     review.length >= ReviewConfig.minPostLength &&
     review.length <= ReviewConfig.maxPostLength;
-
-  const SUBMIT_STYLE = classNames('add-review__btn', {
-    'visually-hidden': !isValidToPost(),
-  });
 
   const handleReviewStarClick = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const indexOfChecked = Number(target.value) - 1;
@@ -85,9 +80,9 @@ function ReviewForm(): JSX.Element {
         />
         <div className="add-review__submit">
           <button
-            className={SUBMIT_STYLE}
+            className="add-review__btn"
             type="submit"
-            disabled={isReviewPosting}
+            disabled={isReviewPosting || !isValidToPost()}
           >
             Post
           </button>

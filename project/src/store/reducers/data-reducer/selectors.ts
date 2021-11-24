@@ -3,18 +3,18 @@ import { NameSpace } from '../../root-reducer';
 import { CommentType, FilmType, UserInfoType } from '../../../types/types';
 
 export const getFilms = (state: StateType): FilmType[] =>
-  state[NameSpace.data].films;
+  state[NameSpace.Data].films;
 export const getGenre = (state: StateType): string =>
-  state[NameSpace.data].genre;
+  state[NameSpace.Data].genre;
 export const getGenres = (state: StateType): GenreType[] =>
-  state[NameSpace.data].genres;
+  state[NameSpace.Data].genres;
 export const getFilm = (state: StateType): FilmType =>
-  state[NameSpace.data].film;
+  state[NameSpace.Data].film;
 export const getSimilarFilms = (state: StateType): FilmType[] =>
-  state[NameSpace.data].similarFilms;
+  state[NameSpace.Data].similarFilms;
 export const getComments = (state: StateType): CommentType[] =>
-  state[NameSpace.data].comments;
+  state[NameSpace.Data].comments;
 export const getUserInfo = (state: StateType): UserInfoType =>
-  state[NameSpace.data].userInfo;
+  state[NameSpace.Data].userInfo;
 export const getFavorites = (state: StateType): FilmType[] =>
-  state[NameSpace.data].favorites;
+  state[NameSpace.Data].favorites;

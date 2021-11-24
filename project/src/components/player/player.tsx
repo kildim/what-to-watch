@@ -13,7 +13,7 @@ function Player(): JSX.Element {
   const { current: videoElement } = videoRef;
   const progressBarRef = useRef<HTMLProgressElement>(null);
   const { current: progressBarElement } = progressBarRef;
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [{ duration, remainingTime }, setDuration] = useState({

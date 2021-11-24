@@ -2,8 +2,8 @@ import { StateType } from '../../../types/state';
 import { NameSpace } from '../../root-reducer';
 
 export const getIsFilmsDataLoading = (state: StateType): boolean =>
-  state[NameSpace.status].isFilmsDataLoading;
+  state[NameSpace.Status].isFilmsDataLoading;
 export const getIsReviewPosting = (state: StateType): boolean =>
-  state[NameSpace.status].isReviewPosting;
+  state[NameSpace.Status].isReviewPosting;
 export const getIsFavoritesLoading = (state: StateType): boolean =>
-  state[NameSpace.status].isFavoritesLoading;
+  state[NameSpace.Status].isFavoritesLoading;

@@ -11,15 +11,6 @@ export const setGenre = createAction(
     }),
 );
 
-export const getGenreFilms = createAction(
-  Action.GetGenre, (genre: string) => ({
-    type: Action.GetGenre,
-    payload: {
-      genre,
-    },
-  }),
-);
-
 export const loadFilms = createAction(
   Action.LoadFilms, (films: FilmType[]) => ({
     type: Action.LoadFilms,

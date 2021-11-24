@@ -32,7 +32,6 @@ export enum AuthorizationStatus {
 
 export enum Action {
   SetGenre = 'genre/setGenre',
-  GetGenre = 'genre/getGenreFilms',
   SetGenres = 'genre/setGenres',
 
   SetApi = 'data/setApi',
@@ -53,14 +52,14 @@ export enum Action {
 export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;
 
-export const TOAST_MESSAGE = {
-  AUTH_SUGGESTION: 'Предлягаем Авторизоваться',
-  POST_ERROR: 'Ошибка при публикации на сервере',
-  FETCH_FILMS_ERROR: 'Возникла ошибка при загрузке фильмов',
-  FETCH_FAVORITES_ERROR_MESSAGE: 'Возникла ошибка при загрузке избранных фильмов',
-  FETCH_SIMILAR_ERROR_MESSAGE: 'Возникла ошибка при загрузке похожих фильмов',
-  FETCH_COMMENTS_ERROR_MESSAGE: 'Возникла ошибка при загрузке комментариев',
-  POST_LOGIN_ACTION_ERROR_MESSAGE: 'Возникла ошибка при отправке параметров аутентификации',
-  POST_SET_FAVORITE_ERROR_MESSAGE: 'Возникла ошибка при внесении в список избранного',
+export const ToastMessage = {
+  AuthSuggestion: 'Предлягаем Авторизоваться',
+  PostError: 'Ошибка при публикации на сервере',
+  FetchFilmsError: 'Возникла ошибка при загрузке фильмов',
+  FetchFavoritesErrorMessage: 'Возникла ошибка при загрузке избранных фильмов',
+  FetchSimilarErrorMessage: 'Возникла ошибка при загрузке похожих фильмов',
+  FetchCommentsErrorMessage: 'Возникла ошибка при загрузке комментариев',
+  PostLoginActionErrorMessage: 'Возникла ошибка при отправке параметров аутентификации',
+  PostSetFavoriteErrorMessage: 'Возникла ошибка при внесении в список избранного',
 };
 

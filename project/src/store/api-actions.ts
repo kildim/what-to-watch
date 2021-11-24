@@ -3,7 +3,7 @@ import {
   APIRoute,
   AppRoute,
   AuthorizationStatus,
-  TOAST_MESSAGE
+  ToastMessage
 } from '../const';
 import {
   loadFavorites,
@@ -50,7 +50,7 @@ export const fetchFilmsAction =
         dispatch(setIsFilmsDataLoading(false));
       } catch (error) {
         dispatch(setIsFilmsDataLoading(false));
-        toast(TOAST_MESSAGE.FETCH_FILMS_ERROR);
+        toast(ToastMessage.FetchFilmsError);
       }
     };
 
@@ -67,7 +67,7 @@ export const fetchFavorites =
         dispatch(setIsFavoritesLoading(false));
       } catch (error) {
         dispatch(setIsFavoritesLoading(false));
-        toast(TOAST_MESSAGE.FETCH_FAVORITES_ERROR_MESSAGE);
+        toast(ToastMessage.FetchFavoritesErrorMessage);
       }
     };
 
@@ -81,7 +81,7 @@ export const fetchSimilarFilmsAction =
         );
         dispatch(loadSimilarFilms(filmsData));
       } catch (error) {
-        toast(TOAST_MESSAGE.FETCH_SIMILAR_ERROR_MESSAGE);
+        toast(ToastMessage.FetchSimilarErrorMessage);
       }
     };
 
@@ -92,7 +92,7 @@ export const fetchFilmCommentsAction =
         const { data: comments } = await api.get(commentsPath);
         dispatch(loadFilmComments(comments));
       } catch (error) {
-        toast(TOAST_MESSAGE.FETCH_COMMENTS_ERROR_MESSAGE);
+        toast(ToastMessage.FetchCommentsErrorMessage);
       }
     };
 
@@ -126,7 +126,7 @@ export const checkAuthAction =
         dispatch(loadUserInfo(userInfo));
       });
     } catch (error) {
-      toast.info(TOAST_MESSAGE.AUTH_SUGGESTION);
+      toast.info(ToastMessage.AuthSuggestion);
     }
   };
 export const loginAction =
@@ -152,7 +152,7 @@ export const loginAction =
         dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(redirectToRoute(AppRoute.Main));
       } catch (error) {
-        toast.info(TOAST_MESSAGE.POST_LOGIN_ACTION_ERROR_MESSAGE);
+        toast.info(ToastMessage.PostLoginActionErrorMessage);
       }
     };
 
@@ -174,7 +174,7 @@ export const postReview =
           });
       } catch (error) {
         dispatch(setIsReviewPosting(false));
-        toast.info(TOAST_MESSAGE.POST_ERROR);
+        toast.info(ToastMessage.PostError);
       }
     };
 
@@ -204,20 +204,14 @@ export const setFavoriteFlag =
           const films = [...getState().DATA.films];
           const updatedFilms = films.map((movie): FilmType => {
             if (movie?.id === film?.id) {
-              // eslint-disable-next-line no-console
               return film;
             }
             return movie;
           });
-          // eslint-disable-next-line no-console
-          console.log(updatedFilms);
-          // }
           dispatch(loadFilms(updatedFilms));
         }
       } catch {
-      // eslint-disable-next-line no-console
-      //   console.log(error);
-        toast(TOAST_MESSAGE.POST_SET_FAVORITE_ERROR_MESSAGE);
+        toast(ToastMessage.PostSetFavoriteErrorMessage);
       } finally {
         dispatch(setIsFavoritesLoading(false));
       }
