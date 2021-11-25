@@ -18,7 +18,6 @@ import {
   getFilms,
   getSimilarFilms
 } from '../../store/reducers/data-reducer/selectors';
-import {loadFilm} from '../../store/action';
 
 const SIMILAR_NUMBER = 4;
 
@@ -36,7 +35,6 @@ function Film(): JSX.Element {
   const commentsPath = generatePath(AppRoute.Comments, { id: id });
 
   useEffect(() => {
-    dispatch(loadFilm(film ? film : null));
     (dispatch as ThunkAppDispatch)(fetchSimilarFilmsAction(similarFilmsPath));
     (dispatch as ThunkAppDispatch)(fetchFilmCommentsAction(commentsPath));
   }, [url, commentsPath, dispatch, similarFilmsPath, film]);

@@ -36,7 +36,7 @@ export enum Action {
 
   SetApi = 'data/setApi',
   LoadFilms = 'data/loadFilms',
-  LoadFilm = 'data/loadFilm',
+  LoadPromo = 'data/loadPromo',
   LoadFilmComments = 'data/loadFilmComments',
   LoadSimilarFilms = 'data/loadSimilarFilms',
   LoadFavorites = 'data/loadFavorites',

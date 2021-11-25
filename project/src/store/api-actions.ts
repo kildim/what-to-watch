@@ -7,9 +7,9 @@ import {
 } from '../const';
 import {
   loadFavorites,
-  loadFilm,
   loadFilmComments,
   loadFilms,
+  loadPromo,
   loadSimilarFilms,
   loadUserInfo,
   redirectToRoute,
@@ -101,7 +101,7 @@ export const fetchPromoAction =
     async (dispatch, _getState, api): Promise<void> => {
       const { data: serverPromoData } = await api.get(APIRoute.Promo);
       const promoData = parseFilmFromServerFormat(serverPromoData);
-      dispatch(loadFilm(promoData));
+      dispatch(loadPromo(promoData));
     };
 
 export const checkAuthAction =

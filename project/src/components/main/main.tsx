@@ -11,9 +11,9 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import MainHeader from './main-header';
 import MainPromo from './main-promo';
 import {
-  getFilm,
   getFilms,
-  getGenre
+  getGenre,
+  getPromo
 } from '../../store/reducers/data-reducer/selectors';
 
 const CHUNK_LENGTH = 8;
@@ -21,7 +21,7 @@ const CHUNK_LENGTH = 8;
 function Main(): JSX.Element {
   const genre = useSelector(getGenre);
   const films = useSelector(getFilms);
-  const film = useSelector(getFilm);
+  const promoFilm = useSelector(getPromo);
   const [listCount, setListCount] = useState(CHUNK_LENGTH);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,7 +45,7 @@ function Main(): JSX.Element {
     [filmsList.length, listCount],
   );
 
-  if (!film) {
+  if (!promoFilm) {
     return <LoadingScreen />;
   }
 
@@ -53,12 +53,12 @@ function Main(): JSX.Element {
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={film.backgroundImage} alt="Film background" />
+          <img src={promoFilm.backgroundImage} alt="Film background" />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
         <MainHeader />
-        <MainPromo />
+        <MainPromo promo={promoFilm} />
       </section>
       <div className="page-content">
         <section className="catalog">

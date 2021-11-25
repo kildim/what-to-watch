@@ -2,12 +2,14 @@ import PlayFilm from '../play-film/play-film';
 import AddMyList from '../add-my-list/add-my-list';
 import {memo} from 'react';
 import Page404 from '../page-404/page-404';
-import {useSelector} from 'react-redux';
-import {getFilm} from '../../store/reducers/data-reducer/selectors';
+import {FilmType} from '../../types/types';
 
-function MainPromo(): JSX.Element {
-  const film = useSelector(getFilm);
-  if (!film) {
+type MainPromoPropsType = {
+  promo: FilmType;
+}
+
+function MainPromo({promo}: MainPromoPropsType): JSX.Element {
+  if (!promo) {
     return <Page404 />;
   }
 
@@ -16,23 +18,23 @@ function MainPromo(): JSX.Element {
       <div className="film-card__info">
         <div className="film-card__poster">
           <img
-            src={film.posterImage}
-            alt={`${film.name} poster`}
+            src={promo.posterImage}
+            alt={`${promo.name} poster`}
             width="218"
             height="327"
           />
         </div>
 
         <div className="film-card__desc">
-          <h2 className="film-card__title">{film.name}</h2>
+          <h2 className="film-card__title">{promo.name}</h2>
           <p className="film-card__meta">
-            <span className="film-card__genre">{film.genre}</span>
-            <span className="film-card__year">{film.released}</span>
+            <span className="film-card__genre">{promo.genre}</span>
+            <span className="film-card__year">{promo.released}</span>
           </p>
 
           <div className="film-card__buttons">
-            <PlayFilm film={film}/>
-            <AddMyList film={film}/>
+            <PlayFilm film={promo}/>
+            <AddMyList film={promo}/>
           </div>
         </div>
       </div>

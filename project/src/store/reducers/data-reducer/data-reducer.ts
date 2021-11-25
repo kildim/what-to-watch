@@ -3,7 +3,7 @@ import { DataReducerType } from '../../../types/state';
 import { ALL_GENRES_ITEM } from '../../../const';
 import {
   loadFavorites,
-  loadFilm,
+  loadPromo,
   loadFilmComments,
   loadFilms,
   loadSimilarFilms,
@@ -16,7 +16,7 @@ const initialState: DataReducerType = {
   genre: ALL_GENRES_ITEM as string,
   films: [],
   genres: [ALL_GENRES_ITEM],
-  film: null,
+  promo: null,
   similarFilms: [],
   comments: [],
   userInfo: null,
@@ -37,8 +37,8 @@ const dataReducer = createReducer(initialState, (builder) => {
     .addCase(loadSimilarFilms, (state, action) => {
       state.similarFilms = action.payload.similarFilms;
     })
-    .addCase(loadFilm, (state, action) => {
-      state.film = action.payload.film;
+    .addCase(loadPromo, (state, action) => {
+      state.promo= action.payload.promo;
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;

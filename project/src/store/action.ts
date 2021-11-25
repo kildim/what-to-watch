@@ -43,11 +43,11 @@ export const setGenres = createAction(
   }),
 );
 
-export const loadFilm = createAction(
-  Action.LoadFilm, (film: FilmType) => ({
-    type: Action.LoadFilm,
+export const loadPromo = createAction(
+  Action.LoadPromo, (promo: FilmType) => ({
+    type: Action.LoadPromo,
     payload: {
-      film: film,
+      promo: promo,
     },
   }),
 );

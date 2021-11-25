@@ -12,7 +12,7 @@ export type DataReducerType = {
   genre: string;
   films: FilmType[];
   genres: GenreType[];
-  film: FilmType | null,
+  promo: FilmType | null,
   similarFilms: FilmType[],
   comments: CommentType[],
   userInfo: UserInfoType | null,
