@@ -6,11 +6,16 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useSelector } from 'react-redux';
 import { getAuthStatus } from '../../store/reducers/auth-reducer/selectors';
 import Page404 from '../page-404/page-404';
-import {getFilm} from '../../store/reducers/data-reducer/selectors';
+// import {getFilm} from '../../store/reducers/data-reducer/selectors';
+import {FilmType} from '../../types/types';
 
-function FilmCard(): JSX.Element {
+type FilmCardPropsType = {
+  film: FilmType,
+}
+
+function FilmCard({ film }: FilmCardPropsType): JSX.Element {
   const authorizationStatus = useSelector(getAuthStatus);
-  const film = useSelector(getFilm);
+  // const film = useSelector(getFilm);
 
   if (film === null) {
     return <Page404 />;
@@ -27,8 +32,8 @@ function FilmCard(): JSX.Element {
         </p>
 
         <div className="film-card__buttons">
-          <PlayFilm film={film}/>
-          <AddMyList film={film}/>
+          <PlayFilm film={film} />
+          <AddMyList film={film} />
           <Link
             to={addReviewPath}
             className={classNames('btn film-card__button', {

@@ -74,8 +74,7 @@ function Film(): JSX.Element {
             <UserBlock />
           </header>
 
-          {/*пробрасываем Film пропсами до кнопки AddList*/}
-          <FilmCard/>
+          <FilmCard film={film}/>
         </div>
 
         <div className="film-card__wrap film-card__translate-top">
