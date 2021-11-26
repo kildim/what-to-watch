@@ -1,8 +1,14 @@
-import {AuthInfoType, FilmType, ServerAuthInfoType, ServerFilmType} from '../types/types';
+import {
+  AuthInfoType,
+  FilmType,
+  ServerAuthInfoType,
+  ServerFilmType
+} from '../types/types';
 import { GenreType } from '../types/state';
 import { ALL_GENRES_ITEM, AuthorizationStatus, GENRES_NUMBER } from '../const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+
 dayjs.extend(duration);
 
 const joinArrayByComma = (ingoingArray: string[]): string =>
@@ -17,7 +23,7 @@ const filterFilmsByGenre = (
   );
 
 const getGenres = (films: FilmType[]): GenreType[] => {
-  const genres = films.map((film) => film?.genre || '' );
+  const genres = films.map((film) => film?.genre || '');
   return [ALL_GENRES_ITEM as GenreType, ...new Set(genres)].slice(
     0,
     GENRES_NUMBER + 1,
@@ -50,7 +56,9 @@ const parseFilmFromServerFormat = (film: ServerFilmType): FilmType => ({
   isFavorite: film['is_favorite'],
 });
 
-const parseAuthInfoFromServerFormat = (AuthInfo: ServerAuthInfoType): AuthInfoType  => ({
+const parseAuthInfoFromServerFormat = (
+  AuthInfo: ServerAuthInfoType,
+): AuthInfoType => ({
   id: AuthInfo.id,
   email: AuthInfo.email,
   name: AuthInfo.name,
@@ -74,12 +82,13 @@ const rangeFilm = (rating: number): string => {
 };
 
 const convertMinutesToHoursWithMinutes = (minutesDuration: number): string => {
-  const hours = Math.floor(minutesDuration/60);
+  const hours = Math.floor(minutesDuration / 60);
   const minutes = minutesDuration - hours * 60;
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const formatCommentDate = (commentDate: Date): string => dayjs(commentDate).format('MMMM D, YYYY');
+const formatCommentDate = (commentDate: Date): string =>
+  dayjs(commentDate).format('MMMM D, YYYY');
 
 const formatRemainingTime = (remaining: number): string => {
   const HOUR_IN_MS = 3600;

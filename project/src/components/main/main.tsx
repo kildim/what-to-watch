@@ -4,7 +4,6 @@ import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import Footer from '../footer/footer';
 import CatalogGenresList from '../catalog-genres-list/catalog-genres-list';
 import ShowButton from '../show-button/show-button';
-import { filterFilmsByGenre } from '../../utils/utils';
 import { ThunkAppDispatch } from '../../types/action';
 import { fetchPromoAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -12,6 +11,7 @@ import MainHeader from './main-header';
 import MainPromo from './main-promo';
 import {
   getFilms,
+  getFilmsByGenre,
   getGenre,
   getPromo
 } from '../../store/reducers/data-reducer/selectors';
@@ -39,7 +39,8 @@ function Main(): JSX.Element {
     });
   };
 
-  const filmsList = filterFilmsByGenre(films, genre);
+  const filmsList =  useSelector(getFilmsByGenre);
+
   const isShowButtonVisible: boolean = useMemo(
     () => filmsList.length > listCount,
     [filmsList.length, listCount],

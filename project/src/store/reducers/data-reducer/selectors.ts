@@ -1,6 +1,8 @@
 import { GenreType, StateType } from '../../../types/state';
 import { NameSpace } from '../../root-reducer';
 import { CommentType, FilmType, UserInfoType } from '../../../types/types';
+import {createSelector} from 'reselect';
+import {filterFilmsByGenre} from '../../../utils/utils';
 
 export const getFilms = (state: StateType): FilmType[] =>
   state[NameSpace.Data].films;
@@ -18,3 +20,4 @@ export const getUserInfo = (state: StateType): UserInfoType =>
   state[NameSpace.Data].userInfo;
 export const getFavorites = (state: StateType): FilmType[] =>
   state[NameSpace.Data].favorites;
+export const getFilmsByGenre = createSelector(getFilms, getGenre, filterFilmsByGenre );
