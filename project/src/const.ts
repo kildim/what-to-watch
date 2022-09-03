@@ -53,7 +53,7 @@ export const ALL_GENRES_ITEM = 'All genres';
 export const GENRES_NUMBER = 9;
 
 export const ToastMessage = {
-  AuthSuggestion: 'Предлягаем Авторизоваться',
+  AuthSuggestion: 'Предлагаем Авторизоваться',
   PostError: 'Ошибка при публикации на сервере',
   FetchFilmsError: 'Возникла ошибка при загрузке фильмов',
   FetchFavoritesErrorMessage: 'Возникла ошибка при загрузке избранных фильмов',
@@ -62,4 +62,3 @@ export const ToastMessage = {
   PostLoginActionErrorMessage: 'Возникла ошибка при отправке параметров аутентификации',
   PostSetFavoriteErrorMessage: 'Возникла ошибка при внесении в список избранного',
 } as const;
-
