@@ -1,5 +1,8 @@
 # Личный проект «Что посмотреть»
 
+Развёрнутое приложение: https://wtw.kildim.space
+Репозиторий с кодом приложения: https://github.com/kildim/what-to-watch
+
 * Студент: [Дмитрий Килин](https://up.htmlacademy.ru/react/8/user/997093).
 * Наставник: [Сергей Шрамко](https://htmlacademy.ru/profile/id852139).
 
