@@ -1,6 +1,6 @@
 # Личный проект «Что посмотреть»
 
-Развёрнутое приложение: http://wtw.kildim.space\
+Развёрнутое приложение: http://wtw.kildim.space \
 Репозиторий с кодом приложения: https://github.com/kildim/what-to-watch
 
 * Студент: [Дмитрий Килин](https://up.htmlacademy.ru/react/8/user/997093).
